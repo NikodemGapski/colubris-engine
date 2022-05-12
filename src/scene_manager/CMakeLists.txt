@@ -1,0 +1,5 @@
+set(SCENE_MANAGER_SOURCE
+	${CMAKE_CURRENT_SOURCE_DIR}/scene_manager.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/scene_manager.cpp
+	PARENT_SCOPE
+)

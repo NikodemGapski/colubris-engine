@@ -1,0 +1,5 @@
+set(TRANSFORM_SOURCE
+	${CMAKE_CURRENT_SOURCE_DIR}/transform.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/transform.cpp
+	PARENT_SCOPE
+)

@@ -1,0 +1,5 @@
+set(COLLIDERS_SOURCE
+	${CMAKE_CURRENT_SOURCE_DIR}/circle_collider.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/circle_collider.cpp
+	PARENT_SCOPE
+)

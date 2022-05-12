@@ -1,0 +1,5 @@
+set(GAMEOBJECT_SOURCE
+	${CMAKE_CURRENT_SOURCE_DIR}/gameobject.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/gameobject.cpp
+	PARENT_SCOPE
+)
