@@ -53,7 +53,7 @@ void SceneManager::render_current() {
 }
 
 
-void SceneManager::register_gameobject(GameObjectI* obj) {
+void SceneManager::register_gameobject(GameObject* obj) {
 	if(current_scene == -1) return;
 	scenes[current_scene]->register_gameobject(obj);
 }

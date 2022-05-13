@@ -1,7 +1,7 @@
 #pragma once
 #include "gameobject.hpp"
 #include "script3.hpp"
-
+/*
 class MyObj : public GameObjectI {
 	SomeManager* manager;
 public:
@@ -13,4 +13,4 @@ public:
 	void update(float delta_time) {
 		transform.position += manager->get_speed();
 	}
-};
+};*/

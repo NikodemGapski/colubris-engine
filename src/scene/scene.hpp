@@ -8,7 +8,7 @@
 
 class Scene {
 	Renderer renderer;
-	std::vector<GameObjectI*> gameobjects;
+	std::vector<GameObject*> gameobjects;
 	std::vector<CircleCollider*> circle_colliders;
 
 	void instantiate_custom_objects();
@@ -18,6 +18,6 @@ public:
 	void start();
 	void update();
 
-	void register_gameobject(GameObjectI* obj);
+	void register_gameobject(GameObject* obj);
 	void register_circle_collider(CircleCollider* col);
 };

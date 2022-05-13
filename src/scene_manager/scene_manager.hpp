@@ -29,7 +29,7 @@ public:
 
 	// Registration
 	// register the gameobject in the curent scene
-	static void register_gameobject(GameObjectI* obj);
+	static void register_gameobject(GameObject* obj);
 	// register the circle collider in the current scene
 	static void register_circle_collider(CircleCollider* col);
 };

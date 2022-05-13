@@ -1,7 +1,7 @@
 #pragma once
 #include "gameobject.hpp"
 #include "scene_manager.hpp"
-
+/*
 class SomeManager : public GameObjectI {
 	glm::vec3 speed;
 	float speed_value;
@@ -19,4 +19,4 @@ public:
 	glm::vec3 get_speed() {
 		return speed;
 	}
-};
+};*/

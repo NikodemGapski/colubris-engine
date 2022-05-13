@@ -1,16 +1,22 @@
 #pragma once
-#include "gameobject.hpp"
+#include "transform.hpp"
+#include "component.hpp"
 
-class CircleCollider {
-	GameObjectI* parent;
+// forward declaration
+class GameObject;
+
+class CircleCollider : public ComponentI {
 	Transform transform;
 	float radius;
 
 public:
-	CircleCollider(GameObjectI* parent, float radius);
+	CircleCollider(GameObject* parent, float radius);
 
 	glm::vec3 get_centre_real();
 	float get_radius_real();
+
+	void start();
+	void update(float delta_time);
 
 	// debugging utils
 	void print_data();

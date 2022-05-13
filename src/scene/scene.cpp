@@ -11,7 +11,7 @@ Scene::Scene(GLFWwindow* window) : renderer(window) {
 
 void Scene::render() {
 	renderer.clear_window();
-	for(auto& obj : gameobjects) {
+	for(auto obj : gameobjects) {
 		obj->render(renderer.shader_program);
 	}
 }
@@ -23,13 +23,14 @@ void Scene::start() {
 void Scene::update() {
 	float delta_time = SceneManager::get_delta_time();
 	
-	for(auto& obj : gameobjects) {
+	for(auto obj : gameobjects) {
 		obj->update(delta_time);
 	}
 }
 
 
-void Scene::register_gameobject(GameObjectI* obj) {
+void Scene::register_gameobject(GameObject* obj) {
+	obj->start();
 	gameobjects.push_back(obj);
 }
 void Scene::register_circle_collider(CircleCollider* col) {

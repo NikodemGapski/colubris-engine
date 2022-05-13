@@ -1,7 +1,11 @@
 #pragma once
 #include <vector>
 #include "glm/glm.hpp"
-#include "shader.hpp"
+#include "component.hpp"
+
+// forward declarations
+class GameObject;
+class Shader;
 
 enum DefaultMesh {
 	Blob,
@@ -18,17 +22,31 @@ struct Vertex {
 };
 
 // Mesh class
-class Mesh {
+class MeshSingle {
 	std::vector<Vertex> vertices;
 	std::vector<uint> indices;
 
 	uint VAO, VBO, EBO;
 public:
-	Mesh(); // default constructor (empty shape)
-	Mesh(DefaultMesh mesh_type, float width = 0.0f, float height = 0.0f); // default shape constructor (creates default shape)
+	MeshSingle(); // default constructor (empty shape)
+	MeshSingle(DefaultMesh mesh_type, float width = 0.0f, float height = 0.0f); // default shape constructor (creates default shape)
 	// circle constructor
-	Mesh(float radius, int seg_num = 40);
+	MeshSingle(float radius, int seg_num = 40);
 
 	void setup();
 	void render(Shader& shader);
+};
+
+class Mesh : public ComponentI {
+public:
+	std::vector<MeshSingle> submeshes;
+
+	Mesh(GameObject* parent, std::vector<MeshSingle> submeshes);
+	Mesh(GameObject* parent, DefaultMesh mesh_type, float width = 0.0f, float height = 0.0f);
+	Mesh(GameObject* parent, float radius, int seg_num = 40);
+
+	void render(Shader& shader);
+
+	void start();
+	void update(float delta_time);
 };
