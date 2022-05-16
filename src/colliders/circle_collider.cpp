@@ -16,12 +16,8 @@ glm::vec3 CircleCollider::get_centre_real() {
 	return parent_transform->position + transform.position;
 }
 
-void CircleCollider::start() {
-
-}
-void CircleCollider::update(float delta_time) {
-	
-}
+void CircleCollider::start() {}
+void CircleCollider::update(float delta_time) {}
 
 void CircleCollider::print_data() {
 	std::cout<<"[CircleCollider]:\n";

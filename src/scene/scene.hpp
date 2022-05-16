@@ -7,11 +7,6 @@
 #include "circle_collider.hpp"
 
 class Scene {
-	Renderer renderer;
-	std::vector<GameObject*> gameobjects;
-	std::vector<CircleCollider*> circle_colliders;
-
-	void instantiate_custom_objects();
 public:
 	Scene(GLFWwindow* window);
 	void render();
@@ -20,4 +15,11 @@ public:
 
 	void register_gameobject(GameObject* obj);
 	void register_circle_collider(CircleCollider* col);
+
+private:
+	void instantiate_custom_objects();
+
+	Renderer renderer;
+	std::vector<GameObject*> gameobjects;
+	std::vector<CircleCollider*> circle_colliders;
 };

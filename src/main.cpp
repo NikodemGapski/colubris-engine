@@ -45,7 +45,7 @@ int main() {
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 	// initialise a scene
-	SceneManager::start();
+	SceneManager::init();
 	Scene scene(window);
 	int scene_id = SceneManager::add_scene(&scene);
 	SceneManager::set_current(scene_id);

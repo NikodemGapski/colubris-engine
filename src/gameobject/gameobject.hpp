@@ -6,22 +6,20 @@
 #include "mesh/mesh.hpp"
 #include "component.hpp"
 
-typedef std::unordered_map<std::type_index, ComponentI*> comp_map;
+typedef std::unordered_map<std::type_index, ComponentI*> comp_map; // type->component hash map
 
-// Game Object (transform, vertex data)
 class GameObject {
 public:
-	comp_map components;
-
 	GameObject(); // default constructor (creates empty GameObject)
 	GameObject(DefaultMesh mesh_type, float width = 0.0f, float height = 0.0f);
 	GameObject(float radius, int seg_num = 40);
 
-	void render(Shader& shader);
-
+	// Main methods
 	void start();
 	void update(float delta_time);
+	void render(Shader& shader);
 
+	// Components
 	template<typename T>
 	T* get_component();
 
@@ -30,6 +28,9 @@ public:
 
 	template<typename T>
 	bool has_component();
+
+
+	comp_map components; // a map of components (only one component per its type)
 };
 
 // templates implementations must be visible to translation units that use them, hence the header file

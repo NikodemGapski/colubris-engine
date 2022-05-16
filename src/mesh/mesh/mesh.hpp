@@ -7,6 +7,7 @@
 class GameObject;
 class Shader;
 
+// default mesh enumerator
 enum class DefaultMesh {
 	Blob,
 	Rect
@@ -15,14 +16,16 @@ enum class DefaultMesh {
 
 class Mesh : public ComponentI {
 public:
-	std::vector<MeshSingle> submeshes;
-
 	Mesh(GameObject* parent, std::vector<MeshSingle> submeshes);
 	Mesh(GameObject* parent, DefaultMesh mesh_type, float width = 0.0f, float height = 0.0f);
 	Mesh(GameObject* parent, float radius, int seg_num = 40);
 
 	void render(Shader& shader);
 
+	std::vector<MeshSingle> submeshes; // a list of submeshes
+
+
+	// unused, necessary for inheritance
 	void start();
 	void update(float delta_time);
 };

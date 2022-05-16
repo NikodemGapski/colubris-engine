@@ -6,9 +6,6 @@
 class GameObject;
 
 class CircleCollider : public ComponentI {
-	Transform transform;
-	float radius;
-
 public:
 	CircleCollider(GameObject* parent, float radius);
 
@@ -17,7 +14,12 @@ public:
 
 	void start();
 	void update(float delta_time);
+	
+private:
+	Transform transform;
+	float radius;
 
+public:
 	// debugging utils
 	void print_data();
 };

@@ -3,13 +3,10 @@
 // forward declaration
 class GameObject;
 
-// a handy quick alias for the parent's transform
-#define parent_transform game_object->get_component<Transform>()
+#define parent_transform game_object->get_component<Transform>() // a handy quick alias for the parent's transform
 
 class ComponentI {
 public:
-	GameObject* game_object;
-
 	ComponentI(GameObject* parent);
 	ComponentI();
 
@@ -17,4 +14,6 @@ public:
 
 	virtual void start() = 0;
 	virtual void update(float delta_time) = 0;
+
+	GameObject* game_object;
 };

@@ -6,13 +6,14 @@
 #include "gameobject.hpp"
 
 class Renderer {
-	GLFWwindow* window;
-
 public:
-	// shaders
-	Shader shader_program;
-
 	Renderer();
 	Renderer(GLFWwindow* window);
+
 	void clear_window();
+
+	Shader shader_program;
+	
+private:
+	GLFWwindow* window;
 };

@@ -14,9 +14,5 @@ void Mesh::render(Shader& shader) {
 	}
 }
 
-void Mesh::start() {
-
-}
-void Mesh::update(float delta_time) {
-
-}
+void Mesh::start() {}
+void Mesh::update(float delta_time) {}

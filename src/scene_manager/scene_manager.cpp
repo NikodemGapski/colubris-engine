@@ -32,7 +32,7 @@ float SceneManager::get_delta_time() {
 	return delta_time;
 }
 
-void SceneManager::start() {
+void SceneManager::init() {
 	prev_time = glfwGetTime();
 }
 
