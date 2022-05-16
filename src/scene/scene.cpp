@@ -1,5 +1,5 @@
 #include <iostream>
-#include "mesh.hpp"
+#include "mesh/mesh.hpp"
 #include "input.hpp"
 #include "scene_manager.hpp"
 #include "scene.hpp"

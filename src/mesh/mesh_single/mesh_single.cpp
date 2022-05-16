@@ -1,12 +1,11 @@
 #include <iostream>
 #include <glad.h>
 #include <GLFW/glfw3.h>
-#include "mesh.hpp"
+#include "mesh_single.hpp"
+#include "mesh/mesh.hpp"
+#include "vertex/vertex.hpp"
 #include "shader.hpp"
 
-// Vertex class
-Vertex::Vertex() : position(0.0f, 0.0f, 0.0f), colour(0.0f, 0.0f, 0.0f) {}
-Vertex::Vertex(glm::vec3 pos, glm::vec3 col) : position(pos), colour(col) {}
 
 // MeshSingle class
 MeshSingle::MeshSingle() {}

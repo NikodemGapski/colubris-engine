@@ -3,7 +3,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "scene_manager.hpp"
-#include "mesh.hpp"
 
 
 // Game Object class

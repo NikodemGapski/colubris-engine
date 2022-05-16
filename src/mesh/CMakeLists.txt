@@ -1,6 +1,9 @@
 set(MESH_SOURCE
-	${CMAKE_CURRENT_SOURCE_DIR}/mesh.hpp
-	${CMAKE_CURRENT_SOURCE_DIR}/mesh_single.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/mesh.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/mesh/mesh.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/mesh/mesh.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/mesh_single/mesh_single.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/mesh_single/mesh_single.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/vertex/vertex.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/vertex/vertex.cpp
 	PARENT_SCOPE
 )

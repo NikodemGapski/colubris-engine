@@ -3,7 +3,7 @@
 #include <typeindex>
 #include <unordered_map>
 #include "shader.hpp"
-#include "mesh.hpp"
+#include "mesh/mesh.hpp"
 #include "component.hpp"
 
 typedef std::unordered_map<std::type_index, ComponentI*> comp_map;
