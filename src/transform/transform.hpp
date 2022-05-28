@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include <glm/glm.hpp>
 #include "gameobject.hpp"
 
@@ -13,6 +14,13 @@ struct Transform : public ComponentI {
 	// scale up by the given percentage (or scale down if negative)
 	void scale_up(float percentage);
 
+	// Transformations
+	glm::vec3 transform(glm::vec3 point) const;
+	std::vector<glm::vec3> transform(std::vector<glm::vec3> points) const;
+	glm::vec2 transform(glm::vec2 point) const;
+	std::vector<glm::vec2> transform(std::vector<glm::vec2> points) const;
+
+	// Member variables
 	glm::vec3 position;
 	glm::vec3 scale;
 	float rotation; // rotation around (0, 0, 1) axis

@@ -1,0 +1,8 @@
+set(MATH_SOURCE
+	${CMAKE_CURRENT_SOURCE_DIR}/geometry.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/geometry.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/math_core.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/math_core.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/math.hpp
+	PARENT_SCOPE
+)
