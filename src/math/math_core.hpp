@@ -18,6 +18,9 @@ namespace math {
 		T c = a;
 		a = b, b = c;
 	}
+	
+	// --- Infinities ---
+	bool is_inf(float x);
 
 	// --- Ranges operations ---
 

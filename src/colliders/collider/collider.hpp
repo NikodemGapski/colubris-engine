@@ -6,13 +6,13 @@
 // forward declaration
 class GameObject;
 
-class Collider : ComponentI {
+class Collider : public ComponentI {
 public:
 	Collider(GameObject* parent); // creates with no shapes
 	Collider(GameObject* parent, std::vector<ColliderShape> shapes);
 
 	void start();
-	void update(float delta_time);
+	void update();
 private:
 	std::vector<ColliderShape> shapes;
 };

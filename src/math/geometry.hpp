@@ -8,7 +8,7 @@ namespace math {
 	bool are_parallel(glm::vec2 v, glm::vec2 w); // whether two vectors are parallel
 
 	struct Line {
-		Line(glm::vec2 a, glm::vec2 b);
+		Line(glm::vec2 a, glm::vec2 b); // create line through two points
 
 		float A, B, C;
 	};

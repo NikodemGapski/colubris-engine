@@ -6,6 +6,7 @@
 
 class Shader {
 public:
+	Shader();
 	Shader(const char* vertex_shader_dir, const char* fragment_shader_dir);
 	
 	void use(); // bind this shader program

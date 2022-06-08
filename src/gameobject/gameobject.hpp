@@ -16,7 +16,7 @@ public:
 
 	// Main methods
 	void start();
-	void update(float delta_time);
+	void update();
 	void render(Shader& shader);
 
 	// Components

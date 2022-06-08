@@ -50,4 +50,4 @@ std::vector<glm::vec2> Transform::transform(std::vector<glm::vec2> points) const
 
 
 void Transform::start() {}
-void Transform::update(float delta_time) {}
+void Transform::update() {}

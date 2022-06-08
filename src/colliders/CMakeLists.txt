@@ -1,6 +1,4 @@
 set(COLLIDERS_SOURCE
-	${CMAKE_CURRENT_SOURCE_DIR}/circle_collider.hpp
-	${CMAKE_CURRENT_SOURCE_DIR}/circle_collider.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/collider/collider.hpp
 	${CMAKE_CURRENT_SOURCE_DIR}/collider/collider.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/collider_shape/collider_shape.hpp

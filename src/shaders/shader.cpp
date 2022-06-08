@@ -8,6 +8,7 @@
 #include "shader.hpp"
 #include <glm/gtc/type_ptr.hpp>
 
+Shader::Shader() {}
 Shader::Shader(const char* vertex_shader_dir, const char* fragment_shader_dir) {
 	using namespace std;
 

@@ -1,6 +1,11 @@
 #include "math_core.hpp"
+#include <cmath>
 
 namespace math {
+	bool is_inf(float x) {
+		return std::isinf(x);
+	}
+
 	bool belongs_to(float c, float a, float b) {
 		if(a > b) swap(a, b);
 		return (a <= c && c <= b);

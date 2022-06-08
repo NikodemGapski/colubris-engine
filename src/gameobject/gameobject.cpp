@@ -3,6 +3,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "scene_manager.hpp"
+#include "transform.hpp"
+#include "time.hpp"
 
 
 // Game Object class
@@ -46,12 +48,12 @@ void GameObject::start() {
 	}
 }
 
-void GameObject::update(float delta_time) {
+void GameObject::update() {
 	for(auto x : components) {
-		x.second->update(delta_time);
+		x.second->update();
 	}
 
-	float time_value = glfwGetTime();
+	float time_value = Time::time();
 	get_component<Transform>()->rotation = sin(time_value) * 90.0f;
 
 }

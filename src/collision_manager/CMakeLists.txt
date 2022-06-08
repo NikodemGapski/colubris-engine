@@ -1,0 +1,5 @@
+set(COLLISION_MANAGER_SOURCE
+	${CMAKE_CURRENT_SOURCE_DIR}/collision_manager.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/collision_manager.cpp
+	PARENT_SCOPE
+)

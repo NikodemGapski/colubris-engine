@@ -17,7 +17,7 @@ The class also contains the following methods:
 - `add_component<T>(ComponentI*)` (attaches the given component to the gameobject; note that if the gameobject previously already had a component of this type, it will be overwritten),
 - `has_component<T>()` (returns true if has a component of the given type),
 - `start()` (calls all components' `start` methods)
-- `update(float delta_time)` (calls all components' `update` methods),
+- `update()` (calls all components' `update` methods),
 - `render(Shader&)`,
 
 All of which are predefined and shouldn't generally be overloaded. If you want to add custom behaviour to your gameobject, check out `Component` documentation.

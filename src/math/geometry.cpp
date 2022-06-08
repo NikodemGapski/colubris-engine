@@ -20,7 +20,7 @@ namespace math {
 		glm::vec2 result;
 		if(a.A != 0 && b.A != 0) {
 			result.y = (b.C * a.A / b.A - a.C) / (a.B - b.B * a.A / b.A);
-			result.x = (-a.A  - a.B * result.y) / a.A;
+			result.x = (-a.C - a.B * result.y) / a.A;
 			return result;
 		}
 		result.x = (b.C * a.B / b.B - a.C) / (a.A - b.A * a.B / b.B);

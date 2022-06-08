@@ -1,5 +1,4 @@
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/scene/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/renderer/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/shaders/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/gameobject/)
@@ -8,12 +7,13 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/mesh/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/scripts/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/input/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/colliders/)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/collision_manager/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/scene_manager/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/transform/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/math/)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/time/)
 
 set(MODULES
-	${CMAKE_CURRENT_SOURCE_DIR}/scene/
 	${CMAKE_CURRENT_SOURCE_DIR}/renderer/
 	${CMAKE_CURRENT_SOURCE_DIR}/shaders/
 	${CMAKE_CURRENT_SOURCE_DIR}/gameobject/
@@ -21,16 +21,17 @@ set(MODULES
 	${CMAKE_CURRENT_SOURCE_DIR}/mesh/
 	${CMAKE_CURRENT_SOURCE_DIR}/input/
 	${CMAKE_CURRENT_SOURCE_DIR}/colliders/
+	${CMAKE_CURRENT_SOURCE_DIR}/collision_manager/
 	${CMAKE_CURRENT_SOURCE_DIR}/scene_manager/
 	${CMAKE_CURRENT_SOURCE_DIR}/transform/
 	${CMAKE_CURRENT_SOURCE_DIR}/math/
+	${CMAKE_CURRENT_SOURCE_DIR}/time/
 	${CMAKE_CURRENT_SOURCE_DIR}/
 	PARENT_SCOPE
 )
 
 set(EXE_SOURCE
 	${RENDERER_SOURCE}
-	${SCENE_SOURCE}
 	${SHADER_SOURCE}
 	${GAMEOBJECT_SOURCE}
 	${COMPONENT_SOURCE}
@@ -38,9 +39,11 @@ set(EXE_SOURCE
 	${SCRIPTS_SOURCE}
 	${INPUT_SOURCE}
 	${COLLIDERS_SOURCE}
+	${COLLISION_MANAGER_SOURCE}
 	${SCENE_MANAGER_SOURCE}
 	${TRANSFORM_SOURCE}
 	${MATH_SOURCE}
+	${TIME_SOURCE}
 	${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 	PARENT_SCOPE
 )

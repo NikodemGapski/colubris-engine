@@ -1,17 +1,19 @@
 #include "renderer.hpp"
 
-const char* __vertex_dir = "./src/shaders/shader.vs";
-const char* __fragment_dir = "./src/shaders/shader.fs";
+namespace Renderer {
+	// private
+	namespace {
+		const char* vertex_dir = "./src/shaders/shader.vs";
+		const char* fragment_dir = "./src/shaders/shader.fs";
+	}
+	Shader shader_program;
 
-// Constructors
-Renderer::Renderer()
-: shader_program(__vertex_dir, __fragment_dir) {
-	window = NULL;
-}
-Renderer::Renderer(GLFWwindow* window)
-: window(window), shader_program(__vertex_dir, __fragment_dir) {}
+	void init() {
+		shader_program = Shader(vertex_dir, fragment_dir);
+	}
 
-void Renderer::clear_window() {
-	glClearColor(0.15f, 0.2f, 0.5f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	void clear_window() {
+		glClearColor(0.15f, 0.2f, 0.5f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+	}
 }

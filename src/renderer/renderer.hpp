@@ -5,15 +5,9 @@
 #include "shader.hpp"
 #include "gameobject.hpp"
 
-class Renderer {
-public:
-	Renderer();
-	Renderer(GLFWwindow* window);
-
+namespace Renderer {
+	void init();
 	void clear_window();
 
-	Shader shader_program;
-	
-private:
-	GLFWwindow* window;
+	extern Shader shader_program;
 };

@@ -27,5 +27,5 @@ public:
 
 	// unused, necessary for inheritance
 	void start();
-	void update(float delta_time);
+	void update();
 };

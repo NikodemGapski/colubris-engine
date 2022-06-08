@@ -51,3 +51,12 @@ std::vector<glm::vec2> ColliderShape::collision_points(const ColliderShape& a, c
 BoundingBox ColliderShape::get_bounding_box() {
 	return BoundingBox(local_transform.transform(points));
 }
+
+
+// TODO: decide how to manage transformation from the parent gameobject
+std::vector<glm::vec2> get_real_points(const Transform& ) {
+	// first apply your own transformation
+	// then align with the parent
+	//return parent_transform
+	return std::vector<glm::vec2>();
+}

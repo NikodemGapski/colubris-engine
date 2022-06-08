@@ -10,16 +10,11 @@ enum class KeyState {
 	JUST_RELEASED
 };
 
-class Input {
-public:
-	static GLFWwindow* window;
-	static void poll_events();
-	static bool is_key_down(int key_code);
-	static bool key_just_pressed(int key_code);
-	static bool is_key_up(int key_code);
-	static bool key_just_released(int key_code);
-
-private:
-	static const int key_count = 349;
-	static std::vector<KeyState> key_states;
+namespace Input {
+	void init(GLFWwindow* window);
+	void poll_events();
+	bool is_key_down(int key_code);
+	bool key_just_pressed(int key_code);
+	bool is_key_up(int key_code);
+	bool key_just_released(int key_code);
 };

@@ -12,7 +12,7 @@ are registered in an unordered_map with their types as keys.
 To create a component one must inherit from `ComponentI` interface and is required to implement the following methods:
 
 - `start()`
-- `update(float delta_time)`
+- `update()`
 
 Each component should also invoke the interface's constructor with a pointer to the parent gameobject. This pointer can later be accessed from the component to read and manipulate the gameobject's data (including its other components).
 

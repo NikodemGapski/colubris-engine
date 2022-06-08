@@ -9,16 +9,3 @@ The collider will then have a global transform of its parent
 and a local transform of its own.
 
 Colliders' default constructors register them to the scene.
-
-## Circle collider
-
-Local and global scaling for circle colliders might have unwanted
-consequences if the scaling is applied unevenly among the axes.
-The real radius formula is as follows:
-
-```
-real radius = radius * avg global scale * avg local scale
-```
-
-For the collider's real position we add the parent's position with the
-collider's local position.
