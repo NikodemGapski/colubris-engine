@@ -53,7 +53,18 @@ void GameObject::update() {
 		x.second->update();
 	}
 
-	float time_value = Time::time();
-	get_component<Transform>()->rotation = sin(time_value) * 90.0f;
+}
 
+void GameObject::clear_collisions() {
+	collisions.clear();
+}
+void GameObject::add_collision(GameObject* other) {
+	collisions.push_back(other);
+}
+void GameObject::call_collision_callbacks() {
+	for(auto obj : collisions) {
+		for(auto x : components) {
+			x.second->on_collision(obj);
+		}
+	}
 }

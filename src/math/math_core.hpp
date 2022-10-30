@@ -20,10 +20,14 @@ namespace math {
 	}
 	
 	// --- Infinities ---
+	
+	// is x infinity
 	bool is_inf(float x);
 
 	// --- Ranges operations ---
 
-	bool belongs_to(float c, float a, float b); // whether c belongs to range <a, b> (still works if a > b)
-	bool ranges_intersect(float a, float b, float c, float d); // whether ranges <a, b> and <c, d> intersect (still works if a > b or c > d)
+	// whether c belongs to range <a, b> (still works if a > b)
+	bool belongs_to(float c, float a, float b);
+	// whether ranges <a, b> and <c, d> intersect (still works if a > b or c > d)
+	bool ranges_intersect(float a, float b, float c, float d);
 }

@@ -18,7 +18,7 @@ bool BoundingBox::intersect(BoundingBox a, BoundingBox b) {
 
 void BoundingBox::update(glm::vec2 point) {
 	min_x = math::min(min_x, point.x);
-	max_x = math::max(min_x, point.x);
+	max_x = math::max(max_x, point.x);
 	min_y = math::min(min_y, point.y);
 	max_y = math::max(max_y, point.y);
 }

@@ -1,12 +1,12 @@
 #include "collider_shape.hpp"
 #include "geometry.hpp"
 
-ColliderShape::ColliderShape() {}
-ColliderShape::ColliderShape(std::vector<glm::vec2> points) : points(points) {}
+ColliderShape::ColliderShape(Transform* global_transform) : global_transform(global_transform) {}
+ColliderShape::ColliderShape(Transform* global_transform, std::vector<glm::vec2> points) : global_transform(global_transform), points(points) {}
 
 bool ColliderShape::collide(const ColliderShape& a, const ColliderShape& b) {
-	std::vector<glm::vec2> a_points_real = a.local_transform.transform(a.points);
-	std::vector<glm::vec2> b_points_real = b.local_transform.transform(b.points);
+	std::vector<glm::vec2> a_points_real = a.get_real_points();
+	std::vector<glm::vec2> b_points_real = b.get_real_points();
 
 	// check bounding boxes
 	BoundingBox a_box(a_points_real), b_box(b_points_real);
@@ -26,8 +26,8 @@ bool ColliderShape::collide(const ColliderShape& a, const ColliderShape& b) {
 }
 
 std::vector<glm::vec2> ColliderShape::collision_points(const ColliderShape& a, const ColliderShape& b) {
-	std::vector<glm::vec2> a_points_real = a.local_transform.transform(a.points);
-	std::vector<glm::vec2> b_points_real = b.local_transform.transform(b.points);
+	std::vector<glm::vec2> a_points_real = a.get_real_points();
+	std::vector<glm::vec2> b_points_real = b.get_real_points();
 	
 	std::vector<glm::vec2> result;
 
@@ -48,15 +48,16 @@ std::vector<glm::vec2> ColliderShape::collision_points(const ColliderShape& a, c
 }
 
 
-BoundingBox ColliderShape::get_bounding_box() {
-	return BoundingBox(local_transform.transform(points));
+BoundingBox ColliderShape::get_bounding_box() const {
+	return BoundingBox(get_real_points());
 }
 
 
-// TODO: decide how to manage transformation from the parent gameobject
-std::vector<glm::vec2> get_real_points(const Transform& ) {
+std::vector<glm::vec2> ColliderShape::get_real_points() const {
 	// first apply your own transformation
+	std::vector<glm::vec2> result = local_transform.transform(points);
 	// then align with the parent
-	//return parent_transform
-	return std::vector<glm::vec2>();
+	result = global_transform->transform(result);
+	
+	return result;
 }

@@ -1,8 +1,10 @@
 #pragma once
 
 namespace Time {
-	float time(); // get current time
-	float delta_time(); // get current delta time
+	// get current time
+	float time();
+	// get current delta time
+	float delta_time();
 
 	// to be used only by SceneManager
 	void init();

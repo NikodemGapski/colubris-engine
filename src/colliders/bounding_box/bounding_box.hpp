@@ -10,5 +10,6 @@ struct BoundingBox {
 
 	float min_x, min_y, max_x, max_y; // these are public, because no component owns a BoundingBox (it's just a tool recalculated each frame)
 private:
-	void update(glm::vec2 point); // update the box by adding a new point
+	// update the box by adding a new point
+	void update(glm::vec2 point);
 };
