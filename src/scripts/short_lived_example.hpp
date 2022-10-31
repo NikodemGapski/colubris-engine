@@ -14,7 +14,7 @@ public:
 	void update() {
 		if(Time::time() > start_time + lifespan) {
 			// destroy the object
-			SceneManager::destroy_gameobject(game_object);
+			GameObject::destroy_gameobject(game_object);
 		}
 	}
 private:

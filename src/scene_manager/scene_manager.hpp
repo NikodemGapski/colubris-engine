@@ -1,26 +1,16 @@
 #pragma once
-#include <set>
-#include "gameobject.hpp"
+#include <glad.h>
+#include <GLFW/glfw3.h>
 
-namespace SceneManager {
-	// ----- Main methods -----
-
+class SceneManager {
+public:
 	// initialise the manager and call the start() methods of present objects
-	void init();
+	static void init(GLFWwindow* window);
 	// call update() methods
-	void update();
+	static void update();
 	// render the scene
-	void render();
-
-	// ----- Registration -----
-
-	// register the gameobject in the scene
-	void register_gameobject(GameObject* obj);
-	// remove the gameobject from the scene
-	void destroy_gameobject(GameObject* obj);
-	// a list of gameobjects in the scene
-	extern std::set<GameObject*> gameobjects;
+	static void render();
 
 	// user-defined
-	void instantiate_custom_objects();
-}
+	static void instantiate_custom_objects();
+};
