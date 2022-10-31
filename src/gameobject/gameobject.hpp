@@ -21,14 +21,6 @@ public:
 	void update();
 	void render(Shader& shader);
 
-	// Collisions
-
-	// clear all currently happening collisions
-	void clear_collisions();
-	// add a collision with the given GameObject to the list of currently happening collisions
-	void add_collision(GameObject* other);
-	// call collision callbacks for each component
-	void call_collision_callbacks();
 
 	// Components
 	template<typename T>
@@ -43,6 +35,14 @@ public:
 
 	comp_map components; // a map of components (only one component per its type)
 
+	// Collisions
+
+	// clear all currently happening collisions
+	void clear_collisions();
+	// add a collision with the given GameObject to the list of currently happening collisions
+	void add_collision(GameObject* other);
+	// call collision callbacks for each component
+	void call_collision_callbacks();
 private:
 	// a list of currently happening collisions
 	std::vector<GameObject*> collisions;

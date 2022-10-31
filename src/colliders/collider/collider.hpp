@@ -22,13 +22,12 @@ public:
 	// get the list of real global coordinates for all the points in the Collider
 	std::vector<glm::vec2> get_real_points() const;
 
-
-	void start();
-	void update();
-private:
 	// a list of shapes of the Collider
 	std::vector<ColliderShape> shapes;
 
+	void start();
+	void update();
+	
 // ----- STATIC MEMBERS -----
 public:
 	// do Colliders a and b collide

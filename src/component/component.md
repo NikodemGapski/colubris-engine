@@ -1,10 +1,10 @@
 # Component
 
 A component is a piece of code that can be attached to a gameobject and that is allowed to
-access its members freely. Certain component implementations are available by default
-(like `Transform`, `Mesh`, `Collider`), but they can also be written by the developer.
+access its public members freely. Certain component implementations are available by default
+(like `Transform`, `Mesh`, or `Collider`), but new ones can be designed by the developer.
 
-Each gameobject can only have one instance of a given component type, since all components
+> Each gameobject can only have one instance of a given component type, since all components
 are registered in an unordered_map with their types as keys.
 
 ## Interface
@@ -14,9 +14,14 @@ To create a component one must inherit from `ComponentI` interface and is requir
 - `start()`
 - `update()`
 
-Each component should also invoke the interface's constructor with a pointer to the parent gameobject. This pointer can later be accessed from the component to read and manipulate the gameobject's data (including its other components).
+Each component must also invoke the interface's constructor with a pointer to the parent gameobject. This pointer (called `game_object` and public in the interface) can later be accessed from the component to read and manipulate the gameobject's data (including its other components).
 
-If the default constructor is invoked (without passing the parent pointer), the component is unaware of its parent existence, but will behave normally. The parent can be then set later using the `set_parent(GameObject*)` method.
+A component can also implement the method
+- `on_collision(GameObject* other)`
+
+which is called every time a collision with another gameobject's collider occurs.
+
+> This is a simplification. For more specific information about the exact order of events in the game cycle see the `SceneManager` documentation.
 
 ### Accessing other components
 

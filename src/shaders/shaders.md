@@ -4,9 +4,9 @@
 
 ## Constructor
 
-The constructor as parameters accepts two directories (if relative, then starting at the top project directory) pointing to the vertex shader file and fragment shader file.
+The constructor takes two directories (if relative, then starting at the top project directory) pointing to the vertex shader file and fragment shader file.
 
-Upon construction it reads the content of the files, compiles them and links into a new OpenGL shader program.
+Upon construction, it reads the content of the files, compiles them and links into a new OpenGL shader program.
 
 ## Utilities
 

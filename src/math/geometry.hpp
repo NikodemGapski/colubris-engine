@@ -3,7 +3,7 @@
 #include <glm/glm.hpp>
 
 namespace math {
-	// signed area of the triangle based on v and u (the same sign as sin(alpha))
+	// signed area of the triangle based on v and w (the same sign as sin(angle(v, w)))
 	float cross(glm::vec2 v, glm::vec2 w);
 	// whether two vectors are parallel
 	bool are_parallel(glm::vec2 v, glm::vec2 w);
@@ -15,7 +15,7 @@ namespace math {
 		float A, B, C;
 	};
 
-	// intersection point between two non-parallel lines (throws division by 0 exception parallel)
+	// intersection point between two non-parallel lines (throws division by 0 exception when parallel)
 	glm::vec2 intersection(Line a, Line b);
 	// whether two segments intersect
 	bool segments_intersect(glm::vec2 a1, glm::vec2 a2, glm::vec2 b1, glm::vec2 b2);
