@@ -14,7 +14,9 @@ To create a component one must inherit from `ComponentI` interface and is requir
 - `start()`
 - `update()`
 
-Each component must also invoke the interface's constructor with a pointer to the parent gameobject. This pointer (called `game_object` and public in the interface) can later be accessed from the component to read and manipulate the gameobject's data (including its other components).
+Each component should* also invoke the interface's constructor with a pointer to the parent gameobject. This pointer (called `game_object` and public in the interface) can later be accessed from the component to read and manipulate the gameobject's data (including its other components).
+
+> *Note that a constructor without the parent's pointer also exists, but when invoked, the component instance will never be allowed to attach to any gameobject (it will function as some local variable). The example of this behaviour is the `Transform` component which can prove to be useful just as a tool for transforming lists of points.
 
 A component can also implement the method
 - `on_collision(GameObject* other)`

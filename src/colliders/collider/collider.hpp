@@ -17,10 +17,10 @@ public:
 	// destroys the Collider and deregisters it
 	~Collider();
 
-	// get bounding box (calculates real position of each point on each call)
-	BoundingBox get_bounding_box() const;
 	// get the list of real global coordinates for all the points in the Collider
 	std::vector<glm::vec2> get_real_points() const;
+	// get bounding box (calculates real position of each point on each call)
+	BoundingBox get_bounding_box() const;
 
 	// a list of shapes of the Collider
 	std::vector<ColliderShape> shapes;

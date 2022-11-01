@@ -5,7 +5,7 @@
 
 // Transform class
 struct Transform : public ComponentI {
-	// default (x, y, z = 0; scale = {1, 1, 1})
+	// default (x, y, z = 0; scale = {1, 1, 1}, rotation = 0)
 	Transform(GameObject* parent);
 	Transform(GameObject* parent, float x, float y, float z);
 	// same constructors without the parent pointer

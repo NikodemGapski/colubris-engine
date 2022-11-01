@@ -12,6 +12,14 @@ As the engine is supposed to be used for 2D display the 3rd variable in `positio
 ## Public methods
 
 The available methods are the following:
+- constructors,
 - `scale_up(float percentage)` (scales in all dimensions by a given percent; if the argument is less than -1.0f it might produce unpredictable behaviour).
 - `glm::vec2 transform(glm::vec2)` (returns the given vector after applying the transformation)
 - `std::vector<glm::vec2> transform(std::vector<glm::vec2>)` (returns the list of vectors after applying the transformation)
+
+### Constructors
+
+The available constructors are the following:
+- `Transform(GameObject* parent)` (create the component with default values: `0.0` for position and rotation, `1.0` for scale),
+- `Transform(GameObject* parent, float x, float y, float z)` (create the component with default values for scale and rotation, and specified values for position),
+- the same constructors but without the `parent` pointer.

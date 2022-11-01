@@ -17,10 +17,6 @@ public:
 	GameObject(float radius, int seg_num = 40);
 	~GameObject();
 
-	void start();
-	void update();
-	void render(Shader& shader);
-
 
 	// Components
 	template<typename T>
@@ -44,6 +40,10 @@ public:
 	// call collision callbacks for each component
 	void call_collision_callbacks();
 private:
+	void start();
+	void update();
+	void render(Shader& shader);
+
 	// a list of currently happening collisions
 	std::vector<GameObject*> collisions;
 

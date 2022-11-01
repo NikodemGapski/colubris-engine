@@ -1,6 +1,9 @@
 #pragma once
 
 namespace math {
+	// ----- Constants -----
+	const float INF = HUGE_VAL;
+
 	// --- Basic templates ---
 	
 	template<typename T>

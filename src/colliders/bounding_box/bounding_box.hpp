@@ -15,7 +15,7 @@ public:
 	float min_x, min_y, max_x, max_y;
 	
 // ----- STATIC MEMBERS -----
-
+public:
 	// whether two bounding boxes intersect
 	static bool intersect(BoundingBox a, BoundingBox b);
 };

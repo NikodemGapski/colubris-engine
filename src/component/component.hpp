@@ -8,6 +8,7 @@ class GameObject;
 class ComponentI {
 public:
 	ComponentI(GameObject* parent);
+	ComponentI();
 
 	virtual void start() = 0;
 	virtual void update() = 0;
