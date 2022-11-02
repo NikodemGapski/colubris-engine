@@ -30,4 +30,7 @@ There are the following available functions:
 And the following structures:
 - `Line`:
 - - `Line(glm::vec2 a, glm::vec2 b)` (creates a line through points a and b),
-- - `float A, B, C` (directional coefficients of the line satisfying the line equation: `Ax + By + C = 0`).
+- - `float A, B, C` (directional coefficients of the line satisfying the line equation: `Ax + By + C = 0`),
+
+... and constants:
+- `float INF` (infinity, equal to the value of the `HUGE_VAL` macro).

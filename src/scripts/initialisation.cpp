@@ -1,7 +1,7 @@
 #include "scene_manager.hpp"
 #include "user_input_example.hpp"
 #include "on_collision_example.hpp"
-#include "collider/collider.hpp"
+#include "collider.hpp"
 #include <vector>
 
 void SceneManager::instantiate_custom_objects() {

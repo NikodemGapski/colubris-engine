@@ -1,7 +1,7 @@
 #include "scene_manager.hpp"
 #include "input.hpp"
 #include "gameobject.hpp"
-#include "collider/collider.hpp"
+#include "collider.hpp"
 #include "renderer.hpp"
 #include "time.hpp"
 

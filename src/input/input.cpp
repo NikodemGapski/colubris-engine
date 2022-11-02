@@ -9,6 +9,8 @@ std::vector<KeyState> Input::key_states;
 void Input::init(GLFWwindow* _window) {
 	key_states = std::vector<KeyState>(key_count, KeyState::RELEASED);
 	window = _window;
+	// enable sticky keys not to miss a pressed key between cycles
+	glfwSetInputMode(window, GLFW_STICKY_KEYS, GLFW_TRUE);
 }
 
 bool Input::is_key_down(int key_code) {
