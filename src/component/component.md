@@ -23,7 +23,7 @@ A component can also implement the method
 
 which is called every time a collision with another gameobject's collider occurs.
 
-> This is a simplification. For more specific information about the exact order of events in the game cycle see the `SceneManager` documentation.
+> This is a simplification. For more specific information about the exact order of events in the game cycle see the [`SceneManager`](../scene_manager/scene_manager.md) documentation.
 
 ### Accessing other components
 

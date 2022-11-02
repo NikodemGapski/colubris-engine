@@ -1,5 +1,7 @@
 # Renderer
 
+> Disclaimer: this part of the engine has very limited capabilities as of yet (work-in-progress)
+
 Renderer takes care of shader programs used for rendering and basic rendering utilities (like clearing a window with a background colour).
 
 ## Shader programs

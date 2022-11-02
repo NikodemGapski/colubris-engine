@@ -20,3 +20,7 @@ where `your_file_location` is your file's relative directory from the `src/scrip
 ## Includes
 
 To make use of the variety of tools the engine provides, specific header files have to be included in your script. Conveniently, the headers are named the same way as the classes they contain, but if you're unsure which to include, take a look directly to the engine's source code.
+
+## Examples
+
+In the `src/scripts/` folder you'll find some example scripts which show the use of certain features of the engine.
