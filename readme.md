@@ -34,3 +34,7 @@ Intermediate concepts:
 
 Additional information:
 - [`math`](src/math/math.md)
+
+## License
+
+This project is under MIT License.
