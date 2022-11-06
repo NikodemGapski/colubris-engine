@@ -1,6 +1,6 @@
-# **
+# Colubris Game Engine
 
-** is a simple game engine written from scratch in OpenGL which supports, among other features:
+Colubris is a simple 2D game engine written from scratch in OpenGL which supports, among other features:
 - a component-based system for custom object behaviour,
 - 2D rendering of objects composed of polygons and circles,
 - collision detection of polygon colliders,
