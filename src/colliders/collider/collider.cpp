@@ -1,27 +1,92 @@
 #include "collider.hpp"
 
-Collider::Collider(GameObject* parent) : ComponentI(parent) {}
-Collider::Collider(GameObject* parent, std::vector<ColliderShape> shapes) : ComponentI(parent), shapes(shapes) {}
+// static variables definition
+std::set<Collider*> Collider::colliders;
+std::set<Collider*> Collider::to_register;
+std::set<Collider*> Collider::to_destroy;
+
+
+Collider::Collider(GameObject* parent) : ComponentI(parent) {
+	Collider::register_collider(this);
+}
+Collider::Collider(GameObject* parent, std::vector<ColliderShape> shapes) : ComponentI(parent), shapes(shapes) {
+	Collider::register_collider(this);
+}
+Collider::~Collider() {
+	Collider::destroy_collider(this);
+}
+
+BoundingBox Collider::get_bounding_box() const {
+	return BoundingBox(get_real_points());
+}
+std::vector<glm::vec2> Collider::get_real_points() const {
+	std::vector<glm::vec2> result;
+	for(auto shape : shapes) {
+		std::vector<glm::vec2> points = shape.get_real_points();
+		result.insert(result.end(), points.begin(), points.end());
+	}
+	return result;
+}
 
 void Collider::start() {}
+void Collider::update() {}
+
+bool Collider::collide(const Collider& a, const Collider& b) {
+	// for each pair of ColliderShapes check if they collide
+	for(int i = 0; i < a.shapes.size(); ++i) {
+		for(int j = 0; j < b.shapes.size(); ++j) {
+			if(ColliderShape::collide(a.shapes[i], b.shapes[j])) return true;
+		}
+	}
+	return false;
+}
+
+std::vector<glm::vec2> Collider::collision_points(const Collider& a, const Collider& b) {
+	std::vector<glm::vec2> result;
+	// for each pair of ColliderShapes add collision points
+	for(int i = 0; i < a.shapes.size(); ++i) {
+		for(int j = 0; j < b.shapes.size(); ++j) {
+			std::vector<glm::vec2> points = ColliderShape::collision_points(a.shapes[i], b.shapes[j]);
+			result.insert(result.end(), points.begin(), points.end());
+		}
+	}
+	return result;
+}
 
 
-// here the debugging begins
-#include "math.hpp"
-#include <cmath>
-#include <vector>
-void Collider::update() {
-	ColliderShape s = shapes[0];
-	std::vector<glm::vec2> points_real = s.local_transform.transform(s.points);
-	BoundingBox box(points_real);
-	glm::vec2 v = {1.0f, 0.1f}, w = {3.0f, 0.301f};
-	float x = math::cross(v, w);
-	bool b = math::are_parallel(v, w);
-	glm::vec2 k1 = {0.0f, 0.0f}, k2 = {1.0f, 0.0f}, l1 = {0.0f, 0.0f}, l2 = {1.0f, 0.0f};
-	math::Line k(k1, k2), l(l1, l2);
-	b = math::segments_intersect(k1, k2, l1, l2);
-	glm::vec2 inter = math::intersection(k, l);
-	b = math::is_inf(inter.x);
-	std::vector<glm::vec2> res;
-	math::add_collision_points(k1, k2, l1, l2, res);
+
+void Collider::register_collider(Collider* col) {
+	to_register.insert(col);
+}
+
+void Collider::destroy_collider(Collider* col) {
+	to_destroy.insert(col);
+}
+void Collider::register_pending() {
+	for(auto col : to_register) {
+		if(col == NULL) continue;
+		colliders.insert(col);
+		col->start();
+	}
+	to_register.clear();
+}
+void Collider::destroy_pending() {
+	for(auto col : to_destroy) {
+		if(col == NULL) continue;
+		colliders.erase(col);
+		delete col;
+	}
+	to_destroy.clear();
+}
+
+void Collider::find_collisions() {
+	// for each pair of colliders check if they collide
+	for(auto col1 : colliders) {
+		for(auto col2 : colliders) {
+			if(col1 == col2) continue;
+			if(collide(*col1, *col2)) {
+				col1->game_object->add_collision(col2->game_object);
+			}
+		}
+	}
 }

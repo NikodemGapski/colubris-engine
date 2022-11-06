@@ -3,9 +3,10 @@
 #include <glm/glm.hpp>
 #include "gameobject.hpp"
 
-// Transform class (position and scale)
+// Transform class
 struct Transform : public ComponentI {
-	Transform(GameObject* parent); // default (x, y, z = 0; scale = {1, 1, 1})
+	// default (x, y, z = 0; scale = {1, 1, 1}, rotation = 0)
+	Transform(GameObject* parent);
 	Transform(GameObject* parent, float x, float y, float z);
 	// same constructors without the parent pointer
 	Transform();
@@ -23,7 +24,7 @@ struct Transform : public ComponentI {
 	// Member variables
 	glm::vec3 position;
 	glm::vec3 scale;
-	float rotation; // rotation around (0, 0, 1) axis
+	float rotation; // rotation around (0, 0, 1) axis in degrees
 
 
 	// unused, necessary for inheritance

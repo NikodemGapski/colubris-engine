@@ -20,12 +20,12 @@ public:
 	Mesh(GameObject* parent, DefaultMesh mesh_type, float width = 0.0f, float height = 0.0f);
 	Mesh(GameObject* parent, float radius, int seg_num = 40);
 
-	void render(Shader& shader);
-
 	std::vector<MeshSingle> submeshes; // a list of submeshes
-
 
 	// unused, necessary for inheritance
 	void start();
 	void update();
+private:
+	void render(Shader& shader);
+	friend class GameObject;
 };

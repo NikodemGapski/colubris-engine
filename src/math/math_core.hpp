@@ -1,6 +1,10 @@
 #pragma once
+#include <math.h>
 
 namespace math {
+	// ----- Constants -----
+	const float INF = HUGE_VAL;
+
 	// --- Basic templates ---
 	
 	template<typename T>
@@ -20,10 +24,14 @@ namespace math {
 	}
 	
 	// --- Infinities ---
+	
+	// is x infinity
 	bool is_inf(float x);
 
 	// --- Ranges operations ---
 
-	bool belongs_to(float c, float a, float b); // whether c belongs to range <a, b> (still works if a > b)
-	bool ranges_intersect(float a, float b, float c, float d); // whether ranges <a, b> and <c, d> intersect (still works if a > b or c > d)
+	// whether c belongs to range <min(a, b), max(a, b)>
+	bool belongs_to(float c, float a, float b);
+	// whether ranges <min(a, b), max(a, b)> and <min(c, d), max(c, d)> intersect
+	bool ranges_intersect(float a, float b, float c, float d);
 }

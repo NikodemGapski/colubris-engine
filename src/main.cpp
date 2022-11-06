@@ -2,8 +2,6 @@
 #include <glad.h>
 #include <GLFW/glfw3.h>
 #include "scene_manager.hpp"
-#include "input.hpp"
-#include "renderer.hpp"
 
 // window resize
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
@@ -46,15 +44,12 @@ int main() {
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 	// initialise
-	Input::init(window);
-	Renderer::init();
-	SceneManager::init();
+	SceneManager::init(window);
 
 	// render loop
 	while(!glfwWindowShouldClose(window)) {
 		process_input(window);
 
-		Input::poll_events();
 		SceneManager::update();
 		// rendering
 		SceneManager::render();

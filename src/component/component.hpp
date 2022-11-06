@@ -10,10 +10,12 @@ public:
 	ComponentI(GameObject* parent);
 	ComponentI();
 
-	void set_parent(GameObject* parent);
-
 	virtual void start() = 0;
 	virtual void update() = 0;
 
+	// behaviour during collisions
+	virtual void on_collision(GameObject* other);
+
+	// parent GameObject
 	GameObject* game_object;
 };

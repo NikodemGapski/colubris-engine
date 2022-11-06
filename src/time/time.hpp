@@ -1,11 +1,17 @@
 #pragma once
 
-namespace Time {
-	float time(); // get current time
-	float delta_time(); // get current delta time
+class Time {
+public:
+	// get current time
+	static float time();
+	// get current delta time
+	static float delta_time();
 
-	// to be used only by SceneManager
-	void init();
-	// to be used only by SceneManager
-	void update();
-}
+private:
+	static float _prev_time, _cur_time, _delta_time;
+	// initialise Time class
+	static void init();
+	// update Time class
+	static void update();
+	friend class SceneManager;
+};

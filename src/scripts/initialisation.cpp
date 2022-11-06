@@ -1,37 +1,31 @@
 #include "scene_manager.hpp"
-#include "scripts/script1.hpp"
-#include "scripts/script2.hpp"
-#include "scripts/script3.hpp"
-#include "collider/collider.hpp"
+#include "user_input_example.hpp"
+#include "on_collision_example.hpp"
+#include "collider.hpp"
 #include <vector>
 
 void SceneManager::instantiate_custom_objects() {
-	register_gameobject(new GameObject(DefaultMesh::Blob));
+	GameObject* a = new GameObject(DefaultMesh::Blob);
 	
-	gameobjects[0]->get_component<Transform>()->position = {-0.5, 0.4, 0.0f};
-
-	// SomeManager* manager = new SomeManager();
-	// register_gameobject(manager);
-	// register_gameobject(new MyObj(manager));
+	a->get_component<Transform>()->position = {-0.5, 0.4, 0.0f};
 	
 	GameObject* obj1 = new GameObject(0.3f);
 	obj1->add_component<CircleScript>(new CircleScript(obj1, 0.3f));
-	register_gameobject(obj1);
 
 	GameObject* obj2 = new GameObject(DefaultMesh::Rect, 0.2f, 0.2f);
 	obj2->add_component<Collider>(new Collider(obj2,
 				{
-					ColliderShape({{-0.1f, -0.1f}, {-0.1f, 0.1f}, {0.1f, 0.1f}, {0.1f, -0.1f}})
+					ColliderShape(obj2->get_component<Transform>(), {{-0.1f, -0.1f}, {-0.1f, 0.1f}, {0.1f, 0.1f}, {0.1f, -0.1f}})
 				}
 	));
-	register_gameobject(obj2);
+	obj2->add_component<CollisionComponent>(new CollisionComponent(obj2));
 
 	GameObject* obj3 = new GameObject(DefaultMesh::Rect, 0.2f, 0.2f);
 	obj3->get_component<Transform>()->position = {-0.25f, 0.0f, 0.0f};
 	obj3->add_component<Collider>(new Collider(obj3,
 				{
-					ColliderShape({{-0.1f, -0.1f}, {-0.1f, 0.1f}, {0.1f, 0.1f}, {0.1f, -0.1f}})
+					ColliderShape(obj3->get_component<Transform>(), {{-0.1f, -0.1f}, {-0.1f, 0.1f}, {0.1f, 0.1f}, {0.1f, -0.1f}})
 				}
 	));
-	register_gameobject(obj3);
+	obj3->add_component<CollisionComponent>(new CollisionComponent(obj3));
 }
