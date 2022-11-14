@@ -5,14 +5,14 @@
 #include <vector>
 
 void SceneManager::instantiate_custom_objects() {
-	GameObject* a = new GameObject(DefaultMesh::Blob);
+	GameObject* a = new GameObject(DefaultMesh::Blob, {}, {}, {});
 	
 	a->get_component<Transform>()->position = {-0.5, 0.4, 0.0f};
 	
-	GameObject* obj1 = new GameObject(0.3f);
+	GameObject* obj1 = new GameObject(DefaultMesh::Circle, {0.3f}, {}, {{0.3f, 0.6f, 0.8f}});
 	obj1->add_component<CircleScript>(new CircleScript(obj1, 0.3f));
 
-	GameObject* obj2 = new GameObject(DefaultMesh::Rect, 0.2f, 0.2f);
+	GameObject* obj2 = new GameObject(DefaultMesh::Rect, {0.2f, 0.2f}, {}, {});
 	obj2->add_component<Collider>(new Collider(obj2,
 				{
 					ColliderShape(obj2->get_component<Transform>(), {{-0.1f, -0.1f}, {-0.1f, 0.1f}, {0.1f, 0.1f}, {0.1f, -0.1f}})
@@ -20,7 +20,7 @@ void SceneManager::instantiate_custom_objects() {
 	));
 	obj2->add_component<CollisionComponent>(new CollisionComponent(obj2));
 
-	GameObject* obj3 = new GameObject(DefaultMesh::Rect, 0.2f, 0.2f);
+	GameObject* obj3 = new GameObject(DefaultMesh::Rect, {0.2f, 0.2f}, {}, {});
 	obj3->get_component<Transform>()->position = {-0.25f, 0.0f, 0.0f};
 	obj3->add_component<Collider>(new Collider(obj3,
 				{

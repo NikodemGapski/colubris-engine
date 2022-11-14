@@ -17,17 +17,12 @@ GameObject::GameObject() {
 	// register
 	GameObject::register_gameobject(this);
 }
-GameObject::GameObject(DefaultMesh mesh_type, float width, float height) {
+GameObject::GameObject(	DefaultMesh mesh_type,
+						std::vector<float> float_args,
+						std::vector<int> int_args,
+						std::vector<glm::vec3> vec3_args) {
 	// add mesh component
-	add_component<Mesh>(new Mesh(this, mesh_type, width, height));
-	// add transform component
-	add_component<Transform>(new Transform(this));
-	// register
-	GameObject::register_gameobject(this);
-}
-GameObject::GameObject(float radius, int seg_num) {
-	// add mesh component
-	add_component<Mesh>(new Mesh(this, radius, seg_num));
+	add_component<Mesh>(new Mesh(this, mesh_type, float_args, int_args, vec3_args));
 	// add transform component
 	add_component<Transform>(new Transform(this));
 	// register

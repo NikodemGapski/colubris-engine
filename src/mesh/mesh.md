@@ -5,16 +5,18 @@
 ## Constructors
 
 The available constructors are:
-- `Mesh()` (creates an empty shape),
-- `Mesh(DefaultMesh, float width, float height)` (creates a default mesh with additional parameters if required),
-- `Mesh(float radius, int seg_num)` (creates a circle of radius `radius` with `seg_num` resolution which is set to `40` be default).
+- `Mesh(GameObject* parent, std::vector<MeshSingle> submeshes)` (creates a shape made of the given submeshes),
+- `Mesh(GameObject* parent, DefaultMesh, std::vector<float> float_args, std::vector<int> int_args, std::vector<glm::vec3> vec3_args)` (creates a default mesh with additional parameters if required),
 
 ### Default meshes (`enum DefaultMesh`)
 
 Currently, the default meshes available are the following:
-- `DefaultMesh::Blob` (two triangles merged together),
-- `DefaultMesh::Rect` (a rectangle; requires `width` and `height` parameter in the constructor).
+- `Blob` (two triangles merged together; requires no parameters),
+- `Rect` (a rectangle; requires `float` width and `float` height parameters),
+- `Triangle` (a triangle; requires `6` `float` parameters [`x1, y1, x2, y2, x3, y3`]),
+- `Circle` (a circle; requires `float` radius parameter, allows for an `int` seg_num (resolution, set to `40` by default) parameter).
 
+All default meshes (except for `Blob`) allow for a `glm::vec3` colour parameter (in rgb format).
 ## Structure
 
 ### Mesh
@@ -22,7 +24,7 @@ Currently, the default meshes available are the following:
 - `std::vector<MeshSingle> submeshes` (a list of individual submeshes that make up the whole shape).
 
 ### MeshSingle
-`MeshSingle` class has the exact same constructors as the `Mesh` class, as well as the following members:
+`MeshSingle` class has the exact same constructors as the `Mesh` class (without the `parent` pointer), as well as the following members:
 - `std::vector<Vertex> vertices` (a list of vertices that make up the submesh shape),
 - `std::vector<uint> indices` (a list of indices defining the triangulation - see Indices section),
 - `void setup()` (sets OpenGL buffers after setting the vertex/index data)

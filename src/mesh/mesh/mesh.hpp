@@ -10,19 +10,26 @@ class Shader;
 // default mesh enumerator
 enum class DefaultMesh {
 	Blob,
-	Rect
+	Rect,
+	Triangle,
+	Circle
 };
 
 
 class Mesh : public ComponentI {
 public:
 	Mesh(GameObject* parent, std::vector<MeshSingle> submeshes);
-	Mesh(GameObject* parent, DefaultMesh mesh_type, float width = 0.0f, float height = 0.0f);
-	Mesh(GameObject* parent, float radius, int seg_num = 40);
+	// default shape constructor (creates one of default shapes)
+	Mesh(GameObject* parent, 	DefaultMesh mesh_type,
+								std::vector<float> float_args,
+								std::vector<int> int_args,
+								std::vector<glm::vec3> vec3_args);
 
-	std::vector<MeshSingle> submeshes; // a list of submeshes
+	// a list of submeshes
+	std::vector<MeshSingle> submeshes;
 
 	// unused, necessary for inheritance
+	
 	void start();
 	void update();
 private:

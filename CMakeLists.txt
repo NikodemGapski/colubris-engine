@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.7.2)
-project(simple-physics2d VERSION 0.1.0)
+project(colubris-engine VERSION 0.1.0)
 
 include(CTest)
 enable_testing()
 
 # add executables
 add_subdirectory(src)
-add_executable(simple-physics2d ${EXE_SOURCE})
+add_executable(colubris-engine ${EXE_SOURCE})
 
 # add libraries
 add_subdirectory(lib)
@@ -25,7 +25,7 @@ include_directories(
 	${MODULES}
 )
 
-target_link_libraries(simple-physics2d ${ALL_LIBS})
+target_link_libraries(colubris-engine ${ALL_LIBS})
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

@@ -22,8 +22,7 @@ The class also contains the following non-static methods:
 
 The available constructors are the following:
 - `GameObject()` (creates an empty gameobject),
-- `GameObject(DefaultMesh, float width, float height)` (creates a gameobject with one of the default meshes and additional parameters if required),
-- `GameObject(float radius, int seg_num)` (creates a circle gameobject),
+- `GameObject(DefaultMesh mesh_type, std::vector<float> float_args, std::vector<int> int_args, std::vector<glm::vec3> vec3_args)` (creates a gameobject with one of the default meshes and additional parameters if required),
 - `~GameObject()` (destroys the gameobject).
 
 > All constructors register the gameobject to the scene by default and the destructor properly destroys it.

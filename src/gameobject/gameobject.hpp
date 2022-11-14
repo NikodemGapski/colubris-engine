@@ -12,9 +12,13 @@ typedef std::unordered_map<std::type_index, ComponentI*> comp_map; // type->comp
 class GameObject {
 // ----- NON-STATIC MEMBERS -----
 public:
-	GameObject(); // default constructor (creates empty GameObject)
-	GameObject(DefaultMesh mesh_type, float width = 0.0f, float height = 0.0f);
-	GameObject(float radius, int seg_num = 40);
+	// default constructor (creates empty GameObject)
+	GameObject();
+	// gameobject of a default shape constructor (creates one of default shapes)
+	GameObject(	DefaultMesh mesh_type,
+				std::vector<float> float_args,
+				std::vector<int> int_args,
+				std::vector<glm::vec3> vec3_args);
 	~GameObject();
 
 

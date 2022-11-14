@@ -7,11 +7,8 @@
 
 class CollisionComponent : public ComponentI {
 public:
-	CollisionComponent(GameObject* parent) : ComponentI(parent) {
-	}
-	void start() {
-
-	}
+	CollisionComponent(GameObject* parent) : ComponentI(parent) {}
+	void start() {}
 	void update() {
 		// movement
 		float time_value = Time::time();
@@ -21,7 +18,7 @@ public:
 		// mark all collision points
 		std::vector<glm::vec2> points = Collider::collision_points(*game_object->get_component<Collider>(), *other->get_component<Collider>());
 		for(auto pt : points) {
-			GameObject* a = new GameObject(0.003f);
+			GameObject* a = new GameObject(DefaultMesh::Circle, {0.003f}, {}, {{0.9f, 0.3f, 0.3f}});
 			a->get_component<Transform>()->position = {pt.x, pt.y, 0.0f};
 			a->add_component<ShortLived>(new ShortLived(a));
 		}
