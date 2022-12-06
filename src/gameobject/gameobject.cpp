@@ -32,15 +32,11 @@ GameObject::~GameObject() {
 	GameObject::destroy_gameobject(this);
 }
 
-void GameObject::render(Shader& shader) {
-	if(!has_component<Mesh>()) return;
-	
+void GameObject::prepare_shader(Shader& shader) {
 	shader.use();
-	shader.setMat4("global_position", glm::translate(glm::mat4(1.0f), get_component<Transform>()->position));
-	shader.setMat4("scale", glm::scale(glm::mat4(1.0f), get_component<Transform>()->scale));
-	shader.setMat4("rotate", glm::rotate(glm::mat4(1.0f), glm::radians(get_component<Transform>()->rotation), glm::vec3(0.0f, 0.0f, 1.0f)));
-	
-	get_component<Mesh>()->render(shader);
+	shader.set("global_position", glm::translate(glm::mat4(1.0f), get_component<Transform>()->position));
+	shader.set("scale", glm::scale(glm::mat4(1.0f), get_component<Transform>()->scale));
+	shader.set("rotate", glm::rotate(glm::mat4(1.0f), glm::radians(get_component<Transform>()->rotation), glm::vec3(0.0f, 0.0f, 1.0f)));
 }
 
 void GameObject::start() {

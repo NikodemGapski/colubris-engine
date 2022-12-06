@@ -4,11 +4,13 @@
 #include "collider.hpp"
 #include "renderer.hpp"
 #include "time.hpp"
+#include "text.hpp"
 
 void SceneManager::init(GLFWwindow* window) {
 	Time::init();
 	Input::init(window);
 	Renderer::init();
+	Text::init();
 	instantiate_custom_objects();
 }
 void SceneManager::update() {
@@ -44,6 +46,13 @@ void SceneManager::update() {
 void SceneManager::render() {
 	Renderer::clear_window();
 	for(auto obj : GameObject::gameobjects) {
-		obj->render(Renderer::shader_program);
+		if(obj->has_component<Mesh>()) {
+			obj->prepare_shader(Renderer::shader_program);
+			obj->get_component<Mesh>()->render(Renderer::shader_program);
+		}
+		if(obj->has_component<Text>()) {
+			obj->prepare_shader(Text::shader);
+			obj->get_component<Text>()->render();
+		}
 	}
 }

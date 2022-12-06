@@ -46,7 +46,8 @@ public:
 private:
 	void start();
 	void update();
-	void render(Shader& shader);
+	// set the uniform variables of the shader regarding position, rotation and scale
+	void prepare_shader(Shader& shader);
 
 	// a list of currently happening collisions
 	std::vector<GameObject*> collisions;

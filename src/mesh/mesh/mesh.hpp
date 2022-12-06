@@ -34,5 +34,5 @@ public:
 	void update();
 private:
 	void render(Shader& shader);
-	friend class GameObject;
+	friend class SceneManager;
 };

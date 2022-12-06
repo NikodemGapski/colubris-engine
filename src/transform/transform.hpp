@@ -12,7 +12,8 @@ struct Transform : public ComponentI {
 	Transform();
 	Transform(float x, float y, float z);
 
-	// scale up by the given percentage (or scale down if negative)
+	// scale up by the given percentage (or scale down if negative),
+	// percentage is interpreted as a fraction
 	void scale_up(float percentage);
 
 	// Transformations

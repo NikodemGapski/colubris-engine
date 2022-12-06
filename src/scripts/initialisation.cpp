@@ -2,6 +2,7 @@
 #include "user_input_example.hpp"
 #include "on_collision_example.hpp"
 #include "collider.hpp"
+#include "text.hpp"
 #include <vector>
 
 void SceneManager::instantiate_custom_objects() {
@@ -28,4 +29,8 @@ void SceneManager::instantiate_custom_objects() {
 				}
 	));
 	obj3->add_component<CollisionComponent>(new CollisionComponent(obj3));
+
+	GameObject* obj4 = new GameObject();
+	obj4->add_component<Text>(new Text(obj4, "Colubris Engine goes brrr", {0.2f, 0.7f, 0.4f}));
+	obj4->get_component<Transform>()->position = {-0.9f, 0.0f, 1.0f};
 }
