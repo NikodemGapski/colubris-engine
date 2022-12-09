@@ -8,9 +8,9 @@ Mesh::Mesh(GameObject* parent, 	DefaultMesh mesh_type,
 	submeshes = {MeshSingle(mesh_type, float_args, int_args, vec3_args)};
 }
 
-void Mesh::render(Shader& shader) {
+void Mesh::render() {
 	for(auto& m : submeshes) {
-		m.render(shader);
+		m.render();
 	}
 }
 

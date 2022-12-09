@@ -1,9 +1,12 @@
 #include "text.hpp"
 #include "gameobject.hpp"
 #include "transform.hpp"
+#include "renderer.hpp"
 #include <iostream>
 #include <glad.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
@@ -12,15 +15,12 @@ std::unordered_map<char, Character> Text::characters;
 
 Text::Text(GameObject* parent) : ComponentI(parent) {
 	setup();
-	parent_transform->scale_up(-0.99999);
 }
 Text::Text(GameObject* parent, std::string text) : ComponentI(parent), text(text) {
 	setup();
-	parent_transform->scale_up(-0.99999);
 }
 Text::Text(GameObject* parent, std::string text, glm::vec3 colour) : ComponentI(parent), text(text), colour(colour) {
 	setup();
-	parent_transform->scale_up(-0.99999);
 }
 
 void Text::start() {}
@@ -49,14 +49,12 @@ void Text::render() {
 
 	float cur_x = 0.0f;
 	for(char c : text) {
-		characters[c].render(cur_x, VBO);
-		cur_x += characters[c].advance;
+		cur_x += characters[c].render(cur_x, VBO);
 	}
 
 	glBindVertexArray(0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
-
 
 void Text::init() {
 	FT_Library ft;
@@ -70,11 +68,12 @@ void Text::init() {
 		std::cout<<"Error: Text::init:: Roboto-Black.ttf - Font not read successfully.\n";
 		return;
 	}
-	FT_Set_Pixel_Sizes(face, 0, 256); // set font size (width, height) - if 0, then calculated from the other
+	uint char_resolution = 128;
+	FT_Set_Pixel_Sizes(face, 0, char_resolution); // set font size (width, height) - if 0, then calculated from the other
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // align to 1 byte instead of 4
 	for(int c = 0; c < 128; ++c) {
 		// generate character c from face
-		Character character(face, c);
+		Character character(face, c, char_resolution);
 		// insert the character into the map
 		characters.insert({c, character});
 	}
@@ -86,4 +85,10 @@ void Text::init() {
 
 	// import shader
 	shader = Shader("./src/shaders/text_shader.vs", "./src/shaders/text_shader.fs");
+}
+
+void Text::update_projection_matrix() {
+	shader.use();
+	shader.set("projection",
+		glm::ortho(0.0f, (float)Renderer::get_window_width(), 0.0f, (float)Renderer::get_window_height(), -100.0f, 100.0f));
 }

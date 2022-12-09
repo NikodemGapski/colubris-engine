@@ -4,8 +4,9 @@
 #include <GLFW/glfw3.h>
 #include FT_GLYPH_H
 
+
 Character::Character() {}
-Character::Character(FT_Face face, char c) {
+Character::Character(FT_Face face, char c, uint _resolution) : resolution(_resolution) {
 	// load the glyph
 	if(FT_Load_Char(face, c, FT_LOAD_RENDER)) {
 		std::cout<<"Error: Character::Charecter:: "<<c<<" - glyph not read successfully.\n";
@@ -15,6 +16,8 @@ Character::Character(FT_Face face, char c) {
 	size = {face->glyph->metrics.width, face->glyph->metrics.height};
 	bearing = {face->glyph->metrics.horiBearingX, face->glyph->metrics.horiBearingY};
 	advance = face->glyph->metrics.horiAdvance;
+	// normalise metrics
+	size /= resolution; bearing /= resolution; advance /= resolution;
 	// generate the texture
 	glGenTextures(1, &texture_id);
 	glBindTexture(GL_TEXTURE_2D, texture_id);
@@ -38,7 +41,7 @@ Character::Character(FT_Face face, char c) {
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Character::render(float x0, uint VBO) {
+float Character::render(float x0, uint VBO) {
 	float x = x0 + (float)bearing.x;
 	float y = -(size.y - bearing.y);
 	// vertices[i] - {pos.x, pos.y, tex_coords.x, tex_coords.y}
@@ -61,4 +64,6 @@ void Character::render(float x0, uint VBO) {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	// render the quad
 	glDrawArrays(GL_TRIANGLES, 0, 6);
+
+	return advance;
 }

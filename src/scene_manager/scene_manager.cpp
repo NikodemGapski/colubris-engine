@@ -5,12 +5,11 @@
 #include "renderer.hpp"
 #include "time.hpp"
 #include "text.hpp"
+#include "mesh_single/mesh_single.hpp"
 
 void SceneManager::init(GLFWwindow* window) {
 	Time::init();
 	Input::init(window);
-	Renderer::init();
-	Text::init();
 	instantiate_custom_objects();
 }
 void SceneManager::update() {
@@ -47,8 +46,8 @@ void SceneManager::render() {
 	Renderer::clear_window();
 	for(auto obj : GameObject::gameobjects) {
 		if(obj->has_component<Mesh>()) {
-			obj->prepare_shader(Renderer::shader_program);
-			obj->get_component<Mesh>()->render(Renderer::shader_program);
+			obj->prepare_shader(MeshSingle::shader);
+			obj->get_component<Mesh>()->render();
 		}
 		if(obj->has_component<Text>()) {
 			obj->prepare_shader(Text::shader);

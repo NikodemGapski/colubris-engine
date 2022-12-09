@@ -33,6 +33,6 @@ public:
 	void start();
 	void update();
 private:
-	void render(Shader& shader);
+	void render();
 	friend class SceneManager;
 };

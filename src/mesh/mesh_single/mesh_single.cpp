@@ -1,10 +1,13 @@
 #include <iostream>
 #include <glad.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include "mesh_single.hpp"
 #include "mesh/mesh.hpp"
 #include "vertex/vertex.hpp"
 #include "shader.hpp"
+#include "renderer.hpp"
 
 
 // MeshSingle class
@@ -21,12 +24,12 @@ MeshSingle::MeshSingle(DefaultMesh mesh_type,
 			
 			// initialise
 			vertices = {
-				Vertex({-0.3f, 0.0f, 0.0f}, {0.4f, 0.7f, 0.4f}),
-				Vertex({0.3f, 0.0f, 0.0f}, {0.5f, 0.6f, 0.3f}),
-				Vertex({0.0f, 0.3f, 0.0f}, {0.4f, 0.7f, 0.4f}),
-				Vertex({-0.1f, 0.0f, 0.0f}, {0.3f, 0.5f, 0.7f}),
-				Vertex({0.1f, 0.0f, 0.0f}, {0.3f, 0.5f, 0.7f}),
-				Vertex({0.0f, -0.1f, 0.0f}, {0.1f, 0.4f, 0.4f})
+				Vertex({-30.0f, 0.0f, 0.0f}, {40.0f, 70.0f, 40.0f}),
+				Vertex({30.0f, 0.0f, 0.0f}, {50.0f, 60.0f, 30.0f}),
+				Vertex({0.0f, 30.0f, 0.0f}, {40.0f, 70.0f, 40.0f}),
+				Vertex({-10.0f, 0.0f, 0.0f}, {30.0f, 50.0f, 70.0f}),
+				Vertex({10.0f, 0.0f, 0.0f}, {30.0f, 50.0f, 70.0f}),
+				Vertex({0.0f, -10.0f, 0.0f}, {10.0f, 40.0f, 40.0f})
 			};
 			indices = {
 				0, 1, 2,	// triangle 1
@@ -136,9 +139,22 @@ void MeshSingle::setup() {
 	glEnableVertexAttribArray(1);
 }
 
-void MeshSingle::render(Shader& shader) {
+void MeshSingle::render() {
 	shader.use();
 	
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+}
+
+Shader MeshSingle::shader;
+
+void MeshSingle::update_projection_matrix() {
+	shader.use();
+	shader.set("projection",
+			glm::ortho(0.0f, (float)Renderer::get_window_width(), 0.0f, (float)Renderer::get_window_height(), -100.0f, 100.0f));
+}
+
+void MeshSingle::init() {
+	// import shader
+	shader = Shader("./src/shaders/mesh_shader.vs", "./src/shaders/mesh_shader.fs");
 }

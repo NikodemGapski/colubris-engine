@@ -11,7 +11,7 @@ class CircleScript : public ComponentI {
 public:
 	CircleScript(GameObject* parent, float radius) : ComponentI(parent) {
 		parent_transform->position = {0.3f, 0.3f, 0.0f};
-		speed = 0.4f;
+		speed = 100.0f;
 		scaling_speed = 0.2f;
 	}
 	void start() {

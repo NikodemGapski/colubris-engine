@@ -9,6 +9,7 @@ enum class DefaultMesh;
 
 
 class MeshSingle {
+// ----- NON-STATIC MEMBERS -----
 public:
 	// default constructor (empty shape)
 	MeshSingle();
@@ -27,6 +28,16 @@ public:
 	void setup();
 private:
 	uint VAO, VBO, EBO;
-	void render(Shader& shader);
+	void render();
+
+// ----- STATIC MEMBERS -----
+public:
+	static void update_projection_matrix();
+private:
+	static Shader shader;
+	static void init();
+
 	friend class Mesh;
+	friend class SceneManager;
+	friend class Renderer;
 };
