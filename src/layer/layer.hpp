@@ -35,12 +35,13 @@ public:
 	void register_gameobject(GameObject* obj);
 	void destroy_gameobject(GameObject* obj);
 private:
+	ll id;
 	std::string name;
 	bool is_active;
 	int z_index;
 
 	// a set of all gameobjects ordered by their id
-	std::set<GameObject*> gameobjects;
+	std::set<GameObject*, decltype(GameObject::id_comparator)*> gameobjects;
 
 	// map of name -> set of gameobjects
 	std::unordered_map<std::string, std::unordered_set<GameObject*> > gameobject_names;
@@ -71,6 +72,8 @@ public:
 	static std::vector<Layer*> get_layers_by_name(std::string name);
 
 private:
+	static ll id_counter;
+
 	static void init();
 	// comparator of Layer*'s based on their z_index
 	static bool z_comparator(Layer* a, Layer* b);

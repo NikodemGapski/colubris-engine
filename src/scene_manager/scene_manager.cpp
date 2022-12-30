@@ -11,6 +11,7 @@
 void SceneManager::init(GLFWwindow* window) {
 	Time::init();
 	Input::init(window);
+	GameObject::init();
 	Layer::init();
 	instantiate_custom_objects();
 }

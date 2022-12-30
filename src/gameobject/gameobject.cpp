@@ -7,7 +7,10 @@
 #include "time.hpp"
 #include "layer.hpp"
 
+ll GameObject::id_counter;
+
 GameObject::GameObject() :
+		id(id_counter++),
 		name("GameObject #" + std::to_string(reinterpret_cast<intptr_t>(this))),
 		layer(Layer::get_layer_by_name("world")),
 		z_index(0.0f) {
@@ -18,6 +21,7 @@ GameObject::GameObject() :
 	GameObject::register_gameobject(this);
 }
 GameObject::GameObject(std::string name, std::string layer_name, float z_index) :
+		id(id_counter++),
 		name(name),
 		layer(Layer::get_layer_by_name(layer_name)),
 		z_index(z_index) {
@@ -35,6 +39,7 @@ GameObject::GameObject(
 		std::string layer_name,
 		float z_index) :
 		
+		id(id_counter++),
 		name("GameObject #" + std::to_string(reinterpret_cast<intptr_t>(this))),
 		layer(Layer::get_layer_by_name(layer_name)),
 		z_index(z_index) {
@@ -55,6 +60,7 @@ GameObject::GameObject(
 		std::string layer_name,
 		float z_index) :
 		
+		id(id_counter++),
 		name(name),
 		layer(Layer::get_layer_by_name(layer_name)),
 		z_index(z_index) {
@@ -119,9 +125,16 @@ void GameObject::call_collision_callbacks() {
 	}
 }
 
+void GameObject::init() {
+	id_counter = 0;
+}
+
 bool GameObject::z_comparator(GameObject* a, GameObject* b) {
-	if(a->z_index == b->z_index) return a > b;
+	if(a->z_index == b->z_index) return a->id < b->id;
 	return a->z_index > b->z_index;
+}
+bool GameObject::id_comparator(GameObject* a, GameObject* b) {
+	return a->id < b->id;
 }
 
 void GameObject::register_gameobject(GameObject* obj) {

@@ -1,13 +1,16 @@
 #include "layer.hpp"
 #include <iostream>
 
+ll Layer::id_counter;
 std::unordered_map<std::string, std::unordered_set<Layer*> > Layer::layers;
 std::set<Layer*, decltype(Layer::z_comparator)*> Layer::ordered_layers;
 
-Layer::Layer(std::string name) : name(name), z_index(0), is_active(true),
-		gameobjects_render_order(std::set<GameObject*, decltype(GameObject::z_comparator)*>(GameObject::z_comparator)) {}
-Layer::Layer(std::string name, int z_index) : name(name), z_index(z_index), is_active(true),
-		gameobjects_render_order(std::set<GameObject*, decltype(GameObject::z_comparator)*>(GameObject::z_comparator)) {}
+Layer::Layer(std::string name) : id(id_counter++), name(name), z_index(0), is_active(true),
+		gameobjects_render_order(std::set<GameObject*, decltype(GameObject::z_comparator)*>(GameObject::z_comparator)),
+		gameobjects(std::set<GameObject*, decltype(GameObject::id_comparator)*>(GameObject::id_comparator)) {}
+Layer::Layer(std::string name, int z_index) : id(id_counter++), name(name), z_index(z_index), is_active(true),
+		gameobjects_render_order(std::set<GameObject*, decltype(GameObject::z_comparator)*>(GameObject::z_comparator)),
+		gameobjects(std::set<GameObject*, decltype(GameObject::id_comparator)*>(GameObject::id_comparator)) {}
 
 void Layer::set_active(bool is_active) {
 	this->is_active = is_active;
@@ -141,6 +144,7 @@ std::vector<Layer*> Layer::get_layers_by_name(std::string name) {
 }
 
 void Layer::init() {
+	id_counter = 0;
 	ordered_layers = std::set<Layer*, decltype(z_comparator)*>(z_comparator);
 	// add 3 basic layers (UI, game world, background)
 	add_layer(new Layer("UI", INT_MIN));
@@ -159,6 +163,6 @@ void Layer::add_layer(Layer* a) {
 }
 
 bool Layer::z_comparator(Layer* a, Layer* b) {
-	if(a->z_index == b->z_index) return a > b;
+	if(a->z_index == b->z_index) return a->id < b->id;
 	return a->z_index > b->z_index;
 }

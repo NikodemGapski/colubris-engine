@@ -6,6 +6,7 @@
 #include "shader.hpp"
 #include "mesh/mesh.hpp"
 #include "component.hpp"
+#include "math.hpp"
 
 // forward declarations
 class Layer;
@@ -67,6 +68,7 @@ public:
 	// call collision callbacks for each component
 	void call_collision_callbacks();
 private:
+	ll id;
 	std::string name;
 	float z_index;
 	Layer* layer;
@@ -87,8 +89,14 @@ public:
 	static void destroy_gameobject(GameObject* obj);
 
 private:
+	static ll id_counter;
+
+	static void init();
+
 	// comparator of GameObject*'s based on their z_index
 	static bool z_comparator(GameObject* a, GameObject* b);
+	// comparator of GameObject*'s based on their id
+	static bool id_comparator(GameObject* a, GameObject* b);
 
 // ----- FRIENDS -----
 	friend class Layer;
