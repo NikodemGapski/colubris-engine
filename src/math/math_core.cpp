@@ -5,6 +5,9 @@ namespace math {
 	bool is_inf(float x) {
 		return std::isinf(x);
 	}
+	bool is_zero(float x) {
+		return fabs(x) < EPS;
+	}
 
 	bool belongs_to(float c, float a, float b) {
 		if(a > b) swap(a, b);

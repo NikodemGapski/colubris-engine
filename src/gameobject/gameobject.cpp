@@ -5,22 +5,60 @@
 #include "scene_manager.hpp"
 #include "transform.hpp"
 #include "time.hpp"
+#include "layer.hpp"
 
-// static variables definition
-std::set<GameObject*> GameObject::gameobjects;
-std::set<GameObject*> GameObject::to_register;
-std::set<GameObject*> GameObject::to_destroy;
+GameObject::GameObject() :
+		name("GameObject #" + std::to_string(reinterpret_cast<intptr_t>(this))),
+		layer(Layer::get_layer_by_name("world")),
+		z_index(0.0f) {
 
-GameObject::GameObject() {
 	// add transform component
 	add_component<Transform>(new Transform(this));
 	// register
 	GameObject::register_gameobject(this);
 }
-GameObject::GameObject(	DefaultMesh mesh_type,
-						std::vector<float> float_args,
-						std::vector<int> int_args,
-						std::vector<glm::vec3> vec3_args) {
+GameObject::GameObject(std::string name, std::string layer_name, float z_index) :
+		name(name),
+		layer(Layer::get_layer_by_name(layer_name)),
+		z_index(z_index) {
+
+	// add transform component
+	add_component<Transform>(new Transform(this));
+	// register
+	GameObject::register_gameobject(this);
+}
+GameObject::GameObject(
+		DefaultMesh mesh_type,
+		std::vector<float> float_args,
+		std::vector<int> int_args,
+		std::vector<glm::vec3> vec3_args,
+		std::string layer_name,
+		float z_index) :
+		
+		name("GameObject #" + std::to_string(reinterpret_cast<intptr_t>(this))),
+		layer(Layer::get_layer_by_name(layer_name)),
+		z_index(z_index) {
+
+	// add mesh component
+	add_component<Mesh>(new Mesh(this, mesh_type, float_args, int_args, vec3_args));
+	// add transform component
+	add_component<Transform>(new Transform(this));
+	// register
+	GameObject::register_gameobject(this);
+}
+GameObject::GameObject(
+		std::string name,
+		DefaultMesh mesh_type,
+		std::vector<float> float_args,
+		std::vector<int> int_args,
+		std::vector<glm::vec3> vec3_args,
+		std::string layer_name,
+		float z_index) :
+		
+		name(name),
+		layer(Layer::get_layer_by_name(layer_name)),
+		z_index(z_index) {
+
 	// add mesh component
 	add_component<Mesh>(new Mesh(this, mesh_type, float_args, int_args, vec3_args));
 	// add transform component
@@ -29,14 +67,29 @@ GameObject::GameObject(	DefaultMesh mesh_type,
 	GameObject::register_gameobject(this);
 }
 GameObject::~GameObject() {
-	GameObject::destroy_gameobject(this);
+	for(auto comp : components) {
+		delete comp.second;
+	}
+}
+
+std::string GameObject::get_name() const {
+	return name;
+}
+void GameObject::set_name(std::string name) {
+	layer->set_gameobject_name(this, name);
+}
+float GameObject::get_z_index() const {
+	return z_index;
+}
+void GameObject::set_z_index(float z_index) {
+	layer->set_gameobject_z_index(this, z_index);
 }
 
 void GameObject::prepare_shader(Shader& shader) {
 	shader.use();
-	shader.set("global_position", glm::translate(glm::mat4(1.0f), get_component<Transform>()->position));
-	shader.set("scale", glm::scale(glm::mat4(1.0f), get_component<Transform>()->scale));
-	shader.set("rotate", glm::rotate(glm::mat4(1.0f), glm::radians(get_component<Transform>()->rotation), glm::vec3(0.0f, 0.0f, 1.0f)));
+	shader.set("global_position", get_component<Transform>()->translation_matrix());
+	shader.set("scale", get_component<Transform>()->scale_matrix());
+	shader.set("rotate", get_component<Transform>()->rotation_matrix());
 }
 
 void GameObject::start() {
@@ -66,30 +119,14 @@ void GameObject::call_collision_callbacks() {
 	}
 }
 
+bool GameObject::z_comparator(GameObject* a, GameObject* b) {
+	if(a->z_index == b->z_index) return a > b;
+	return a->z_index > b->z_index;
+}
 
 void GameObject::register_gameobject(GameObject* obj) {
-	to_register.insert(obj);
+	obj->layer->register_gameobject(obj);
 }
 void GameObject::destroy_gameobject(GameObject* obj) {
-	to_destroy.insert(obj);
-}
-
-void GameObject::register_pending() {
-	for(auto obj : to_register) {
-		if(obj == NULL) continue;
-		gameobjects.insert(obj);
-		obj->start();
-	}
-	to_register.clear();
-}
-void GameObject::destroy_pending() {
-	for(auto obj : to_destroy) {
-		if(obj == NULL) continue;
-		for(auto comp : obj->components) {
-			delete comp.second;
-		}
-		gameobjects.erase(obj);
-		delete obj;
-	}
-	to_destroy.clear();
+	obj->layer->destroy_gameobject(obj);
 }

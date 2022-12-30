@@ -7,20 +7,43 @@
 #include "mesh/mesh.hpp"
 #include "component.hpp"
 
+// forward declarations
+class Layer;
+
 typedef std::unordered_map<std::type_index, ComponentI*> comp_map; // type->component hash map
 
 class GameObject {
 // ----- NON-STATIC MEMBERS -----
 public:
-	// default constructor (creates empty GameObject)
+	// empty GameObject in the world layer
 	GameObject();
-	// gameobject of a default shape constructor (creates one of default shapes)
+	// empty GameObject with the given name
+	GameObject(std::string name, std::string layer_name = "world", float z_index = 0);
+	// gameobject with a default shape constructor (creates one of default shapes)
 	GameObject(	DefaultMesh mesh_type,
 				std::vector<float> float_args,
 				std::vector<int> int_args,
-				std::vector<glm::vec3> vec3_args);
+				std::vector<glm::vec3> vec3_args,
+				std::string layer_name = "world",
+				float z_index = 0);
+	// gameobject with a default shape constructor (creates one of default shapes) with the given name
+	GameObject(	std::string name,
+				DefaultMesh mesh_type,
+				std::vector<float> float_args,
+				std::vector<int> int_args,
+				std::vector<glm::vec3> vec3_args,
+				std::string layer_name = "world",
+				float z_index = 0);
 	~GameObject();
 
+	// get name
+	std::string get_name() const;
+	// set name
+	void set_name(std::string name);
+	// get z_index
+	float get_z_index() const;
+	// set z_index
+	void set_z_index(float z_index);
 
 	// Components
 	template<typename T>
@@ -44,6 +67,10 @@ public:
 	// call collision callbacks for each component
 	void call_collision_callbacks();
 private:
+	std::string name;
+	float z_index;
+	Layer* layer;
+
 	void start();
 	void update();
 	// set the uniform variables of the shader regarding position, rotation and scale
@@ -60,17 +87,11 @@ public:
 	static void destroy_gameobject(GameObject* obj);
 
 private:
-	// a set of all gameobjects in the scene
-	static std::set<GameObject*> gameobjects;
-	// a set of all gameobjects pending registration
-	static std::set<GameObject*> to_register;
-	// a set of all gameobjects pending destruction
-	static std::set<GameObject*> to_destroy;
-	// register all pending gameobjects in the scene
-	static void register_pending();
-	// remove all pending gameobjects from the scene
-	static void destroy_pending();
+	// comparator of GameObject*'s based on their z_index
+	static bool z_comparator(GameObject* a, GameObject* b);
 
+// ----- FRIENDS -----
+	friend class Layer;
 	friend class SceneManager;
 };
 

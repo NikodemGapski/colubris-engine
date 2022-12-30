@@ -1,12 +1,20 @@
 #pragma once
 #include <math.h>
 
+typedef long long ll;
+
 namespace math {
 	// ----- Constants -----
 	const float INF = HUGE_VAL;
+	const float EPS = 1e-10;
+
+	// is x infinity
+	bool is_inf(float x);
+	// is x zero
+	bool is_zero(float x);
 
 	// --- Basic templates ---
-	
+
 	template<typename T>
 	float min(T a, T b) {
 		if(a < b) return a;
@@ -22,11 +30,27 @@ namespace math {
 		T c = a;
 		a = b, b = c;
 	}
+
+	template<typename A, typename B>
+	class pair {
+	public:
+		union {
+			A a;
+			A x;
+			A first;
+		};
+		union {
+			B b;
+			B y;
+			B second;
+		};
+
+		bool operator<(const pair<A, B>& other) const {
+			if(!(a < other.a) && !(other.a < a)) return b < other.b;
+			return a < other.a;
+		}
+	};
 	
-	// --- Infinities ---
-	
-	// is x infinity
-	bool is_inf(float x);
 
 	// --- Ranges operations ---
 

@@ -10,7 +10,7 @@ class CircleScript : public ComponentI {
 
 public:
 	CircleScript(GameObject* parent, float radius) : ComponentI(parent) {
-		parent_transform->position = {0.3f, 0.3f, 0.0f};
+		parent_transform->position = {0.3f, 0.3f};
 		speed = 100.0f;
 		scaling_speed = 0.2f;
 	}
@@ -34,10 +34,18 @@ public:
 
 		// scaling
 		if(Input::is_key_down(GLFW_KEY_E)) {
-			parent_transform->scale_up(scaling_speed * Time::delta_time());
+			parent_transform->scale *= (1.0f + scaling_speed * Time::delta_time());
 		}
 		if(Input::is_key_down(GLFW_KEY_F)) {
-			parent_transform->scale_up(-scaling_speed * Time::delta_time());
+			parent_transform->scale *= (1.0f - scaling_speed * Time::delta_time());
+		}
+
+		// z_indexing
+		if(Input::key_just_pressed(GLFW_KEY_P)) {
+			game_object->set_z_index(game_object->get_z_index() - 0.1f);
+		}
+		if(Input::key_just_released(GLFW_KEY_P)) {
+			game_object->set_z_index(game_object->get_z_index() + 0.1f);
 		}
 	}
 };

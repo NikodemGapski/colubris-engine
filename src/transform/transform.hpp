@@ -5,30 +5,41 @@
 
 // Transform class
 struct Transform : public ComponentI {
-	// default (x, y, z = 0; scale = {1, 1, 1}, rotation = 0)
+	// default (position = {0.0f, 0.0f}, scale = {1.0f, 1.0f}, rotation = 0.0f)
 	Transform(GameObject* parent);
-	Transform(GameObject* parent, float x, float y, float z);
+	Transform(GameObject* parent, float x, float y);
 	// same constructors without the parent pointer
 	Transform();
-	Transform(float x, float y, float z);
+	Transform(float x, float y);
 
-	// scale up by the given percentage (or scale down if negative),
-	// percentage is interpreted as a fraction
-	void scale_up(float percentage);
+	// Transformation matrices
+
+	// generate translation matrix from position
+	glm::mat4 translation_matrix() const;
+	// generate scale matrix from scale
+	glm::mat4 scale_matrix() const;
+	// generate rotation matrix from rotation
+	glm::mat4 rotation_matrix() const;
 
 	// Transformations
+
+	// apply transformation to a point in 3d space
 	glm::vec3 transform(glm::vec3 point) const;
+	// apply transformation to a list of points in 3d space
 	std::vector<glm::vec3> transform(std::vector<glm::vec3> points) const;
+	// apply transformaption to a point in 2d space
 	glm::vec2 transform(glm::vec2 point) const;
+	// apply transformation to a list of points in 2d space
 	std::vector<glm::vec2> transform(std::vector<glm::vec2> points) const;
 
 	// Member variables
-	glm::vec3 position;
-	glm::vec3 scale;
-	float rotation; // rotation around (0, 0, 1) axis in degrees
+
+	glm::vec2 position;
+	glm::vec2 scale;
+	float rotation; // rotation around the z-axis in degrees
 
 
-	// unused, necessary for inheritance
+	// empty, necessary for inheritance
 	void start();
 	void update();
 };

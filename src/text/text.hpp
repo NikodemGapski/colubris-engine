@@ -29,12 +29,11 @@ private:
 	void render();
 
 // ----- STATIC MEMBERS -----
-public:
-	static void update_projection_matrix();
 private:
 	static Shader shader;
 	static std::unordered_map<char, Character> characters;
 	static void init();
+	static void update_projection_matrix();
 
 	friend class SceneManager;
 	friend class Renderer;

@@ -2,27 +2,34 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 // Transform class
-Transform::Transform(GameObject* parent) : ComponentI(parent), position(0.0f, 0.0f, 0.0f), scale(1.0f), rotation(0.0f) {}
-Transform::Transform(GameObject* parent, float x, float y, float z) : ComponentI(parent), position(x, y, z), scale(1.0f), rotation(0.0f) {}
+Transform::Transform(GameObject* parent) : ComponentI(parent), position(0.0f), scale(1.0f), rotation(0.0f) {}
+Transform::Transform(GameObject* parent, float x, float y)
+	: ComponentI(parent), position(x, y), scale(1.0f), rotation(0.0f) {}
 
-Transform::Transform() : ComponentI(), position(0.0f, 0.0f, 0.0f), scale(1.0f), rotation(0.0f) {}
-Transform::Transform(float x, float y, float z) : ComponentI(), position(x, y, z), scale(1.0f), rotation(0.0f) {}
+Transform::Transform() : ComponentI(), position(0.0f), scale(1.0f), rotation(0.0f) {}
+Transform::Transform(float x, float y) : ComponentI(), position(x, y), scale(1.0f), rotation(0.0f) {}
 
 
-void Transform::scale_up(float percentage) {
-	scale *= (1 + percentage);
+glm::mat4 Transform::translation_matrix() const {
+	return glm::translate(glm::mat4(1.0f), glm::vec3(position, 0.0f));
+}
+glm::mat4 Transform::scale_matrix() const {
+	return glm::scale(glm::mat4(1.0f), glm::vec3(scale, 0.0f));
+}
+glm::mat4 Transform::rotation_matrix() const {
+	return glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
 }
 
 glm::vec3 Transform::transform(glm::vec3 point) const {
 	// scale
-	point *= scale;
+	point *= glm::vec3(scale.x, scale.y, 1.0f);
 	// convert to vec4 to enable rotations
-	glm::vec4 point4 = glm::vec4(point.x, point.y, point.z, 1.0f);
+	glm::vec4 point4 = glm::vec4(point, 1.0f);
 	// rotate
 	glm::mat4 rotation_matrix = glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
 	point4 = point4 * rotation_matrix;
 	// translate
-	return glm::vec3(point4.x, point4.y, point4.z) + position;
+	return glm::vec3(point4) + glm::vec3(position, 0.0f);
 }
 std::vector<glm::vec3> Transform::transform(std::vector<glm::vec3> points) const {
 	std::vector<glm::vec3> res(points.size());
@@ -33,12 +40,12 @@ std::vector<glm::vec3> Transform::transform(std::vector<glm::vec3> points) const
 }
 glm::vec2 Transform::transform(glm::vec2 point) const {
 	// scale
-	point *= glm::vec2(scale.x, scale.y);
+	point *= scale;
 	// rotate
 	float angle = glm::radians(rotation);
 	point = glm::vec2(point.x * glm::cos(angle) - point.y * glm::sin(angle), point.x * glm::sin(angle) + point.y * glm::cos(angle));
 	// translate
-	return point + glm::vec2(position.x, position.y);
+	return point + position;
 }
 std::vector<glm::vec2> Transform::transform(std::vector<glm::vec2> points) const {
 	std::vector<glm::vec2> res(points.size());

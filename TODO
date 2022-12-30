@@ -1,0 +1,4 @@
+- add reliable cross-session id system for gameobjects and layers
+- think about transform alias
+- add collision layers
+- update the docs
