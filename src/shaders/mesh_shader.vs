@@ -6,11 +6,9 @@ layout (location = 1) in vec3 aCol;
 out vec4 Colour;
 
 uniform mat4 projection;
-uniform mat4 global_position;
-uniform mat4 scale;
-uniform mat4 rotate;
+uniform mat4 transform_matrix;
 
 void main() {
-	gl_Position = projection * global_position * rotate * scale * vec4(aPos, 1.0f);
+	gl_Position = projection * transform_matrix * vec4(aPos, 1.0f);
 	Colour = vec4(aCol, 1.0f);
 }

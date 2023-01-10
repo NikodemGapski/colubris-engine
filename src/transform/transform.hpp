@@ -11,15 +11,9 @@ struct Transform : public ComponentI {
 	// same constructors without the parent pointer
 	Transform();
 	Transform(float x, float y);
-
-	// Transformation matrices
-
-	// generate translation matrix from position
-	glm::mat4 translation_matrix() const;
-	// generate scale matrix from scale
-	glm::mat4 scale_matrix() const;
-	// generate rotation matrix from rotation
-	glm::mat4 rotation_matrix() const;
+	
+	// generate transformation matrix from position, scale, rotation, and parent transform
+	glm::mat4 generate_matrix() const;
 
 	// Transformations
 
@@ -38,8 +32,20 @@ struct Transform : public ComponentI {
 	glm::vec2 scale;
 	float rotation; // rotation around the z-axis in degrees
 
+	// update the parent transform data
+	void update_data(Transform* parent);
 
 	// empty, necessary for inheritance
 	void start();
 	void update();
+
+private:
+	// generate translation matrix from position
+	glm::mat4 translation_matrix() const;
+	// generate scale matrix from scale
+	glm::mat4 scale_matrix() const;
+	// generate rotation matrix from rotation
+	glm::mat4 rotation_matrix() const;
+	// the parent's tranformation matrix
+	glm::mat4 parent_matrix;
 };

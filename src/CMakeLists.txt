@@ -12,7 +12,8 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/transform/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/math/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/time/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/text/)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/layer/)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/layers/)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/hierarchy_tree/)
 
 set(MODULES
 	${CMAKE_CURRENT_SOURCE_DIR}/renderer/
@@ -28,7 +29,8 @@ set(MODULES
 	${CMAKE_CURRENT_SOURCE_DIR}/math/
 	${CMAKE_CURRENT_SOURCE_DIR}/time/
 	${CMAKE_CURRENT_SOURCE_DIR}/text/
-	${CMAKE_CURRENT_SOURCE_DIR}/layer/
+	${CMAKE_CURRENT_SOURCE_DIR}/layers/
+	${CMAKE_CURRENT_SOURCE_DIR}/hierarchy_tree/
 	${CMAKE_CURRENT_SOURCE_DIR}/
 	PARENT_SCOPE
 )
@@ -47,7 +49,8 @@ set(EXE_SOURCE
 	${MATH_SOURCE}
 	${TIME_SOURCE}
 	${TEXT_SOURCE}
-	${LAYER_SOURCE}
+	${LAYERS_SOURCE}
+	${HIERARCHY_TREE_SOURCE}
 	${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 	PARENT_SCOPE
 )

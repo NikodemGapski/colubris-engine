@@ -1,0 +1,5 @@
+set(HIERARCHY_TREE_SOURCE
+	${CMAKE_CURRENT_SOURCE_DIR}/hierarchy_tree.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/hierarchy_tree.cpp
+	PARENT_SCOPE
+)

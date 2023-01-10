@@ -18,6 +18,9 @@ public:
 
 	}
 	void update() {
+		if(Input::key_just_pressed(GLFW_KEY_C)) {
+			GameObject::print_tree();
+		}
 		// movement
 		if(Input::is_key_down(GLFW_KEY_UP)) {
 			parent_transform->position.y += speed * Time::delta_time();
@@ -41,11 +44,11 @@ public:
 		}
 
 		// z_indexing
-		if(Input::key_just_pressed(GLFW_KEY_P)) {
-			game_object->set_z_index(game_object->get_z_index() - 0.1f);
+		if(Input::is_key_down(GLFW_KEY_P)) {
+			game_object->set_z_index(game_object->get_z_index() - 5.0f * Time::delta_time());
 		}
-		if(Input::key_just_released(GLFW_KEY_P)) {
-			game_object->set_z_index(game_object->get_z_index() + 0.1f);
+		if(Input::is_key_down(GLFW_KEY_O)) {
+			game_object->set_z_index(game_object->get_z_index() + 5.0f * Time::delta_time());
 		}
 	}
 };

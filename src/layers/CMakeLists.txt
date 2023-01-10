@@ -1,0 +1,5 @@
+set(LAYERS_SOURCE
+	${CMAKE_CURRENT_SOURCE_DIR}/render_layer.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/render_layer.cpp
+	PARENT_SCOPE
+)

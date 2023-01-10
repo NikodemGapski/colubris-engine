@@ -7,11 +7,14 @@ namespace math {
 	// ----- Constants -----
 	const float INF = HUGE_VAL;
 	const float EPS = 1e-10;
+	const float PI = M_PI;
 
 	// is x infinity
 	bool is_inf(float x);
 	// is x zero
 	bool is_zero(float x);
+	// are x and y equal (with EPS error)
+	bool eq(float x, float y);
 
 	// --- Basic templates ---
 
@@ -58,4 +61,9 @@ namespace math {
 	bool belongs_to(float c, float a, float b);
 	// whether ranges <min(a, b), max(a, b)> and <min(c, d), max(c, d)> intersect
 	bool ranges_intersect(float a, float b, float c, float d);
+
+	// --- Clamp and ring values
+
+	// get the value of `value` in the ring of `ring_period` period
+	float ring_value(float value, float ring_period);
 }

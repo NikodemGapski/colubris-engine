@@ -5,14 +5,14 @@
 #include "renderer.hpp"
 #include "time.hpp"
 #include "text.hpp"
-#include "layer.hpp"
+#include "render_layer.hpp"
 #include "mesh_single/mesh_single.hpp"
 
 void SceneManager::init(GLFWwindow* window) {
 	Time::init();
 	Input::init(window);
 	GameObject::init();
-	Layer::init();
+	RenderLayer::init();
 	instantiate_custom_objects();
 }
 void SceneManager::update() {
@@ -23,48 +23,36 @@ void SceneManager::update() {
 	Input::poll_events();
 
 	// register pending gameobjects and colliders
-	for(auto layer : Layer::ordered_layers) {
-		if(!layer->is_active) continue;
-		layer->register_pending();
-	}
+	GameObject::register_pending();
 	Collider::register_pending();
 
 	// update collisions
-	for(auto layer : Layer::ordered_layers) {
-		if(!layer->is_active) continue;
-		for(auto obj : layer->gameobjects) {
-			obj->clear_collisions();
-		}
-	}
+	GameObject::clear_collisions_all();
+	// find new collisions
 	Collider::find_collisions();
 	// call collision callbacks
-	for(auto layer : Layer::ordered_layers) {
-		if(!layer->is_active) continue;
-		for(auto obj : layer->gameobjects) {
-			obj->call_collision_callbacks();
-		}
-	}
+	GameObject::call_collision_callbacks_all();
 
 	// update gameobjects
-	for(auto layer : Layer::ordered_layers) {
-		if(!layer->is_active) continue;
-		for(auto obj : layer->gameobjects) {
-			obj->update();
-		}
-	}
+	GameObject::update_all();
 
 	// destroy pending gameobjects and colliders
-	for(auto layer : Layer::ordered_layers) {
-		if(!layer->is_active) continue;
-		layer->destroy_pending();
-	}
+	GameObject::destroy_pending();
 	Collider::destroy_pending();
+
+	// update global transform values
+	GameObject::update_transforms();
+	// update gloabal z_index values
+	GameObject::update_z_indices();
 }
 void SceneManager::render() {
 	Renderer::clear_window();
-	for(auto layer : Layer::ordered_layers) {
-		if(!layer->is_active) continue;
-		for(auto obj : layer->gameobjects_render_order) {
+	for(auto layer : RenderLayer::ordered_layers) {
+		if(!layer->get_is_active()) continue;
+		// reorder the gameobjets
+		layer->reorder();
+		for(auto obj : layer->ordered_gameobjects) {
+			if(!obj->get_is_active()) continue;
 			if(obj->has_component<Mesh>()) {
 				obj->prepare_shader(MeshSingle::shader);
 				obj->get_component<Mesh>()->render();
