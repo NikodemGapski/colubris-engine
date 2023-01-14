@@ -45,10 +45,10 @@ public:
 
 		// z_indexing
 		if(Input::is_key_down(GLFW_KEY_P)) {
-			game_object->set_z_index(game_object->get_z_index() - 5.0f * Time::delta_time());
+			game_object->z_index -= 5.0f * Time::delta_time();
 		}
 		if(Input::is_key_down(GLFW_KEY_O)) {
-			game_object->set_z_index(game_object->get_z_index() + 5.0f * Time::delta_time());
+			game_object->z_index += 5.0f * Time::delta_time();
 		}
 	}
 };

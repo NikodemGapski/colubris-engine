@@ -12,9 +12,9 @@ public:
 	RenderLayer(std::string name, int z_index);
 
 	// get is_active flag
-	bool get_is_active() const;
+	bool is_active() const;
 	// set is_active flag
-	void set_active(bool is_active);
+	void set_active(bool active);
 	// get name
 	std::string get_name() const;
 	// change name
@@ -34,7 +34,7 @@ public:
 private:
 	ll id;
 	std::string name;
-	bool is_active;
+	bool active;
 	int z_index;
 
 	// a set of all gameobjects in the layer

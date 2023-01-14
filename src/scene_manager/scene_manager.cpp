@@ -48,11 +48,11 @@ void SceneManager::update() {
 void SceneManager::render() {
 	Renderer::clear_window();
 	for(auto layer : RenderLayer::ordered_layers) {
-		if(!layer->get_is_active()) continue;
+		if(!layer->is_active()) continue;
 		// reorder the gameobjets
 		layer->reorder();
 		for(auto obj : layer->ordered_gameobjects) {
-			if(!obj->get_is_active()) continue;
+			if(!obj->is_active()) continue;
 			if(obj->has_component<Mesh>()) {
 				obj->prepare_shader(MeshSingle::shader);
 				obj->get_component<Mesh>()->render();

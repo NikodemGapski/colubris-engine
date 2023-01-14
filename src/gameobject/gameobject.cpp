@@ -16,7 +16,8 @@ std::unordered_set<GameObject*, GameObject::Hash> GameObject::to_destroy;
 
 GameObject::GameObject() :
 	id(id_counter++),
-	is_active(true),
+	active(true),
+	alive(true),
 	name("GameObject #" + std::to_string(reinterpret_cast<intptr_t>(this))),
 	node(new HierarchyTree(this, &hierarchy_tree)),
 	layer(RenderLayer::get_layer_by_name("world")),
@@ -24,22 +25,22 @@ GameObject::GameObject() :
 	parent_z_index(0.0f) {
 
 	// add transform component
-	add_component<Transform>(new Transform(this));
+	add_component<Transform>(transform = new Transform(this));
 	// register
 	GameObject::register_gameobject(this);
 }
 GameObject::GameObject(std::string name, GameObject* parent, std::string layer_name, float z_index) :
 	id(id_counter++),
-	is_active(true),
+	active(true),
+	alive(true),
 	name(name),
 	node(new HierarchyTree(this, parent ? parent->node : &hierarchy_tree)),
 	layer(RenderLayer::get_layer_by_name(layer_name)),
 	z_index(z_index),
-	parent_z_index(parent ? parent->get_z_index() : 0.0f),
-	prev_global_z_index(z_index + parent_z_index) {
+	parent_z_index(parent ? parent->z_index : 0.0f) {
 
 	// add transform component
-	add_component<Transform>(new Transform(this));
+	add_component<Transform>(transform = new Transform(this));
 	// register
 	GameObject::register_gameobject(this);
 }
@@ -53,18 +54,18 @@ GameObject::GameObject(
 		float z_index) :
 		
 	id(id_counter++),
-	is_active(true),
+	active(true),
+	alive(true),
 	name("GameObject #" + std::to_string(reinterpret_cast<intptr_t>(this))),
 	node(new HierarchyTree(this, parent ? parent->node : &hierarchy_tree)),
 	layer(RenderLayer::get_layer_by_name(layer_name)),
 	z_index(z_index),
-	parent_z_index(parent ? parent->get_z_index() : 0.0f),
-	prev_global_z_index(z_index + parent_z_index) {
+	parent_z_index(parent ? parent->z_index : 0.0f) {
 
 	// add mesh component
 	add_component<Mesh>(new Mesh(this, mesh_type, float_args, int_args, vec3_args));
 	// add transform component
-	add_component<Transform>(new Transform(this));
+	add_component<Transform>(transform = new Transform(this));
 	// register
 	GameObject::register_gameobject(this);
 }
@@ -79,21 +80,22 @@ GameObject::GameObject(
 		float z_index) :
 		
 	id(id_counter++),
-	is_active(true),
+	active(true),
+	alive(true),
 	name(name),
 	node(new HierarchyTree(this, parent ? parent->node : &hierarchy_tree)),
 	layer(RenderLayer::get_layer_by_name(layer_name)),
 	z_index(z_index),
-	parent_z_index(parent ? parent->get_z_index() : 0.0f),
-	prev_global_z_index(z_index + parent_z_index) {
+	parent_z_index(parent ? parent->z_index : 0.0f) {
 
 	// add mesh component
 	add_component<Mesh>(new Mesh(this, mesh_type, float_args, int_args, vec3_args));
 	// add transform component
-	add_component<Transform>(new Transform(this));
+	add_component<Transform>(transform = new Transform(this));
 	// register
 	GameObject::register_gameobject(this);
 }
+
 GameObject::~GameObject() {
 	for(auto comp : components) {
 		delete comp.second;
@@ -101,15 +103,17 @@ GameObject::~GameObject() {
 	delete node;
 }
 
-bool GameObject::active() const {
-	return get_is_active() && layer->get_is_active();
+ll GameObject::get_id() const {
+	return id;
 }
-bool GameObject::get_is_active() const {
-	return is_active;
+
+bool GameObject::is_active() const {
+	return alive && active && layer->is_active();
 }
-void GameObject::set_is_active(bool is_active) {
-	this->is_active = is_active;
+void GameObject::set_active(bool active) {
+	this->active = active;
 }
+
 std::string GameObject::get_name() const {
 	return name;
 }
@@ -129,18 +133,16 @@ void GameObject::set_name(std::string name) {
 	found->second.insert(this);
 }
 
-float GameObject::get_z_index() const {
-	return z_index;
+float GameObject::z_index_global() const {
+	std::function<float(HierarchyTree*)> get_index_global;
+	get_index_global = [&](HierarchyTree* node) {
+		if(node->parent == NULL) return 0.0f;
+		return node->obj->z_index + get_index_global(node->parent);
+	};
+	return get_index_global(node);
 }
-float GameObject::z_index_no_sync() const {
+float GameObject::z_index_global_no_sync() const {
 	return z_index + parent_z_index;
-}
-void GameObject::set_z_index(float z_index) {
-	this->z_index = z_index;
-}
-
-ll GameObject::get_id() const {
-	return id;
 }
 
 bool GameObject::operator==(const GameObject& other) const {
@@ -149,7 +151,7 @@ bool GameObject::operator==(const GameObject& other) const {
 
 void GameObject::prepare_shader(Shader& shader) {
 	shader.use();
-	shader.set("transform_matrix", get_component<Transform>()->generate_matrix());
+	shader.set("transform_matrix", transform->generate_matrix());
 }
 
 void GameObject::start() {
@@ -159,7 +161,6 @@ void GameObject::start() {
 }
 
 void GameObject::update() {
-	if(!active()) return;
 	for(auto x : components) {
 		x.second->update();
 	}
@@ -180,10 +181,9 @@ void GameObject::call_collision_callbacks() {
 	}
 }
 
-
 bool GameObject::z_comparator(GameObject* a, GameObject* b) {
-	if(a->z_index_no_sync() == b->z_index_no_sync()) return a->id < b->id;
-	return a->z_index_no_sync() > b->z_index_no_sync();
+	if(a->z_index_global_no_sync() == b->z_index_global_no_sync()) return a->id < b->id;
+	return a->z_index_global_no_sync() > b->z_index_global_no_sync();
 }
 
 int GameObject::count(std::string name) {
@@ -215,6 +215,7 @@ void GameObject::destroy_gameobject(GameObject* obj) {
 	std::function<void(HierarchyTree*)> destroy_subtree;
 	destroy_subtree = [&](HierarchyTree* node) {
 		to_destroy.insert(node->obj);
+		node->obj->alive = false;
 		for(auto child : node->children) destroy_subtree(child);
 	};
 	destroy_subtree(obj->node);
@@ -228,8 +229,8 @@ void GameObject::update_transforms() {
 	std::function<void(HierarchyTree*, Transform*)> update_subtree;
 	// update the node subtree (provided that node is not the root)
 	update_subtree = [&](HierarchyTree* node, Transform* parent) {
-		node->obj->get_component<Transform>()->update_data(parent);
-		for(auto child : node->children) update_subtree(child, node->obj->get_component<Transform>());
+		node->obj->transform->update_data(parent);
+		for(auto child : node->children) update_subtree(child, node->obj->transform);
 	};
 
 	for(auto child : hierarchy_tree.children) update_subtree(child, NULL);
@@ -239,7 +240,7 @@ void GameObject::update_z_indices() {
 	// update the node subtree (provided that node is not the root)
 	update_subtree = [&](HierarchyTree* node, float parent_z_index) {
 		node->obj->parent_z_index = parent_z_index;
-		for(auto child : node->children) update_subtree(child, node->obj->z_index_no_sync());
+		for(auto child : node->children) update_subtree(child, node->obj->z_index_global_no_sync());
 	};
 
 	for(auto child : hierarchy_tree.children) update_subtree(child, 0.0f);
@@ -249,6 +250,7 @@ void GameObject::update_all() {
 	std::function<void(HierarchyTree*)> update_subtree;
 	// update the node subtree (provided that node is not the root)
 	update_subtree = [&](HierarchyTree* node) {
+		if(!node->obj->is_active()) return;
 		node->obj->update();
 		for(auto child : node->children) update_subtree(child);
 	};
@@ -269,6 +271,7 @@ void GameObject::call_collision_callbacks_all() {
 	std::function<void(HierarchyTree*)> call_subtree;
 	// call callbacks on the node subtree (provided that node is not the root)
 	call_subtree = [&](HierarchyTree* node) {
+		if(!node->obj->is_active()) return;
 		node->obj->call_collision_callbacks();
 		for(auto child : node->children) call_subtree(child);
 	};
@@ -318,7 +321,6 @@ size_t GameObject::Hash::operator()(const GameObject* obj) const {
 	return std::hash<ll>()(obj->get_id());
 }
 
-
 // DEBUG
 void GameObject::print_tree() {
 	std::function<void(HierarchyTree*,int)> print_subtree;
@@ -327,7 +329,7 @@ void GameObject::print_tree() {
 		for(int i = 0; i < depth; ++i) std::cout<<'-';
 		
 		std::cout<<' '<<node->obj->name;
-		std::cout<<' '<<node->obj->z_index_no_sync();
+		std::cout<<' '<<node->obj->z_index_global_no_sync();
 		std::cout<<std::endl;
 		
 		for(auto child : node->children) print_subtree(child, depth + 1);

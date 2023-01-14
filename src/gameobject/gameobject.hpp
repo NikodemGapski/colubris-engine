@@ -11,8 +11,7 @@
 
 // forward declarations
 class RenderLayer;
-
-typedef std::unordered_map<std::type_index, ComponentI*> comp_map; // type->component hash map
+class Transform;
 
 class GameObject {
 // ----- NON-STATIC MEMBERS -----
@@ -40,23 +39,21 @@ public:
 				float z_index = 0);
 	~GameObject();
 
-	// get active state (is_active flag and the layer state)
-	// active() = get_is_active() && layer->get_is_active()
-	bool active() const;
-	// get is_active flag (regardless of the layer state)
-	bool get_is_active() const;
-	// set is_active flag (regardless of the layer state)
-	void set_is_active(bool is_active);
+	// get GameObject id
+	ll get_id() const;
+	// get activation state (active flag and the layer state)
+	// is_active() = alive && active && layer->is_active()
+	bool is_active() const;
+	// set active flag
+	void set_active(bool active);
 	// get name
 	std::string get_name() const;
 	// set name
 	void set_name(std::string name);
-	// get local z_index (relative to the parent)
-	float get_z_index() const;
-	// set local z_index (relative to the parent)
-	void set_z_index(float z_index);
-	// get id
-	ll get_id() const;
+	// z_index relative to its parent
+	float z_index;
+	// get the global z_index [ O(depth in the hierarchy tree) ]
+	float z_index_global() const;
 
 	// Components
 	template<typename T>
@@ -68,8 +65,10 @@ public:
 	template<typename T>
 	bool has_component();
 
-
-	comp_map components; // a map of components (only one component per its type)
+	// a convenient pointer to the transform component
+	Transform* transform;
+	// a map of components (only one component per its type)
+	std::unordered_map<std::type_index, ComponentI*> components;
 
 	// Collisions
 
@@ -84,18 +83,15 @@ public:
 
 private:
 	ll id;
-	bool is_active;
+	bool active;
+	bool alive;
 	std::string name;
 
-	// z_index relative to its parent
-	float z_index;
 	// the parent's global z_index (synchronised every frame)
 	float parent_z_index;
-	// global z_index from the previous frame (to check if changes were made)
-	float prev_global_z_index;
 	// get the global z_index without synchronising
 	// z_index + parent_z_index
-	float z_index_no_sync() const;
+	float z_index_global_no_sync() const;
 
 	RenderLayer* layer;
 	HierarchyTree* node;
@@ -120,15 +116,19 @@ public:
 	// remove the gameobject from the scene
 	static void destroy_gameobject(GameObject* obj);
 
+	// comparator of GameObject*'s based on their z_index
+	static bool z_comparator(GameObject* a, GameObject* b);
+
+	// structure for GameObject* hashing
+	struct Hash {
+		size_t operator()(const GameObject* obj) const;
+	};
+
 private:
 	static ll id_counter;
 	// the hierarchy tree in the scene
 	static HierarchyTree hierarchy_tree;
 
-public:
-	struct Hash {
-		size_t operator()(const GameObject* obj) const;
-	};
 	// map of name -> set of gameobjects
 	static std::unordered_map<std::string, std::unordered_set<GameObject*, Hash> > names;
 
@@ -151,9 +151,6 @@ public:
 	static void register_pending();
 	// remove all pending gameobjects from the scene
 	static void destroy_pending();
-
-	// comparator of GameObject*'s based on their z_index
-	static bool z_comparator(GameObject* a, GameObject* b);
 
 // ----- FRIENDS -----
 	friend class SceneManager;

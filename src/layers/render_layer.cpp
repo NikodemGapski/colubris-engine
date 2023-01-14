@@ -6,14 +6,14 @@ ll RenderLayer::id_counter;
 std::unordered_map<std::string, std::unordered_set<RenderLayer*> > RenderLayer::layers;
 std::set<RenderLayer*, decltype(RenderLayer::z_comparator)*> RenderLayer::ordered_layers;
 
-RenderLayer::RenderLayer(std::string name) : id(id_counter++), name(name), z_index(0), is_active(true) {}
-RenderLayer::RenderLayer(std::string name, int z_index) : id(id_counter++), name(name), z_index(z_index), is_active(true) {}
+RenderLayer::RenderLayer(std::string name) : id(id_counter++), name(name), z_index(0), active(true) {}
+RenderLayer::RenderLayer(std::string name, int z_index) : id(id_counter++), name(name), z_index(z_index), active(true) {}
 
-bool RenderLayer::get_is_active() const {
-	return is_active;
+bool RenderLayer::is_active() const {
+	return active;
 }
-void RenderLayer::set_active(bool is_active) {
-	this->is_active = is_active;
+void RenderLayer::set_active(bool active) {
+	this->active = active;
 }
 std::string RenderLayer::get_name() const {
 	return name;
