@@ -22,9 +22,8 @@ void SceneManager::update() {
 	// poll input events
 	Input::poll_events();
 
-	// register pending gameobjects and colliders
-	GameObject::register_pending();
-	Collider::register_pending();
+	// make a hierarchy tree copy to stabilise the traversal on user-defined methods
+	GameObject::cache_hierarchy_tree();
 
 	// update collisions
 	GameObject::clear_collisions_all();
@@ -35,6 +34,13 @@ void SceneManager::update() {
 
 	// update gameobjects
 	GameObject::update_all();
+
+	// clear the cached hierarchy tree stable copy
+	GameObject::clear_cached_hierarchy_tree();
+
+	// register pending gameobjects and colliders
+	GameObject::register_pending();
+	Collider::register_pending();
 
 	// destroy pending gameobjects and colliders
 	GameObject::destroy_pending();

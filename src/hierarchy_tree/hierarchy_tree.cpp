@@ -1,5 +1,6 @@
 #include "hierarchy_tree.hpp"
 #include "gameobject.hpp"
+#include <functional>
 
 HierarchyTree::HierarchyTree() : obj(NULL), parent(NULL) {}
 HierarchyTree::HierarchyTree(GameObject* obj, HierarchyTree* parent) : obj(obj), parent(parent) {}
@@ -15,6 +16,16 @@ void HierarchyTree::insert_child(HierarchyTree* node) {
 }
 void HierarchyTree::remove_child(HierarchyTree* node) {
 	children.erase(node);
+}
+HierarchyTree* HierarchyTree::copy() const {
+	HierarchyTree* res = new HierarchyTree(obj, parent);
+	for(auto child : children) res->children.insert(child->copy());
+	return res;
+}
+void HierarchyTree::destroy() {
+	if(parent != NULL) parent->remove_child(this);
+	for(auto child : children) child->destroy();
+	delete this;
 }
 
 size_t HierarchyTree::Hash::operator()(const HierarchyTree* node) const {

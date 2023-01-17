@@ -19,7 +19,7 @@ public:
 	// empty GameObject in the world layer
 	GameObject();
 	// empty GameObject with the given name
-	GameObject(std::string name, GameObject* parent, std::string layer_name = "world", float z_index = 0);
+	GameObject(std::string name, GameObject* parent, std::string layer_name = "world", float z_index = 0.0f);
 	// gameobject with a default shape constructor (creates one of default shapes)
 	GameObject(	DefaultMesh mesh_type,
 				std::vector<float> float_args,
@@ -27,7 +27,7 @@ public:
 				std::vector<glm::vec3> vec3_args,
 				GameObject* parent,
 				std::string layer_name = "world",
-				float z_index = 0);
+				float z_index = 0.0f);
 	// gameobject with a default shape constructor (creates one of default shapes) with the given name
 	GameObject(	std::string name,
 				DefaultMesh mesh_type,
@@ -36,7 +36,7 @@ public:
 				std::vector<glm::vec3> vec3_args,
 				GameObject* parent,
 				std::string layer_name = "world",
-				float z_index = 0);
+				float z_index = 0.0f);
 	~GameObject();
 
 	// get GameObject id
@@ -54,6 +54,10 @@ public:
 	float z_index;
 	// get the global z_index [ O(depth in the hierarchy tree) ]
 	float z_index_global() const;
+
+	void assign_to_render_layer(std::string layer_name);
+	void assign_to_render_layer(RenderLayer* new_layer);
+	void remove_from_render_layer();
 
 	// Components
 	template<typename T>
@@ -128,6 +132,8 @@ private:
 	static ll id_counter;
 	// the hierarchy tree in the scene
 	static HierarchyTree hierarchy_tree;
+	// the stable copy of the hierarchy tree
+	static HierarchyTree* hierarchy_tree_copy;
 
 	// map of name -> set of gameobjects
 	static std::unordered_map<std::string, std::unordered_set<GameObject*, Hash> > names;
@@ -138,6 +144,12 @@ private:
 	static void update_transforms();
 	// update all of the global z_index data in the objects in the hierarchy tree
 	static void update_z_indices();
+
+	// make a stable copy of the hierarchy tree
+	static void cache_hierarchy_tree();
+	// clear the stable copy of the hierarchy tree
+	static void clear_cached_hierarchy_tree();
+
 	// update all gameobjects in the hierarchy tree
 	static void update_all();
 	static void clear_collisions_all();

@@ -2,17 +2,35 @@
 #include <iostream>
 #include <algorithm>
 
+std::string void_name = "__VOID__";
+
 ll RenderLayer::id_counter;
 std::unordered_map<std::string, std::unordered_set<RenderLayer*> > RenderLayer::layers;
 std::set<RenderLayer*, decltype(RenderLayer::z_comparator)*> RenderLayer::ordered_layers;
 
-RenderLayer::RenderLayer(std::string name) : id(id_counter++), name(name), z_index(0), active(true) {}
-RenderLayer::RenderLayer(std::string name, int z_index) : id(id_counter++), name(name), z_index(z_index), active(true) {}
+RenderLayer::RenderLayer(std::string name) : id(id_counter++), name("default_name"), z_index(0), active(true) {
+	if(name == void_name) {
+		std::cout<<"Warning: RenderLayer::set_name(): __VOID__ is a reserved name; didn't change the name.\n";
+		return;
+	}
+	this->name = name;
+}
+RenderLayer::RenderLayer(std::string name, int z_index) : id(id_counter++), name("default_name"), z_index(z_index), active(true) {
+	if(name == void_name) {
+		std::cout<<"Warning: RenderLayer::set_name(): __VOID__ is a reserved name; didn't change the name.\n";
+		return;
+	}
+	this->name = name;
+}
 
 bool RenderLayer::is_active() const {
 	return active;
 }
 void RenderLayer::set_active(bool active) {
+	if(get_name() == void_name && active) {
+		std::cout<<"Warning: RenderLayer::set_active(): tried to activate the void render layer; action prohibited.\n";
+		return;
+	}
 	this->active = active;
 }
 std::string RenderLayer::get_name() const {
@@ -20,6 +38,10 @@ std::string RenderLayer::get_name() const {
 }
 void RenderLayer::set_name(std::string name) {
 	if(this->name == name) return;
+	if(name == void_name) {
+		std::cout<<"Warning: RenderLayer::set_name(): __VOID__ is a reserved name; didn't change the name.\n";
+		return;
+	}
 	// remove previous entry
 	auto found = layers.find(this->name);
 	found->second.erase(this);
@@ -87,6 +109,11 @@ void RenderLayer::init() {
 	add_layer(new RenderLayer("UI", INT_MIN));
 	add_layer(new RenderLayer("world", 0));
 	add_layer(new RenderLayer("background", INT_MAX));
+	// add the void layer
+	add_layer(new RenderLayer("_", 0));
+	auto void_layer = get_layer_by_name("_");
+	void_layer->set_active(false);
+	void_layer->name = void_name;
 }
 
 void RenderLayer::add_layer(RenderLayer* a) {
@@ -97,6 +124,9 @@ void RenderLayer::add_layer(RenderLayer* a) {
 		return;
 	}
 	found->second.insert(a);
+}
+RenderLayer* RenderLayer::void_layer() {
+	return get_layer_by_name(void_name);
 }
 
 bool RenderLayer::z_comparator(RenderLayer* a, RenderLayer* b) {

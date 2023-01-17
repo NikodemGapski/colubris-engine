@@ -1,26 +1,32 @@
+[RENDERING UPDATE]
 - add collision layers
 - add hierarchy tree modification
-- add methods that synchronise what we need (global z_index / global transform) - just up the tree
+- - set_parent
 
-- gameobject: is_alive (- make sure you don't assign a gameobject to a dead one [aka in the same frame it's been destroyed])
 
-Which processes should happen *during* update and which in a dedicated time window?
-- outside of update: hierarchy tree topology changes (influence the order of update() calls)
+- should register and destroy pending methods handle names and layers?
+- - no?: so i can find a gameobject right after its instantiation
+- - yes?: ???
+
+- a bit more testing
 
 - fix constructor indentation
 
-- what happens when a gameobject is removed from a render_layer? (some inactive layer that stores unassigned objects - every gameobject should be in some render_layer... or should it?)
-
+[UI UPDATE]
 - what if a component has a pointer to a gameobject that's been detroyed? how to handle dangling pointers? [UI UPDATE]
 - general event system [UI UPDATE]
+- get global transform (so that parent_transform = ID), data extraction from the matrix [UI UPDATE]
 
-Order of events:
-- adding to the hierarchy tree happens during the registration process
-
-- update the docs
+Update the docs:
 - DOCS: every gameobject MUST HAVE a transform component
 - DOCS: remember about the compiler flag for the freetype library
 - DOCS: revise the order of events (transform and z_index syncing)
 - DOCS: if an object is inactive, then its children are as well
 - DOCS: don't call update on a dead object; start method is always called
 - DOCS: handy transform pointer in GameObject class
+- DOCS: what happens when a gameobject is removed from a render_layer? (some inactive layer that stores unassigned objects - every gameobject should be in some render_layer)
+- DOCS: Which processes happen *during* update and which in a dedicated time window?
+- DOCS: create a tree copy before update and traverse it
+- DOCS: change method order: update, register pending, destroy pending (to fix the 'created and destroyed in one frame' scenario)
+- DOCS: add method that gets global z_index traversing just up the tree
+- DOCS: gameobject: is_alive (- make sure you don't assign a gameobject to a dead one [aka in the same frame it's been destroyed]) -> destroy the node right in the destroy_gameobject method, don't wait until pending

@@ -10,6 +10,7 @@
 
 ll GameObject::id_counter;
 HierarchyTree GameObject::hierarchy_tree;
+HierarchyTree* GameObject::hierarchy_tree_copy;
 std::unordered_map<std::string, std::unordered_set<GameObject*, GameObject::Hash> > GameObject::names;
 std::unordered_set<GameObject*, GameObject::Hash> GameObject::to_register;
 std::unordered_set<GameObject*, GameObject::Hash> GameObject::to_destroy;
@@ -18,7 +19,7 @@ GameObject::GameObject() :
 	id(id_counter++),
 	active(true),
 	alive(true),
-	name("GameObject #" + std::to_string(reinterpret_cast<intptr_t>(this))),
+	name("GameObject #" + std::to_string(id)),
 	node(new HierarchyTree(this, &hierarchy_tree)),
 	layer(RenderLayer::get_layer_by_name("world")),
 	z_index(0.0f),
@@ -56,7 +57,7 @@ GameObject::GameObject(
 	id(id_counter++),
 	active(true),
 	alive(true),
-	name("GameObject #" + std::to_string(reinterpret_cast<intptr_t>(this))),
+	name("GameObject #" + std::to_string(id)),
 	node(new HierarchyTree(this, parent ? parent->node : &hierarchy_tree)),
 	layer(RenderLayer::get_layer_by_name(layer_name)),
 	z_index(z_index),
@@ -100,7 +101,6 @@ GameObject::~GameObject() {
 	for(auto comp : components) {
 		delete comp.second;
 	}
-	delete node;
 }
 
 ll GameObject::get_id() const {
@@ -134,15 +134,34 @@ void GameObject::set_name(std::string name) {
 }
 
 float GameObject::z_index_global() const {
-	std::function<float(HierarchyTree*)> get_index_global;
-	get_index_global = [&](HierarchyTree* node) {
-		if(node->parent == NULL) return 0.0f;
-		return node->obj->z_index + get_index_global(node->parent);
-	};
-	return get_index_global(node);
+	float res = 0.0f;
+	HierarchyTree* cur_node = node;
+	while(cur_node->obj != NULL) {
+		res += cur_node->obj->z_index;
+		cur_node = cur_node->parent;
+	}
+	return res;
 }
 float GameObject::z_index_global_no_sync() const {
 	return z_index + parent_z_index;
+}
+
+void GameObject::assign_to_render_layer(std::string layer_name) {
+	assign_to_render_layer(RenderLayer::get_layer_by_name(layer_name));
+}
+void GameObject::assign_to_render_layer(RenderLayer* new_layer) {
+	if(new_layer == NULL) {
+		remove_from_render_layer();
+		return;
+	}
+	layer->remove(this);
+	layer = new_layer;
+	layer->add(this);
+}
+void GameObject::remove_from_render_layer() {
+	layer->remove(this);
+	layer = RenderLayer::void_layer();
+	layer->add(this);
 }
 
 bool GameObject::operator==(const GameObject& other) const {
@@ -209,9 +228,11 @@ std::vector<GameObject*> GameObject::find_all(std::string name) {
 
 void GameObject::register_gameobject(GameObject* obj) {
 	to_register.insert(obj);
+	// insert the node into the hierarchy tree
+	obj->node->parent->insert_child(obj->node);
 }
 void GameObject::destroy_gameobject(GameObject* obj) {
-	// mount this object and all of its descendants to the hierarchy tree
+	// insert this object and all of its descendants into to_destroy
 	std::function<void(HierarchyTree*)> destroy_subtree;
 	destroy_subtree = [&](HierarchyTree* node) {
 		to_destroy.insert(node->obj);
@@ -219,6 +240,8 @@ void GameObject::destroy_gameobject(GameObject* obj) {
 		for(auto child : node->children) destroy_subtree(child);
 	};
 	destroy_subtree(obj->node);
+	// remove the subtree from the hierarchy tree
+	obj->node->destroy();
 }
 
 void GameObject::init() {
@@ -246,6 +269,13 @@ void GameObject::update_z_indices() {
 	for(auto child : hierarchy_tree.children) update_subtree(child, 0.0f);
 }
 
+void GameObject::cache_hierarchy_tree() {
+	hierarchy_tree_copy = hierarchy_tree.copy();
+}
+void GameObject::clear_cached_hierarchy_tree() {
+	hierarchy_tree_copy->destroy();
+}
+
 void GameObject::update_all() {
 	std::function<void(HierarchyTree*)> update_subtree;
 	// update the node subtree (provided that node is not the root)
@@ -255,7 +285,7 @@ void GameObject::update_all() {
 		for(auto child : node->children) update_subtree(child);
 	};
 
-	for(auto child : hierarchy_tree.children) update_subtree(child);
+	for(auto child : hierarchy_tree_copy->children) update_subtree(child);
 }
 void GameObject::clear_collisions_all() {
 	std::function<void(HierarchyTree*)> clear_subtree;
@@ -265,7 +295,7 @@ void GameObject::clear_collisions_all() {
 		for(auto child : node->children) clear_subtree(child);
 	};
 
-	for(auto child : hierarchy_tree.children) clear_subtree(child);
+	for(auto child : hierarchy_tree_copy->children) clear_subtree(child);
 }
 void GameObject::call_collision_callbacks_all() {
 	std::function<void(HierarchyTree*)> call_subtree;
@@ -276,14 +306,13 @@ void GameObject::call_collision_callbacks_all() {
 		for(auto child : node->children) call_subtree(child);
 	};
 
-	for(auto child : hierarchy_tree.children) call_subtree(child);
+	for(auto child : hierarchy_tree_copy->children) call_subtree(child);
 }
 
 void GameObject::register_pending() {
 	for(auto obj : to_register) {
 		if(obj == NULL) continue;
 		// insert the gameobject to the registry
-		obj->node->parent->insert_child(obj->node);
 		auto found = names.find(obj->name);
 		if(found == names.end()) {
 			names.insert({obj->name, {obj}});
@@ -296,10 +325,6 @@ void GameObject::register_pending() {
 	to_register.clear();
 }
 void GameObject::destroy_pending() {
-	// detach nodes from the tree
-	for(auto obj : to_destroy) {
-		obj->node->parent->remove_child(obj->node);
-	}
 	// remove from names and layers, and destroy the objects
 	for(auto obj : to_destroy) {
 		// 1. remove from names

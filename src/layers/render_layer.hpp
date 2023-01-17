@@ -23,11 +23,6 @@ public:
 	int get_z_index() const;
 	// change z_index
 	void set_z_index(int z_index);
-
-	// add the gameobject to the layer
-	void add(GameObject* obj);
-	// remove the gamobject from the layer
-	void remove(GameObject* obj);
 	
 	// recalculate the z_index order of gameobjects in the layer
 	void reorder();
@@ -37,18 +32,22 @@ private:
 	bool active;
 	int z_index;
 
+	// add the gameobject to the layer
+	void add(GameObject* obj);
+	// remove the gamobject from the layer
+	void remove(GameObject* obj);
+
 	// a set of all gameobjects in the layer
 	std::unordered_set<GameObject*, GameObject::Hash> gameobjects;
 	// a list of gameobjects in z_index order (synchronised by reorder())
 	std::vector<GameObject*> ordered_gameobjects;
-	// a set of all gameobjects in z_index order
-	// std::set<GameObject*, decltype(GameObject::z_comparator)*> ordered_gameobjects;
 
 // ----- STATIC MEMBERS -----
 public:
 	// add the layer to the list of all layers
 	static void add_layer(RenderLayer* a);
 
+	static RenderLayer* void_layer();
 	// count the number of layers with the given name
 	static int layers_count(std::string name);
 	// get a layer with the given name
@@ -73,4 +72,5 @@ private:
 
 // ----- FRIENDS -----
 	friend class SceneManager;
+	friend class GameObject;
 };

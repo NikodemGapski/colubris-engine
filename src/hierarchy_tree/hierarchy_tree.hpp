@@ -28,5 +28,8 @@ public:
 	void insert_child(HierarchyTree* node);
 	// remove the node as the child
 	void remove_child(HierarchyTree* node);
-private:
+	// make a copy of the tree structure
+	HierarchyTree* copy() const;
+	// destroy, deallocate the tree structure and detach as child
+	void destroy();
 };
