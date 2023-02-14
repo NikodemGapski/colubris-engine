@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <set>
+#include <map>
 #include <typeindex>
 #include <unordered_map>
 #include "shader.hpp"
@@ -11,6 +12,9 @@
 
 // forward declarations
 class RenderLayer;
+class MainLayer;
+class Layer;
+class CollisionLayer;
 class Transform;
 
 class GameObject {
@@ -19,14 +23,13 @@ public:
 	// empty GameObject in the world layer
 	GameObject();
 	// empty GameObject with the given name
-	GameObject(std::string name, GameObject* parent, std::string layer_name = "world", float z_index = 0.0f);
+	GameObject(std::string name, GameObject* parent, float z_index = 0.0f);
 	// gameobject with a default shape constructor (creates one of default shapes)
 	GameObject(	DefaultMesh mesh_type,
 				std::vector<float> float_args,
 				std::vector<int> int_args,
 				std::vector<glm::vec3> vec3_args,
 				GameObject* parent,
-				std::string layer_name = "world",
 				float z_index = 0.0f);
 	// gameobject with a default shape constructor (creates one of default shapes) with the given name
 	GameObject(	std::string name,
@@ -35,7 +38,6 @@ public:
 				std::vector<int> int_args,
 				std::vector<glm::vec3> vec3_args,
 				GameObject* parent,
-				std::string layer_name = "world",
 				float z_index = 0.0f);
 	~GameObject();
 
@@ -48,16 +50,12 @@ public:
 	void set_active(bool active);
 	// get name
 	std::string get_name() const;
-	// set name
-	void set_name(std::string name);
+	// rename
+	void rename(std::string name);
 	// z_index relative to its parent
 	float z_index;
 	// get the global z_index [ O(depth in the hierarchy tree) ]
 	float z_index_global() const;
-
-	void assign_to_render_layer(std::string layer_name);
-	void assign_to_render_layer(RenderLayer* new_layer);
-	void remove_from_render_layer();
 
 	// Components
 	template<typename T>
@@ -97,7 +95,10 @@ private:
 	// z_index + parent_z_index
 	float z_index_global_no_sync() const;
 
-	RenderLayer* layer;
+	MainLayer* main_layer;
+	RenderLayer* render_layer;
+	std::map<std::string, Layer*> layers;
+	
 	HierarchyTree* node;
 
 	void start();
@@ -138,8 +139,6 @@ private:
 	// map of name -> set of gameobjects
 	static std::unordered_map<std::string, std::unordered_set<GameObject*, Hash> > names;
 
-	// initialise static variables
-	static void init();
 	// update all of the global transform data in the objects in the hierarchy tree
 	static void update_transforms();
 	// update all of the global z_index data in the objects in the hierarchy tree
@@ -165,6 +164,9 @@ private:
 	static void destroy_pending();
 
 // ----- FRIENDS -----
+	friend class MainLayer;
+	friend class RenderLayer;
+	friend class Layer;
 	friend class SceneManager;
 
 // DEBUG

@@ -1,21 +1,17 @@
 [RENDERING UPDATE]
-- add collision layers
 - add hierarchy tree modification
 - - set_parent
-
-
-- should register and destroy pending methods handle names and layers?
-- - no?: so i can find a gameobject right after its instantiation
-- - yes?: ???
 
 - a bit more testing
 
 - fix constructor indentation
 
+
 [UI UPDATE]
 - what if a component has a pointer to a gameobject that's been detroyed? how to handle dangling pointers? [UI UPDATE]
 - general event system [UI UPDATE]
 - get global transform (so that parent_transform = ID), data extraction from the matrix [UI UPDATE]
+- a little issue with gameobjects having their render_layer set before registration (despite not yet belonging to the layer)
 
 Update the docs:
 - DOCS: every gameobject MUST HAVE a transform component
@@ -24,9 +20,19 @@ Update the docs:
 - DOCS: if an object is inactive, then its children are as well
 - DOCS: don't call update on a dead object; start method is always called
 - DOCS: handy transform pointer in GameObject class
-- DOCS: what happens when a gameobject is removed from a render_layer? (some inactive layer that stores unassigned objects - every gameobject should be in some render_layer)
+- DOCS: there is no void render layer
 - DOCS: Which processes happen *during* update and which in a dedicated time window?
 - DOCS: create a tree copy before update and traverse it
 - DOCS: change method order: update, register pending, destroy pending (to fix the 'created and destroyed in one frame' scenario)
 - DOCS: add method that gets global z_index traversing just up the tree
 - DOCS: gameobject: is_alive (- make sure you don't assign a gameobject to a dead one [aka in the same frame it's been destroyed]) -> destroy the node right in the destroy_gameobject method, don't wait until pending
+- DOCS: reimagine the game loop
+- DOCS: register_pending method handles names and layers, but destroy_gameobject handles it too
+- DOCS: main layers, render layers, collision layers
+- DOCS: custom layers, layers can be used as chunks
+- DOCS: layer collections, operation (beware: called on all ordered pairs of objects)
+- DOCS: layers are responsible for gameobjects' layer pointers
+- DOCS: adding to a main/render layer removes from the current one
+- DOCS: list of LayerCollections, MainLayers, RenderLayers
+- DOCS: LayerCollection - unique name, list of Layers, operation method, active, z_index
+- DOCS: Layer - unique name per collection, list of objects, active, z_index

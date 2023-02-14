@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include "scene_manager.hpp"
 #include "renderer.hpp"
+#include "time.hpp"
 
 // closing the window
 void process_input(GLFWwindow* window) {
@@ -21,10 +22,22 @@ int main() {
 	SceneManager::init(window);
 
 	// render loop
-	while(!glfwWindowShouldClose(window)) {
-		process_input(window);
+	// render lag related variables
+	float prev_time = glfwGetTime();
+	float lag_time = 0.0f;
 
-		SceneManager::update();
+	while(!glfwWindowShouldClose(window)) {
+		// update render lag variables
+		float cur_time = glfwGetTime();
+		lag_time += cur_time - prev_time;
+		prev_time = cur_time;
+		// update the number of times which should have been updated by the time we start the lag loop for the first time
+		while(lag_time >= Time::ms_per_render_frame()) {
+			process_input(window);
+			SceneManager::update();
+			lag_time -= Time::ms_per_render_frame();
+		}
+
 		// rendering
 		SceneManager::render();
 

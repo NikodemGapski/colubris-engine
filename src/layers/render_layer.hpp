@@ -4,73 +4,48 @@
 #include <unordered_map>
 #include "math.hpp" // long long typedef
 #include "gameobject.hpp"
+#include "base_layer.hpp"
 
-class RenderLayer {
+class RenderLayer : public BaseLayer {
 // ----- NON-STATIC MEMBERS -----
 public:
-	RenderLayer(std::string name);
-	RenderLayer(std::string name, int z_index);
-
-	// get is_active flag
-	bool is_active() const;
-	// set is_active flag
-	void set_active(bool active);
-	// get name
-	std::string get_name() const;
-	// change name
-	void set_name(std::string name);
+	// change the name
+	// (no effect if a different layer with such name already exists)
+	void rename(std::string name);
 	// get z_index
 	int get_z_index() const;
-	// change z_index
+	// set z_index
 	void set_z_index(int z_index);
-	
 	// recalculate the z_index order of gameobjects in the layer
 	void reorder();
-private:
-	ll id;
-	std::string name;
-	bool active;
-	int z_index;
-
+	
 	// add the gameobject to the layer
 	void add(GameObject* obj);
 	// remove the gamobject from the layer
 	void remove(GameObject* obj);
-
-	// a set of all gameobjects in the layer
-	std::unordered_set<GameObject*, GameObject::Hash> gameobjects;
-	// a list of gameobjects in z_index order (synchronised by reorder())
+private:
+	RenderLayer(std::string name);
+	// layer z_index determining the order of rendering of the layer
+	int z_index;
+	// a list of gameobjects in their z_index order (synchronised by reorder())
 	std::vector<GameObject*> ordered_gameobjects;
 
 // ----- STATIC MEMBERS -----
 public:
-	// add the layer to the list of all layers
-	static void add_layer(RenderLayer* a);
-
-	static RenderLayer* void_layer();
-	// count the number of layers with the given name
-	static int layers_count(std::string name);
-	// get a layer with the given name
-	// - if no such layer exists, returns NULL
-	// - if more such layers exist, returns one of them
-	static RenderLayer* get_layer_by_name(std::string name);
-	// get a list of layers with the given name
-	static std::vector<RenderLayer*> get_layers_by_name(std::string name);
-
+	// find a layer with the given name, NULL if none exist
+	static RenderLayer* find_layer(std::string name);
+	// create a new layer with the given name
+	// (beware: layer names must be unique, passing an already existing name will have no effect)
+	static void add_layer(std::string name);
+	// remove the layer with the given name
+	static void remove_layer(std::string name);
 private:
-	static ll id_counter;
-
+	// add 3 basic render layers
 	static void init();
-	// comparator of Layer*'s based on their z_index
-	static bool z_comparator(RenderLayer* a, RenderLayer* b);
+	static bool comparator(RenderLayer* a, RenderLayer* b);
 
-	// map of name -> set of layers
-	static std::unordered_map<std::string, std::unordered_set<RenderLayer*> > layers;
-
-	// a set of all layers in z_index order
-	static std::set<RenderLayer*, decltype(z_comparator)*> ordered_layers;
-
+	static std::unordered_map<std::string, RenderLayer*> layers;
+	static std::set<RenderLayer*, decltype(comparator)*> ordered_layers;
 // ----- FRIENDS -----
 	friend class SceneManager;
-	friend class GameObject;
 };

@@ -6,12 +6,12 @@
 #include "time.hpp"
 #include "text.hpp"
 #include "render_layer.hpp"
+#include "layer_collection.hpp"
 #include "mesh_single/mesh_single.hpp"
 
 void SceneManager::init(GLFWwindow* window) {
 	Time::init();
 	Input::init(window);
-	GameObject::init();
 	RenderLayer::init();
 	instantiate_custom_objects();
 }
@@ -31,6 +31,9 @@ void SceneManager::update() {
 	Collider::find_collisions();
 	// call collision callbacks
 	GameObject::call_collision_callbacks_all();
+
+	// execute all layer collections' operations
+	LayerCollection::execute_all();
 
 	// update gameobjects
 	GameObject::update_all();
@@ -70,3 +73,4 @@ void SceneManager::render() {
 		}
 	}
 }
+
