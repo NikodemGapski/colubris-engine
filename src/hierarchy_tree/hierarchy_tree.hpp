@@ -22,6 +22,8 @@ public:
 	// the children in the tree
 	std::unordered_set<HierarchyTree*, Hash> children;
 
+	// check if the node is the root
+	bool is_root() const;
 	// change the node's parent
 	void change_parent(HierarchyTree* new_parent);
 	// insert the node as the child

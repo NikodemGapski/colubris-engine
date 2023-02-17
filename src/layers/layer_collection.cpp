@@ -107,6 +107,7 @@ void LayerCollection::execute_layers() {
 		for(auto a : layer->gameobjects) {
 			for(auto b : layer->gameobjects) {
 				if(a == b) continue;
+				if(!a->is_active() || !b->is_active()) continue;
 				operation(a, b);
 			}
 		}

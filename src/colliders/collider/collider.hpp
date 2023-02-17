@@ -6,6 +6,7 @@
 
 // forward declaration
 class GameObject;
+class LayerCollection;
 
 class Collider : public ComponentI {
 // ----- NON-STATIC MEMBERS -----
@@ -35,24 +36,13 @@ public:
 	// get all collision points of Colliders a and b
 	static std::vector<glm::vec2> collision_points(const Collider& a, const Collider& b);
 
-	// register the collider in the scene
-	static void register_collider(Collider* col);
-	// remove the collider from the scene
-	static void destroy_collider(Collider* col);
 private:
-	// a set of all colliders in the scene
-	static std::set<Collider*> colliders;
-	// a set of all colliders pending registration
-	static std::set<Collider*> to_register;
-	// a set of all colliders pending destruction
-	static std::set<Collider*> to_destroy;
-	// register all pending colliders in the scene
-	static void register_pending();
-	// remove all pending colliders from the scene
-	static void destroy_pending();
-
-	// find all collisions in the scene and call callback functions
-	static void find_collisions();
+	// the Collision layer collection
+	static LayerCollection* layer_collection;
+	// initialise the Collision layer collection
+	static void init();
+	// the collision operation to be passed to the Collision layer collection
+	static void collision_operation(GameObject* a, GameObject* b);
 
 	friend class SceneManager;
 };

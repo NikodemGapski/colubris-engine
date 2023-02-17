@@ -29,13 +29,17 @@ void Layer::set_index(int index) {
 
 void Layer::add(GameObject* obj) {
 	if(obj == NULL) return;
+	// if the object alreay belongs to another layer in this collection
+	if(obj->layers.find(collection->get_name()) != obj->layers.end()) {
+		obj->layers.find(collection->get_name())->second->remove(obj);
+	}
 	gameobjects.insert(obj);
-	obj->layers.insert({get_name(), this});
+	obj->layers.insert({collection->get_name(), this});
 }
 void Layer::remove(GameObject* obj) {
 	if(obj == NULL) return;
 	gameobjects.erase(obj);
-	obj->layers.erase(get_name());
+	obj->layers.erase(collection->get_name());
 }
 
 bool Layer::comparator(Layer* a, Layer* b) {

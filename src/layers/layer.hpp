@@ -5,7 +5,7 @@
 class LayerCollection;
 
 // Functional layer
-class Layer : BaseLayer {
+class Layer : public BaseLayer {
 // ----- NON-STATIC MEMBERS -----
 public:
 	// change the name

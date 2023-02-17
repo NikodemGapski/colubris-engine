@@ -44,7 +44,7 @@ public:
 	// get GameObject id
 	ll get_id() const;
 	// get activation state (active flag and the layer state)
-	// is_active() = alive && active && layer->is_active()
+	// is_active() = alive && active && main_layer->is_active()
 	bool is_active() const;
 	// set active flag
 	void set_active(bool active);
@@ -57,7 +57,23 @@ public:
 	// get the global z_index [ O(depth in the hierarchy tree) ]
 	float z_index_global() const;
 
+	// Hierarchy tree
+
+	// set a new parent for this GameObject
+	void set_parent(GameObject* new_parent);
+	// get a pointer to the parent (NULL if the parent is the root)
+	GameObject* get_parent() const;
+	// get a list of all the children
+	std::vector<GameObject*> get_children() const;
+
+	// Layers
+
+	// get a map of all functional layers the gameobject belongs to
+	std::map<std::string, Layer*> get_layers() const;
+	// find a layer from the given collection
+
 	// Components
+
 	template<typename T>
 	T* get_component();
 
@@ -97,6 +113,7 @@ private:
 
 	MainLayer* main_layer;
 	RenderLayer* render_layer;
+	// the map of functional layers this gameobject belongs to (collection name -> layer pointer)
 	std::map<std::string, Layer*> layers;
 	
 	HierarchyTree* node;

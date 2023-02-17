@@ -1,6 +1,4 @@
 [RENDERING UPDATE]
-- add hierarchy tree modification
-- - set_parent
 
 - a bit more testing
 
@@ -12,6 +10,7 @@
 - general event system [UI UPDATE]
 - get global transform (so that parent_transform = ID), data extraction from the matrix [UI UPDATE]
 - a little issue with gameobjects having their render_layer set before registration (despite not yet belonging to the layer)
+- bug: if a new GameObject is created in a start() method, regitration has a problem
 
 Update the docs:
 - DOCS: every gameobject MUST HAVE a transform component
@@ -36,3 +35,6 @@ Update the docs:
 - DOCS: list of LayerCollections, MainLayers, RenderLayers
 - DOCS: LayerCollection - unique name, list of Layers, operation method, active, z_index
 - DOCS: Layer - unique name per collection, list of objects, active, z_index
+- DOCS: add hierarchy tree modification: set_parent, get_parent, get_children
+- DOCS: incorporate collisions into a layer
+- DOCS: currently a gameobject can belong to only one layer in a collection

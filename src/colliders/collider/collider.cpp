@@ -1,19 +1,17 @@
 #include "collider.hpp"
+#include "layer_collection.hpp"
 
 // static variables definition
-std::set<Collider*> Collider::colliders;
-std::set<Collider*> Collider::to_register;
-std::set<Collider*> Collider::to_destroy;
-
+LayerCollection* Collider::layer_collection;
 
 Collider::Collider(GameObject* parent) : ComponentI(parent) {
-	Collider::register_collider(this);
+	layer_collection->find("world")->add(parent);
 }
 Collider::Collider(GameObject* parent, std::vector<ColliderShape> shapes) : ComponentI(parent), shapes(shapes) {
-	Collider::register_collider(this);
+	layer_collection->find("world")->add(parent);
 }
 Collider::~Collider() {
-	Collider::destroy_collider(this);
+	layer_collection->find(game_object->get_layers()["Collision"]->get_name());
 }
 
 BoundingBox Collider::get_bounding_box() const {
@@ -53,40 +51,17 @@ std::vector<glm::vec2> Collider::collision_points(const Collider& a, const Colli
 	return result;
 }
 
-
-
-void Collider::register_collider(Collider* col) {
-	to_register.insert(col);
+void Collider::init() {
+	LayerCollection::add_collection("Collision", Collider::collision_operation);
+	layer_collection = LayerCollection::find_collection("Collision");
+	layer_collection->add("world");
 }
 
-void Collider::destroy_collider(Collider* col) {
-	to_destroy.insert(col);
-}
-void Collider::register_pending() {
-	for(auto col : to_register) {
-		if(col == NULL) continue;
-		colliders.insert(col);
-		col->start();
-	}
-	to_register.clear();
-}
-void Collider::destroy_pending() {
-	for(auto col : to_destroy) {
-		if(col == NULL) continue;
-		colliders.erase(col);
-		delete col;
-	}
-	to_destroy.clear();
-}
-
-void Collider::find_collisions() {
-	// for each pair of colliders check if they collide
-	for(auto col1 : colliders) {
-		for(auto col2 : colliders) {
-			if(col1 == col2) continue;
-			if(collide(*col1, *col2)) {
-				col1->game_object->add_collision(col2->game_object);
-			}
-		}
+void Collider::collision_operation(GameObject* a, GameObject* b) {
+	// check if both objects have a Collider component
+	if(!a->has_component<Collider>() || !b->has_component<Collider>()) return;
+	// check if they collide
+	if(collide(*a->get_component<Collider>(), *b->get_component<Collider>())) {
+		a->add_collision(b);
 	}
 }

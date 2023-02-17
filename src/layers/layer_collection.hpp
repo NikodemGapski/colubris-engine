@@ -38,7 +38,7 @@ private:
 	// collection index determining the order of collections
 	int index;
 
-	// the operation to be called on all ordered pairs of objects in the collection
+	// the operation to be called on all ordered pairs of active objects in the collection
 	std::function<void(GameObject*, GameObject*)> operation;
 
 	void execute_layers();
@@ -49,13 +49,13 @@ private:
 	std::set<Layer*, decltype(Layer::comparator)*> ordered_layers;
 
 // ----- STATIC MEMBERS -----
-private:
-	static ll id_counter;
-
+public:
 	static LayerCollection* find_collection(std::string name);
 	static void add_collection(std::string name, std::function<void(GameObject*, GameObject*)> operation);
 	static void remove_collection(std::string name);
 
+private:
+	static ll id_counter;
 	static void execute_all();
 
 	// comparator of Layer*'s based on their index

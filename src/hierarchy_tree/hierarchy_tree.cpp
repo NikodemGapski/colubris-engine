@@ -7,9 +7,14 @@ HierarchyTree::HierarchyTree(GameObject* obj, HierarchyTree* parent) : obj(obj),
 
 HierarchyTree::~HierarchyTree() {}
 
+bool HierarchyTree::is_root() const {
+	return parent == NULL;
+}
+
 void HierarchyTree::change_parent(HierarchyTree* new_parent) {
 	parent->remove_child(this);
 	new_parent->insert_child(this);
+	parent = new_parent;
 }
 void HierarchyTree::insert_child(HierarchyTree* node) {
 	children.insert(node);

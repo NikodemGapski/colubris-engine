@@ -13,6 +13,7 @@ void SceneManager::init(GLFWwindow* window) {
 	Time::init();
 	Input::init(window);
 	RenderLayer::init();
+	Collider::init();
 	instantiate_custom_objects();
 }
 void SceneManager::update() {
@@ -27,13 +28,11 @@ void SceneManager::update() {
 
 	// update collisions
 	GameObject::clear_collisions_all();
-	// find new collisions
-	Collider::find_collisions();
+	// execute all layer collections' operations
+	LayerCollection::execute_all();
 	// call collision callbacks
 	GameObject::call_collision_callbacks_all();
 
-	// execute all layer collections' operations
-	LayerCollection::execute_all();
 
 	// update gameobjects
 	GameObject::update_all();
@@ -41,13 +40,11 @@ void SceneManager::update() {
 	// clear the cached hierarchy tree stable copy
 	GameObject::clear_cached_hierarchy_tree();
 
-	// register pending gameobjects and colliders
+	// register pending gameobjects
 	GameObject::register_pending();
-	Collider::register_pending();
 
-	// destroy pending gameobjects and colliders
+	// destroy pending gameobjects
 	GameObject::destroy_pending();
-	Collider::destroy_pending();
 
 	// update global transform values
 	GameObject::update_transforms();

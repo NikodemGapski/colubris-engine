@@ -154,6 +154,35 @@ bool GameObject::operator==(const GameObject& other) const {
 	return get_id() == other.get_id();
 }
 
+void GameObject::set_parent(GameObject* new_parent) {
+	// if new_parent is NULL, set the parent to the root of the tree
+	if(new_parent == NULL) {
+		node->change_parent(&hierarchy_tree);
+		return;
+	}
+	// if new_parent is dead, do nothing
+	if(!new_parent->alive) return;
+	// otherwise change the parent
+	node->change_parent(new_parent->node);
+}
+
+GameObject* GameObject::get_parent() const {
+	if(node->parent->is_root()) return NULL;
+	return node->parent->obj;
+}
+
+std::vector<GameObject*> GameObject::get_children() const {
+	std::vector<GameObject*> result;
+	for(auto child : node->children) {
+		result.push_back(child->obj);
+	}
+	return result;
+}
+
+std::map<std::string, Layer*> GameObject::get_layers() const {
+	return layers;
+}
+
 void GameObject::prepare_shader(Shader& shader) {
 	shader.use();
 	shader.set("transform_matrix", transform->generate_matrix());
