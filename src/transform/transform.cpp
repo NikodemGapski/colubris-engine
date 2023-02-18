@@ -12,6 +12,29 @@ Transform::Transform() : ComponentI(), position(0.0f), scale(1.0f), rotation(0.0
 Transform::Transform(float x, float y) : ComponentI(), position(x, y), scale(1.0f), rotation(0.0f),
 											parent_matrix(1.0f) {}
 
+glm::vec2 Transform::normal_vector() const {
+	glm::vec4 forward = rotation_matrix() * glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
+	return {forward.x, forward.y};
+}
+
+glm::vec2 Transform::global_position() const {
+	glm::mat4 M = generate_matrix();
+	return {M[3][0], M[3][1]};
+}
+glm::vec2 Transform::global_scale() const {
+	glm::mat4 M = generate_matrix();
+	glm::vec3 s_x = {M[0][0], M[0][1], M[0][2]};
+	glm::vec3 s_y = {M[1][0], M[1][1], M[1][2]};
+	return {glm::length(s_x), glm::length(s_y)};
+}
+float Transform::global_rotation() const {
+	glm::mat4 M = generate_matrix();
+	glm::vec2 g_scale = global_scale();
+	float result = glm::degrees(glm::atan((M[0][1] / g_scale.x) / (M[0][0] / g_scale.x)));
+	if(M[0][0] / g_scale.x < 0.0f) result += 180.0f;
+	return result;
+}
+
 glm::mat4 Transform::generate_matrix() const {
 	return parent_matrix * translation_matrix() * rotation_matrix() * scale_matrix();
 }

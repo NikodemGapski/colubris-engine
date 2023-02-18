@@ -9,9 +9,21 @@ class Shader;
 
 // default mesh enumerator
 enum class DefaultMesh {
+	// blob shape (two triangles)
+	// required arguments: none
+	// optional arguments: none
 	Blob,
+	// rectangle
+	// required arguments: float width, height
+	// optional arguments: glm::vec3 colour
 	Rect,
+	// triangle
+	// required arguments: float x1, y1, x2, y2, x3, y3
+	// optional arguments: glm::vec3 colour
 	Triangle,
+	// cricle
+	// required arguments: float radius
+	// optional arguments: int number of segments, glm::vec3 colour
 	Circle
 };
 

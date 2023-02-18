@@ -1,5 +1,5 @@
 [RENDERING UPDATE]
-
+- OPTIMISE?!?!? 25 projectiles lags the whole engine!!
 - a bit more testing
 
 - fix constructor indentation
@@ -8,7 +8,7 @@
 [UI UPDATE]
 - what if a component has a pointer to a gameobject that's been detroyed? how to handle dangling pointers? [UI UPDATE]
 - general event system [UI UPDATE]
-- get global transform (so that parent_transform = ID), data extraction from the matrix [UI UPDATE]
+- prefabs [UI UPDATE]
 - a little issue with gameobjects having their render_layer set before registration (despite not yet belonging to the layer)
 - bug: if a new GameObject is created in a start() method, regitration has a problem
 
@@ -38,3 +38,8 @@ Update the docs:
 - DOCS: add hierarchy tree modification: set_parent, get_parent, get_children
 - DOCS: incorporate collisions into a layer
 - DOCS: currently a gameobject can belong to only one layer in a collection
+- DOCS: Renderer::rgb_colour, rgba_colour
+- DOCS: component_utils.hpp
+- DOCS: mesh vec2, transform.normal_vector()
+- DOCS: don't use negative scale in Transform
+- DOCS: transform.global_position() etc

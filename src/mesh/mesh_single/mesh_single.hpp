@@ -26,6 +26,9 @@ public:
 
 	// setup OpenGL buffers after setting the vertex/index data
 	void setup();
+
+	// get a list of positions of the vertices
+	std::vector<glm::vec2> get_vertex_positions() const;
 private:
 	uint VAO, VBO, EBO;
 	void render();

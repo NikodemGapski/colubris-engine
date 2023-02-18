@@ -5,15 +5,24 @@
 
 // Transform class
 struct Transform : public ComponentI {
-	// default (position = {0.0f, 0.0f}, scale = {1.0f, 1.0f}, rotation = 0.0f)
+	// default constructor (position = {0.0f, 0.0f}, scale = {1.0f, 1.0f}, rotation = 0.0f)
 	Transform(GameObject* parent);
+	// position = {x, y}, scale = {1.0f, 1.0f}, rotation = 0.0f
 	Transform(GameObject* parent, float x, float y);
-	// same constructors without the parent pointer
+	// default constructor (position = {0.0f, 0.0f}, scale = {1.0f, 1.0f}, rotation = 0.0f)
 	Transform();
+	// position = {x, y}, scale = {1.0f, 1.0f}, rotation = 0.0f
 	Transform(float x, float y);
 	
 	// generate transformation matrix from position, scale, rotation, and parent transform
 	glm::mat4 generate_matrix() const;
+
+	glm::vec2 global_position() const;
+	glm::vec2 global_scale() const;
+	float global_rotation() const;
+
+	// get a normal vector from the transform's rotation
+	glm::vec2 normal_vector() const;
 
 	// Transformations
 

@@ -101,6 +101,7 @@ GameObject::GameObject(
 	GameObject::register_gameobject(this);
 }
 
+
 GameObject::~GameObject() {
 	for(auto comp : components) {
 		delete comp.second;

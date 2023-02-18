@@ -24,12 +24,12 @@ MeshSingle::MeshSingle(DefaultMesh mesh_type,
 			
 			// initialise
 			vertices = {
-				Vertex({-30.0f, 0.0f, 0.0f}, {40.0f, 70.0f, 40.0f}),
-				Vertex({30.0f, 0.0f, 0.0f}, {50.0f, 60.0f, 30.0f}),
-				Vertex({0.0f, 30.0f, 0.0f}, {40.0f, 70.0f, 40.0f}),
-				Vertex({-10.0f, 0.0f, 0.0f}, {30.0f, 50.0f, 70.0f}),
-				Vertex({10.0f, 0.0f, 0.0f}, {30.0f, 50.0f, 70.0f}),
-				Vertex({0.0f, -10.0f, 0.0f}, {10.0f, 40.0f, 40.0f})
+				Vertex({-30.0f, 0.0f}, {40.0f, 70.0f, 40.0f}),
+				Vertex({30.0f, 0.0f}, {50.0f, 60.0f, 30.0f}),
+				Vertex({0.0f, 30.0f}, {40.0f, 70.0f, 40.0f}),
+				Vertex({-10.0f, 0.0f}, {30.0f, 50.0f, 70.0f}),
+				Vertex({10.0f, 0.0f}, {30.0f, 50.0f, 70.0f}),
+				Vertex({0.0f, -10.0f}, {10.0f, 40.0f, 40.0f})
 			};
 			indices = {
 				0, 1, 2,	// triangle 1
@@ -52,10 +52,10 @@ MeshSingle::MeshSingle(DefaultMesh mesh_type,
 			float x0 = -width/2;
 			float y0 = -height/2;
 			vertices = {
-				Vertex({x0, y0, 0.0f}, colour),
-				Vertex({x0 + width, y0, 0.0f}, colour),
-				Vertex({x0 + width, y0 + height, 0.0f}, colour),
-				Vertex({x0, y0 + height, 0.0f}, colour)
+				Vertex({x0, y0}, colour),
+				Vertex({x0 + width, y0}, colour),
+				Vertex({x0 + width, y0 + height}, colour),
+				Vertex({x0, y0 + height}, colour)
 			};
 			indices = {
 				0, 1, 2,	// triangle 1
@@ -77,9 +77,9 @@ MeshSingle::MeshSingle(DefaultMesh mesh_type,
 
 			// initialise
 			vertices = {
-				Vertex({x1, y1, 0.0f}, colour),
-				Vertex({x2, y2, 0.0f}, colour),
-				Vertex({x3, y3, 0.0f}, colour)
+				Vertex({x1, y1}, colour),
+				Vertex({x2, y2}, colour),
+				Vertex({x3, y3}, colour)
 			};
 			indices = {
 				0, 1, 2	// triangle 1
@@ -102,7 +102,7 @@ MeshSingle::MeshSingle(DefaultMesh mesh_type,
 			for(int i = 0; i < seg_num; ++i) {
 				float x = cos(glm::radians(360.0f / (float)seg_num * (float)i)) * radius;
 				float y = sin(glm::radians(360.0f / (float)seg_num * (float)i)) * radius;
-				vertices.push_back(Vertex({x, y, 0.0f}, colour));
+				vertices.push_back(Vertex({x, y}, colour));
 			}
 			for(int i = 1; i + 1 < seg_num; ++i) {
 				indices.push_back(0);
@@ -137,6 +137,14 @@ void MeshSingle::setup() {
 	// colour attribute
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, colour));
 	glEnableVertexAttribArray(1);
+}
+
+std::vector<glm::vec2> MeshSingle::get_vertex_positions() const {
+	std::vector<glm::vec2> result;
+	for(auto& v : vertices) {
+		result.push_back(v.position);
+	}
+	return result;
 }
 
 void MeshSingle::render() {

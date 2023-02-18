@@ -61,5 +61,16 @@ void Renderer::on_window_resize(GLFWwindow* window, int width, int height) {
 	Text::update_projection_matrix();
 }
 
+glm::vec4 Renderer::get_bg_colour() { return bg_colour; }
+void Renderer::set_bg_colour(glm::vec4 colour) {
+	bg_colour = colour;
+}
+glm::vec3 Renderer::rgb_colour(int r, int g, int b) {
+	return {(float)r / 255.0f, (float)g / 255.0f, (float)b / 255.0f};
+}
+glm::vec4 Renderer::rgba_colour(int r, int g, int b, int a) {
+	return {(float)r / 255.0f, (float)g / 255.0f, (float)b / 255.0f, (float)a / 255.0f};
+}
+
 int Renderer::get_window_width() { return window_width; }
 int Renderer::get_window_height() { return window_height; }

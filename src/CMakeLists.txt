@@ -14,6 +14,7 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/time/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/text/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/layers/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/hierarchy_tree/)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/include_bundles/)
 
 set(MODULES
 	${CMAKE_CURRENT_SOURCE_DIR}/renderer/
@@ -31,6 +32,7 @@ set(MODULES
 	${CMAKE_CURRENT_SOURCE_DIR}/text/
 	${CMAKE_CURRENT_SOURCE_DIR}/layers/
 	${CMAKE_CURRENT_SOURCE_DIR}/hierarchy_tree/
+	${CMAKE_CURRENT_SOURCE_DIR}/include_bundles/
 	${CMAKE_CURRENT_SOURCE_DIR}/
 	PARENT_SCOPE
 )
@@ -51,6 +53,7 @@ set(EXE_SOURCE
 	${TEXT_SOURCE}
 	${LAYERS_SOURCE}
 	${HIERARCHY_TREE_SOURCE}
+	${INCLUDE_BUNDLES_SOURCE}
 	${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 	PARENT_SCOPE
 )
