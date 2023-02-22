@@ -12,7 +12,7 @@ Transform::Transform() : ComponentI(), position(0.0f), scale(1.0f), rotation(0.0
 Transform::Transform(float x, float y) : ComponentI(), position(x, y), scale(1.0f), rotation(0.0f),
 											parent_matrix(1.0f) {}
 
-glm::vec2 Transform::normal_vector() const {
+glm::vec2 Transform::forward_vector() const {
 	glm::vec4 forward = rotation_matrix() * glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
 	return {forward.x, forward.y};
 }
@@ -32,7 +32,7 @@ float Transform::global_rotation() const {
 	glm::vec2 g_scale = global_scale();
 	float result = glm::degrees(glm::atan((M[0][1] / g_scale.x) / (M[0][0] / g_scale.x)));
 	if(M[0][0] / g_scale.x < 0.0f) result += 180.0f;
-	return result;
+	return math::ring_value(result, 360.0f);
 }
 
 glm::mat4 Transform::generate_matrix() const {

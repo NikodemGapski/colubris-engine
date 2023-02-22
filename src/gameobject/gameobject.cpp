@@ -247,35 +247,36 @@ void GameObject::register_gameobject(GameObject* obj) {
 	obj->node->parent->insert_child(obj->node);
 }
 void GameObject::destroy_gameobject(GameObject* obj) {
-	// insert this object and all of its descendants into to_destroy
-	std::function<void(HierarchyTree*)> destroy_subtree;
-	destroy_subtree = [&](HierarchyTree* node) {
-		to_destroy.insert(node->obj);
-		// 1. remove from names
-		auto found = names.find(obj->name);
-		if(found != names.end()) {
-			found->second.erase(obj);
-			if(found->second.size() == 0) {
-				names.erase(found);
-			}
-		}
-		// 2. remove from the layers
-		if(obj->main_layer != NULL) {
-			obj->main_layer->remove(obj);
-		}
-		if(obj->render_layer != NULL) {
-			obj->render_layer->remove(obj);
-		}
-		for(auto layer : obj->layers) {
-			layer.second->remove(obj);
-		}
-
-		node->obj->alive = false;
-		for(auto child : node->children) destroy_subtree(child);
-	};
 	destroy_subtree(obj->node);
 	// remove the subtree from the hierarchy tree
-	obj->node->destroy();
+	obj->node->clear();
+}
+void GameObject::destroy_subtree(HierarchyTree* node) {
+	to_destroy.insert(node->obj);
+
+	GameObject* obj = node->obj;
+	// 1. remove from names
+	auto found = names.find(obj->name);
+	if(found != names.end()) {
+		found->second.erase(obj);
+		if(found->second.size() == 0) {
+			names.erase(found);
+		}
+	}
+	// 2. remove from the layers
+	if(obj->main_layer != NULL) {
+		obj->main_layer->remove(obj);
+	}
+	if(obj->render_layer != NULL) {
+		obj->render_layer->remove(obj);
+	}
+	auto layers_copy = obj->layers;
+	for(auto layer : layers_copy) {
+		layer.second->remove(obj);
+	}
+
+	node->obj->alive = false;
+	for(auto child : node->children) destroy_subtree(child);
 }
 
 
@@ -301,7 +302,7 @@ void GameObject::update_z_indices() {
 }
 
 void GameObject::cache_hierarchy_tree() {
-	hierarchy_tree_copy = hierarchy_tree.copy();
+	hierarchy_tree_copy = hierarchy_tree.copy(NULL);
 }
 void GameObject::clear_cached_hierarchy_tree() {
 	hierarchy_tree_copy->destroy();

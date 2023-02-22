@@ -1,19 +1,23 @@
 # Colubris Game Engine
 
-Colubris is a simple 2D game engine written from scratch in OpenGL which supports, among other features:
+Colubris is a simple 2D game engine written from scratch in OpenGL, with the help of FreeType library, which supports, among other features:
+- a hierarchy tree of objects,
 - a component-based system for custom object behaviour,
 - 2D rendering of objects composed of polygons and circles,
+- text rendering,
 - collision detection of polygon colliders,
-- user input detection (keyboard).
+- user input detection (keyboard),
+- grouping and ordering objects in layers.
 
 Libraries used:
 - GLFW,
 - GLAD,
-- GLM.
+- GLM,
+- FreeType 2.
 
 ## Setup
 
-To setup the working environment, clone the repository, then configure and build the project using CMake.
+To setup the working environment, clone the repository, install the freetype2 library, then configure and build the project using CMake.
 
 ## Documentation
 ### Table of contents

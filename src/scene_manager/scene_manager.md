@@ -1,16 +1,25 @@
 # SceneManager
 
-`SceneManager` is a class responsible for managing the cycle of the scene, calling the cycle methods of: `Time`, `Renderer`, `GameObject` and `Collider` classes. Its methods are invoked in the `main.cpp` file and nowhere else.
+`SceneManager` is a class responsible for managing the game loop methods and scene instantiation. Its methods are invoked in the `main.cpp` file and nowhere else.
 
-## Game cycle
+## Game loop
+The game loop consists of two major steps:
+- updating the state of the scene,
+- rendering,
 
-Every cycle, the cycle actions are performed in the following order:
-1. Update time values.
+which are executed independently. That is, the engine performs updating with a fixed time step (`Time::delta_time()`) and does the rendering when it has enough spare time to do so.
+
+## Update order
+Every cycle, the update actions are performed in the following order:
+1. Update `Time::time()` value.
 2. Poll user input events.
-3. Register pending gameobjects and colliders.
-4. Detect collisions and call collision callback methods.
-5. Call `update()` methods on all gameobjects.
-6. Destroy pending gameobjects and colliders.
+3. Make a stable copy of the hierarchy tree (to safely traverse it when updating gameobjects).
+4. Execute operations in all functional layers.
+5. Call collision callbacks.
+6. Update all active gameobjects (call `update()` on their components).
+7. Register pending gameobjects.
+8. Destroy pending gameobjects (including the ones which have just been registered and immediately destroyed).
+9. Update global transform and z_index values.
 
 ## In the beginning, there was only void...
 

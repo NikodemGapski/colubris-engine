@@ -22,14 +22,29 @@ void HierarchyTree::insert_child(HierarchyTree* node) {
 void HierarchyTree::remove_child(HierarchyTree* node) {
 	children.erase(node);
 }
-HierarchyTree* HierarchyTree::copy() const {
-	HierarchyTree* res = new HierarchyTree(obj, parent);
-	for(auto child : children) res->children.insert(child->copy());
+HierarchyTree* HierarchyTree::copy(HierarchyTree* new_parent) const {
+	HierarchyTree* res = new HierarchyTree(obj, new_parent);
+	for(auto child : children) res->children.insert(child->copy(res));
 	return res;
 }
 void HierarchyTree::destroy() {
 	if(parent != NULL) parent->remove_child(this);
-	for(auto child : children) child->destroy();
+	// make a stable copy of children
+	auto children_copy = children;
+	for(auto child : children_copy) {
+		child->destroy();
+	}
+
+	delete this;
+}
+void HierarchyTree::clear() {
+	if(parent != NULL) parent->remove_child(this);
+
+	if(obj != NULL) obj->node = NULL;
+	// make a stable copy of children
+	auto children_copy = children;
+	for(auto child : children_copy) child->clear();
+
 	delete this;
 }
 

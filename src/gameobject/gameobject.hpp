@@ -180,11 +180,17 @@ private:
 	// remove all pending gameobjects from the scene
 	static void destroy_pending();
 
+	// hierarchy tree traversal
+
+	// insert this object and all of its descendants into to_destroy
+	static void destroy_subtree(HierarchyTree* node);
+
 // ----- FRIENDS -----
 	friend class MainLayer;
 	friend class RenderLayer;
 	friend class Layer;
 	friend class SceneManager;
+	friend class HierarchyTree;
 
 // DEBUG
 public:

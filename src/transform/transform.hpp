@@ -21,8 +21,8 @@ struct Transform : public ComponentI {
 	glm::vec2 global_scale() const;
 	float global_rotation() const;
 
-	// get a normal vector from the transform's rotation
-	glm::vec2 normal_vector() const;
+	// get a normalised forward vector from the transform's rotation
+	glm::vec2 forward_vector() const;
 
 	// Transformations
 

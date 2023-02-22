@@ -32,10 +32,10 @@ int main() {
 		lag_time += cur_time - prev_time;
 		prev_time = cur_time;
 		// update the number of times which should have been updated by the time we start the lag loop for the first time
-		while(lag_time >= Time::ms_per_render_frame()) {
+		while(lag_time >= Time::delta_time()) {
 			process_input(window);
 			SceneManager::update();
-			lag_time -= Time::ms_per_render_frame();
+			lag_time -= Time::delta_time();
 		}
 
 		// rendering

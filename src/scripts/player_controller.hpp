@@ -3,20 +3,40 @@
 #include "bullet.hpp"
 #include "renderer.hpp"
 #include "collider.hpp"
+#include "text.hpp"
+#include "render_layer.hpp"
+#include "game_controller.hpp"
 
 class PlayerController : public ComponentI {
 public:
 	PlayerController(GameObject* parent, GameObject* shoot_position) :
-	ComponentI(parent), speed(100.0f), rotation_speed(100.0f), shoot_position(shoot_position) {}
+	ComponentI(parent), speed(150.0f), rotation_speed(100.0f), shoot_position(shoot_position), alive(true) {}
 
-	void start() {
-		
-	}
+	void start() {}
+
 	void update() {
+		if(!GameController::game_on) return;
+
+		if(!alive) {
+			GameController::game_on = false;
+			std::cout<<"You died :(\n";
+			// print Game Over!
+			GameObject* text = new GameObject("Game Over", NULL);
+			RenderLayer::find_layer("UI")->add(text);
+			text->add_component<Text>(new Text(text, "Game Over!", Renderer::rgb_colour(230, 230, 230)));
+			text->transform->position = {230.0f, 400.0f};
+		}
 		move();
 		shoot();
 	}
+
+	void on_collision(GameObject* other) {
+		if(alive && other->get_name() == "Enemy") {
+			alive = false;
+		}
+	}
 private:
+	bool alive;
 	float speed, rotation_speed;
 	GameObject* shoot_position;
 

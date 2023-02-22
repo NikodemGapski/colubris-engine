@@ -13,12 +13,6 @@
 Shader Text::shader;
 std::unordered_map<char, Character> Text::characters;
 
-Text::Text(GameObject* parent) : ComponentI(parent) {
-	setup();
-}
-Text::Text(GameObject* parent, std::string text) : ComponentI(parent), text(text) {
-	setup();
-}
 Text::Text(GameObject* parent, std::string text, glm::vec3 colour) : ComponentI(parent), text(text), colour(colour) {
 	setup();
 }

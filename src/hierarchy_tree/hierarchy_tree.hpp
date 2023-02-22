@@ -30,8 +30,10 @@ public:
 	void insert_child(HierarchyTree* node);
 	// remove the node as the child
 	void remove_child(HierarchyTree* node);
-	// make a copy of the tree structure
-	HierarchyTree* copy() const;
+	// make a copy of the tree structure with the new_parent as the parent
+	HierarchyTree* copy(HierarchyTree* new_parent) const;
 	// destroy, deallocate the tree structure and detach as child
 	void destroy();
+	// destroy, deallocate the tree structure, detach as child, AND clear the obj's node field
+	void clear();
 };

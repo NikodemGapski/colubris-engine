@@ -1,5 +1,6 @@
 #pragma once
 #include "component_utils.hpp"
+#include "game_controller.hpp"
 
 class Bullet : public ComponentI {
 public:
@@ -7,7 +8,13 @@ public:
 
 	void start() {}
 	void update() {
-		game_object->transform->position += game_object->transform->normal_vector() * speed * Time::delta_time();
+		if(!GameController::game_on) return;
+
+		game_object->transform->position += game_object->transform->forward_vector() * speed * Time::delta_time();
+		
+		if(glm::length(game_object->transform->position) > 1500.0f) {
+			GameObject::destroy_gameobject(game_object);
+		}
 	}
 private:
 	float speed;

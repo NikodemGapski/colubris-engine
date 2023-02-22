@@ -3,8 +3,9 @@
 #include "transform.hpp"
 #include "collider.hpp"
 #include "player_controller.hpp"
+#include "enemy_spawner.hpp"
 
-void create_player() {
+GameObject* create_player() {
 	GameObject* player = new GameObject("Player", NULL);
 	player->get_component<Transform>()->position = {200.0f, 200.0f};
 
@@ -40,6 +41,20 @@ void create_player() {
 
 	// player script
 	player->add_component<PlayerController>(new PlayerController(player, shoot_position));
+
+	return player;
+}
+
+GameObject* create_score() {
+	GameObject* score = new GameObject("Score", NULL);
+	score->transform->position = {20.0f, 700.0f};
+	score->transform->scale *= 0.5f;
+
+	Text* text = new Text(score, "Score 0", Renderer::rgb_colour(230, 230, 230));
+	score->add_component<Text>(text);
+	GameController::score = text;
+
+	return score;
 }
 
 void SceneManager::instantiate_custom_objects() {
@@ -47,5 +62,12 @@ void SceneManager::instantiate_custom_objects() {
 	Renderer::set_bg_colour(Renderer::rgba_colour(0, 51, 102, 255));
 
 	// Player
-	create_player();
+	GameObject* player = create_player();
+
+	// Enemy spawner
+	GameObject* spawner = new GameObject("Enemy Spawner", NULL);
+	spawner->add_component<EnemySpawner>(new EnemySpawner(spawner, player));
+
+	// Score
+	GameObject* score = create_score();
 }

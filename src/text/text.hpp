@@ -8,12 +8,8 @@
 class Text : public ComponentI {
 // ----- NON-STATIC MEMBERS -----
 public:
-	// create a Text object with no text
-	Text(GameObject* parent);
-	// create a Text object from the specified text
-	Text(GameObject* parent, std::string text);
 	// create a Text object from the specified text, of the given colour
-	Text(GameObject* parent, std::string text, glm::vec3 colour);
+	Text(GameObject* parent, std::string text = "", glm::vec3 colour = glm::vec3(0));
 
 	std::string text;
 	glm::vec3 colour;
