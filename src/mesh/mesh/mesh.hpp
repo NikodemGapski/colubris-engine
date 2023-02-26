@@ -11,7 +11,7 @@ class Shader;
 enum class DefaultMesh {
 	// blob shape (two triangles)
 	// required arguments: none
-	// optional arguments: none
+	// optional arguments: glm::vec3 colour
 	Blob,
 	// rectangle
 	// required arguments: float width, height

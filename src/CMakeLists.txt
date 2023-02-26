@@ -10,6 +10,7 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/colliders/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/scene_manager/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/transform/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/math/)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/random/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/time/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/text/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/layers/)
@@ -28,6 +29,7 @@ set(MODULES
 	${CMAKE_CURRENT_SOURCE_DIR}/scene_manager/
 	${CMAKE_CURRENT_SOURCE_DIR}/transform/
 	${CMAKE_CURRENT_SOURCE_DIR}/math/
+	${CMAKE_CURRENT_SOURCE_DIR}/random/
 	${CMAKE_CURRENT_SOURCE_DIR}/time/
 	${CMAKE_CURRENT_SOURCE_DIR}/text/
 	${CMAKE_CURRENT_SOURCE_DIR}/layers/
@@ -49,6 +51,7 @@ set(EXE_SOURCE
 	${SCENE_MANAGER_SOURCE}
 	${TRANSFORM_SOURCE}
 	${MATH_SOURCE}
+	${RANDOM_SOURCE}
 	${TIME_SOURCE}
 	${TEXT_SOURCE}
 	${LAYERS_SOURCE}

@@ -74,3 +74,4 @@ glm::vec4 Renderer::rgba_colour(int r, int g, int b, int a) {
 
 int Renderer::get_window_width() { return window_width; }
 int Renderer::get_window_height() { return window_height; }
+glm::vec2 Renderer::get_window_dimensions() { return {window_width, window_height}; }

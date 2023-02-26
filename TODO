@@ -1,5 +1,4 @@
 [RENDERING UPDATE]
-- OPTIMISE?!?!?
 - a bit more testing
 
 - fix constructor indentation
@@ -13,8 +12,13 @@
 - a little issue with gameobjects having their render_layer set before registration (despite not yet belonging to the layer)
 - bug: if a new GameObject is created in a start() method, regitration has a problem
 - text aligning
+- camera
+- drawing collider outline for debugging
+- faster collision detection for circles, sweeping
 
 Update the docs:
+- DOCS: new math functions
+- DOCS: new Renderer method
 - DOCS: text size/resolution? font type?
 - DOCS: every gameobject MUST HAVE a transform component
 - DOCS: remember about the compiler flag for the freetype library
@@ -38,3 +42,4 @@ Update the docs:
 - DOCS: currently a gameobject can belong to only one layer in a collection
 - DOCS: Renderer::rgb_colour, rgba_colour
 - DOCS: component_utils.hpp
+- DOCS: randomness with a seed

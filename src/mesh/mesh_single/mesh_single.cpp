@@ -20,16 +20,18 @@ MeshSingle::MeshSingle(DefaultMesh mesh_type,
 	glm::vec3 default_colour = {0.7f, 0.7f, 0.7f};
 	switch(mesh_type) {
 		case DefaultMesh::Blob: {
-			// arguments required: none
+			// arguments required: none, optional: colour
+			glm::vec3 colour = default_colour;
+			if(vec3_args.size() > 0) colour = vec3_args[0];
 			
 			// initialise
 			vertices = {
-				Vertex({-30.0f, 0.0f}, {40.0f, 70.0f, 40.0f}),
-				Vertex({30.0f, 0.0f}, {50.0f, 60.0f, 30.0f}),
-				Vertex({0.0f, 30.0f}, {40.0f, 70.0f, 40.0f}),
-				Vertex({-10.0f, 0.0f}, {30.0f, 50.0f, 70.0f}),
-				Vertex({10.0f, 0.0f}, {30.0f, 50.0f, 70.0f}),
-				Vertex({0.0f, -10.0f}, {10.0f, 40.0f, 40.0f})
+				Vertex({-30.0f, 0.0f}, colour),
+				Vertex({30.0f, 0.0f}, colour),
+				Vertex({0.0f, 30.0f}, colour),
+				Vertex({-10.0f, 0.0f}, colour),
+				Vertex({10.0f, 0.0f}, colour),
+				Vertex({0.0f, -10.0f}, colour)
 			};
 			indices = {
 				0, 1, 2,	// triangle 1

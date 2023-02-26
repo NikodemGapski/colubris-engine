@@ -16,6 +16,12 @@ namespace math {
 	// are x and y equal (with EPS error)
 	bool eq(float x, float y);
 
+	// return the value x clamped in range (min, max)
+	float clamp(float x, float min, float max);
+
+	// return the absolute value of x
+	int abs(int x);
+
 	// --- Basic templates ---
 
 	template<typename T>
@@ -54,6 +60,12 @@ namespace math {
 		}
 	};
 	
+	// --- Float to int operations ---
+
+	// greatest integer lower or equal to x
+	int floor(float x);
+	// integer of greatest absolute value which is lower or equal to x
+	int trunc(float x);
 
 	// --- Ranges operations ---
 

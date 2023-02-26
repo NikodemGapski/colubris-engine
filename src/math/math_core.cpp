@@ -12,6 +12,23 @@ namespace math {
 		return is_zero(x - y);
 	}
 
+	float clamp(float x, float min, float max) {
+		if(x < min) return min;
+		if(x > max) return max;
+		return x;
+	}
+
+	int abs(int x) {
+		return x > 0 ? x : -x;
+	}
+
+	int floor(float x) {
+		return std::floor(x);
+	}
+	int trunc(float x) {
+		return std::trunc(x);
+	}
+
 	bool belongs_to(float c, float a, float b) {
 		if(a > b) swap(a, b);
 		return (a <= c && c <= b);

@@ -47,6 +47,7 @@ GameObject* create_player() {
 
 GameObject* create_score() {
 	GameObject* score = new GameObject("Score", NULL);
+	RenderLayer::find_layer("UI")->add(score);
 	score->transform->position = {20.0f, 700.0f};
 	score->transform->scale *= 0.5f;
 

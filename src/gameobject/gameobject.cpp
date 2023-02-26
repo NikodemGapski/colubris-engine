@@ -229,7 +229,7 @@ GameObject* GameObject::find_one(std::string name) {
 	auto found = names.find(name);
 	if(found == names.end()) return NULL;
 	if(found->second.size() > 1) {
-		std::cout<<"Warning: Layer::get_gameobject_by_name(std::string): requested one gameobject, multiple exist\n";
+		std::cout<<"Warning: GameObject::find_one(std::string): requested one gameobject, multiple exist\n";
 	}
 	// return the first element in the set of gameobjects with the specified name
 	return *found->second.begin();
