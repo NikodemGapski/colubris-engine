@@ -44,6 +44,12 @@ Utilities:
 - [`math`](src/math/math.md)
 - [`Random`](src/random/random.md)
 
+Example scenes:
+- [*Shoot the triangle*](src/scripts/v1.1-example-01/example.md)
+</br> <img src="src/scripts/v1.1-example-01/example-01-img-1.png" width="300"/>
+- [*Sheep herder*](src/scripts/v1.1-example-02/example.md)
+</br> <img src="src/scripts/v1.1-example-02/example-02-img-2.png" width="300"/>
+
 Additional insights:
 - [`HierarchyTree`](src/hierarchy_tree/hierarchy_tree.md)
 
