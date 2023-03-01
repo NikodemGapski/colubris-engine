@@ -3,7 +3,7 @@
 // forward declaration
 class GameObject;
 
-#define parent_transform game_object->get_component<Transform>() // a handy quick alias for the parent's transform
+#define parent_transform game_object->transform // a handy quick alias for the parent's transform
 
 class ComponentI {
 public:

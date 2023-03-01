@@ -1,0 +1,4 @@
+set(INCLUDE_BUNDLES_SOURCE
+	${CMAKE_CURRENT_SOURCE_DIR}/component_utils.hpp
+	PARENT_SCOPE
+)

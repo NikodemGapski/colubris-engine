@@ -9,17 +9,37 @@ enum class DefaultMesh;
 
 
 class MeshSingle {
+// ----- NON-STATIC MEMBERS -----
 public:
-	MeshSingle(); // default constructor (empty shape)
-	MeshSingle(DefaultMesh mesh_type, float width = 0.0f, float height = 0.0f); // default shape constructor (creates default shape)
-	MeshSingle(float radius, int seg_num = 40); // circle constructor
+	// default constructor (empty shape)
+	MeshSingle();
+	// default shape constructor (creates one of default shapes)
+	MeshSingle(DefaultMesh mesh_type,
+				std::vector<float> float_args,
+				std::vector<int> int_args,
+				std::vector<glm::vec3> vec3_args);
 
-	std::vector<Vertex> vertices; // a list of vertices
-	std::vector<uint> indices; // a list of indices
+	// a list of vertices
+	std::vector<Vertex> vertices;
+	// a list of indices
+	std::vector<uint> indices;
 
-	void setup(); // setup OpenGL buffers after setting the vertex/index data
+	// setup OpenGL buffers after setting the vertex/index data
+	void setup();
+
+	// get a list of positions of the vertices
+	std::vector<glm::vec2> get_vertex_positions() const;
 private:
 	uint VAO, VBO, EBO;
-	void render(Shader& shader);
+	void render();
+
+// ----- STATIC MEMBERS -----
+private:
+	static Shader shader;
+	static void init();
+	static void update_projection_matrix();
+
 	friend class Mesh;
+	friend class SceneManager;
+	friend class Renderer;
 };

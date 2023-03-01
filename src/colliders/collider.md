@@ -4,7 +4,7 @@ Colliders are components that can detect if they collide with each other.
 
 ## Collider
 
-### Non-static members
+### Non-static public members
 
 `Collider` has a non-static member variable
 - `std::vector<ColliderShape> shapes` (a list of shapes that make up the whole collider)
@@ -22,28 +22,13 @@ The following constructors are available:
 - `Collider(GameObject* parent)` (creates a collider with no shapes),
 - `Collider(GameObject* parent, std::vector<ColliderShape> shapes)` (creates a collider with given shapes).
 
-> All constructors register the collider to the scene by default and the destructor properly destroys it.
-
 ### Static members and registration
 
 `Collider` class has the following static methods:
 - `bool collide(const Collider&, const Collider&)` (whether two colliders collide),
 - `std::vector<glm::vec2> collision_points(const Collider&, const Collider&)` (returns a list of collision points of two colliders - or an empty list if no collision occurs),
 
-> Note that the `collide` method can be significantly faster than `collision_points`, so, for better performance, try to avoid using the latter for collision detection in your code.
-
-- `void register_collider(Collider*)`,
-- `void destroy_collider(Collider*)`.
-
-In order for a collider to be exist in the scene, it must be registered. The last two methods revolve around doing just that. In general, all of the `Collider`'s constructors and destructors handle the registration process themselves, but, if for some reason the developer wants to register or destroy a collider in a different manner, they can achieve it using the said static methods.
-
-> It is important to note that multiple calls of the registration methods stated above are permitted, as the list of colliders in the scene is represented as a set of pointers and these methods call .insert() and .erase() methods on that set.
-
-> Another thing to remember is that colliders are not created nor destroyed immediately, only at specific moments in each cycle:
-> - creation happens at the start of each cycle,
-> - destruction happens at the end of each cycle.
->
-> For more information on the game cycle see the `SceneManager` documentation.
+> Note that the `collide` method can be significantly faster than `collision_points`, because it returns `true` the moment it finds any collision, so, for better performance, try to avoid using the latter for collision detection in your code.
 
 ## ColliderShape
 
@@ -68,7 +53,7 @@ The following static methods are available:
 - `bool collide(const ColliderShape&, const ColliderShape&)` (whether two shapes collide - some of their segments intersect),
 - `std::vector<glm::vec2> collision_points(const ColliderShape&, const ColliderShape&)` (returns a list of collision points of two shapes - or an empty list if no collision occurs).
 
-> Note that the `collide` method can be significantly faster than `collision_points`, so, for better performance, try to avoid using the latter for collision detection in your code.
+> Note that the `collide` method can be significantly faster than `collision_points`, because it returns `true` the moment it finds any collision, so, for better performance, try to avoid using the latter for collision detection in your code.
 
 ## BoundingBox
 

@@ -2,55 +2,42 @@
 #include <glad.h>
 #include <GLFW/glfw3.h>
 #include "scene_manager.hpp"
+#include "renderer.hpp"
+#include "time.hpp"
 
-// window resize
-void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
-	glViewport(0, 0, width, height);
-}
-
-// input processing
+// closing the window
 void process_input(GLFWwindow* window) {
-	if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+	if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
 	}
 }
 
 int main() {
-	// initialise glfw
-	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-	// create and open a window
-	GLFWwindow* window = glfwCreateWindow(800, 800, "Shaders go wild", NULL, NULL);
+	// initialise the renderer
+	GLFWwindow* window = Renderer::init();
 	if(window == NULL) {
-		std::cout<<"Failed to create a window\n";
-		glfwTerminate();
 		return -1;
 	}
-	glfwMakeContextCurrent(window);
-
-	// initialise glad
-	if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-		std::cout<<"Failed to initialise GLAD\n";
-		glfwTerminate();
-		return -1;
-	}
-
-	// set viewport size
-	glViewport(0, 0, 800, 800);
-	// enable automatic resize
-	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
 	// initialise
 	SceneManager::init(window);
 
 	// render loop
-	while(!glfwWindowShouldClose(window)) {
-		process_input(window);
+	// render lag related variables
+	float prev_time = glfwGetTime();
+	float lag_time = 0.0f;
 
-		SceneManager::update();
+	while(!glfwWindowShouldClose(window)) {
+		// update render lag variables
+		float cur_time = glfwGetTime();
+		lag_time += cur_time - prev_time;
+		prev_time = cur_time;
+		// update the number of times which should have been updated by the time we start the lag loop for the first time
+		while(lag_time >= Time::delta_time()) {
+			process_input(window);
+			SceneManager::update();
+			lag_time -= Time::delta_time();
+		}
+
 		// rendering
 		SceneManager::render();
 

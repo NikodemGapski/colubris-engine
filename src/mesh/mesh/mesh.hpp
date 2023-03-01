@@ -9,23 +9,42 @@ class Shader;
 
 // default mesh enumerator
 enum class DefaultMesh {
+	// blob shape (two triangles)
+	// required arguments: none
+	// optional arguments: glm::vec3 colour
 	Blob,
-	Rect
+	// rectangle
+	// required arguments: float width, height
+	// optional arguments: glm::vec3 colour
+	Rect,
+	// triangle
+	// required arguments: float x1, y1, x2, y2, x3, y3
+	// optional arguments: glm::vec3 colour
+	Triangle,
+	// cricle
+	// required arguments: float radius
+	// optional arguments: int number of segments, glm::vec3 colour
+	Circle
 };
 
 
 class Mesh : public ComponentI {
 public:
 	Mesh(GameObject* parent, std::vector<MeshSingle> submeshes);
-	Mesh(GameObject* parent, DefaultMesh mesh_type, float width = 0.0f, float height = 0.0f);
-	Mesh(GameObject* parent, float radius, int seg_num = 40);
+	// default shape constructor (creates one of default shapes)
+	Mesh(GameObject* parent, 	DefaultMesh mesh_type,
+								std::vector<float> float_args,
+								std::vector<int> int_args,
+								std::vector<glm::vec3> vec3_args);
 
-	std::vector<MeshSingle> submeshes; // a list of submeshes
+	// a list of submeshes
+	std::vector<MeshSingle> submeshes;
 
 	// unused, necessary for inheritance
+	
 	void start();
 	void update();
 private:
-	void render(Shader& shader);
-	friend class GameObject;
+	void render();
+	friend class SceneManager;
 };

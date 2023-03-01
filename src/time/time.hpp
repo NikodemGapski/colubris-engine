@@ -6,9 +6,8 @@ public:
 	static float time();
 	// get current delta time
 	static float delta_time();
-
 private:
-	static float _prev_time, _cur_time, _delta_time;
+	static float _cur_time, _delta_time;
 	// initialise Time class
 	static void init();
 	// update Time class

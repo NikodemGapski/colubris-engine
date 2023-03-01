@@ -3,8 +3,8 @@
 
 struct Vertex {
 	Vertex(); // initialise with 0s
-	Vertex(glm::vec3 pos, glm::vec3 col);
+	Vertex(glm::vec2 pos, glm::vec3 col);
 
-	glm::vec3 position;
+	glm::vec2 position;
 	glm::vec3 colour;
 };

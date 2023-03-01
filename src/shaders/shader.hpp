@@ -12,9 +12,10 @@ public:
 	void use(); // bind this shader program
 
 	// uniform value setters
-	void setInt(std::string name, int value);
-	void setFloat(std::string name, float value);
-	void setMat4(std::string name, glm::mat4 value);
+	void set(std::string name, int value);
+	void set(std::string name, float value);
+	void set(std::string name, glm::mat4 value);
+	void set(std::string name, glm::vec3 value);
 	
 private:
 	uint ID; // program ID

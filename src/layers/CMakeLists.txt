@@ -1,0 +1,13 @@
+set(LAYERS_SOURCE
+	${CMAKE_CURRENT_SOURCE_DIR}/base_layer.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/base_layer.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/main_layer.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/main_layer.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/render_layer.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/render_layer.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/layer.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/layer.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/layer_collection.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/layer_collection.cpp
+	PARENT_SCOPE
+)

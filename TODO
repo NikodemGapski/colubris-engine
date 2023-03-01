@@ -1,0 +1,14 @@
+[UI UPDATE]
+- what if a component has a pointer to a gameobject that's been detroyed? how to handle dangling pointers? - HANDLES [UI UPDATE]
+- general optimisations (data-oriented design)
+- general event system [UI UPDATE]
+- prefabs [UI UPDATE]
+- a little issue with gameobjects having their render_layer set before registration (despite not yet belonging to the layer)
+- bug: if a new GameObject is created in a start() method, regitration has a problem
+- text aligning
+- camera
+- drawing collider outline for debugging
+- faster collision detection for circles, sweeping (as a general collision optimisation)
+- change font type, add integer font size (?)
+- find an alternative to the 'handy transform variable` in gameobject (it's not safe being modifiable)
+- is compounding z-index really a good thing? what if we don't want to have objects pass between parents and children, but we want to order the children in a certain way?

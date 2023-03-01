@@ -33,13 +33,13 @@ void Input::poll_events() {
 	for(int i = 0; i < key_count; ++i) {
 		int state = glfwGetKey(window, i);
 		if(state == GLFW_PRESS) {
-			if(key_states[i] == KeyState::RELEASED) {
+			if(key_states[i] == KeyState::RELEASED || key_states[i] == KeyState::JUST_RELEASED) {
 				key_states[i] = KeyState::JUST_PRESSED;
 			}else {
 				key_states[i] = KeyState::PRESSED;
 			}
 		}else {
-			if(key_states[i] == KeyState::PRESSED) {
+			if(key_states[i] == KeyState::PRESSED || key_states[i] == KeyState::JUST_PRESSED) {
 				key_states[i] = KeyState::JUST_RELEASED;
 			}else {
 				key_states[i] = KeyState::RELEASED;

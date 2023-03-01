@@ -4,8 +4,7 @@ A component is a piece of code that can be attached to a gameobject and that is 
 access its public members freely. Certain component implementations are available by default
 (like `Transform`, `Mesh`, or `Collider`), but new ones can be designed by the developer.
 
-> Each gameobject can only have one instance of a given component type, since all components
-are registered in an unordered_map with their types as keys.
+> Each gameobject can only have one instance of a given component type, since all components are registered in an unordered_map with their types as keys.
 
 ## Interface
 
@@ -34,4 +33,8 @@ Usually if you want to access the parent's component of type `T`, you need to wr
 However, as the `Transform` component is very commonly accessed, there is an alias to retrieve it faster:
 ```c++
 	parent_transform;
+```
+or simply
+```c++
+	game_object->transform;
 ```

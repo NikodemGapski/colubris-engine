@@ -17,6 +17,7 @@ The available methods are the following:
 - `is_key_up(int key_code)`,
 - `key_just_released(int key_code)`.
 
-## Private methods
+## Insight
 
-The `poll_events()` method communicates with GLFW and is used once per cycle by the `SceneManager`.
+All input events are polled and remembered at the start of every game cycle.
+> For more information about the game loop order, see the [`SceneManager`](../scene_manager/scene_manager.md) documentation.

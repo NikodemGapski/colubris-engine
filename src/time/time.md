@@ -4,5 +4,5 @@
 
 ## Public methods
 The available methods are the following:
-- `float time()` (get the current time in the scene)
-- `float delta_time()` (get the amount of time eclipsed from the start of the previous cycle to the start of the current one)
+- `float time()` (the current time in the scene, incremented by `delta_time()` in every update cycle),
+- `float delta_time()` (a fixed timestep of the update loop).
