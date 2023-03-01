@@ -26,18 +26,26 @@ Basic concepts:
 - [`Component`](src/component/component.md)
 - [`Transform`](src/transform/transform.md)
 - [`SceneManager`](src/scene_manager/scene_manager.md)
+- [Scripts](src/scripts/scripts.md)
 - [`Time`](src/time/time.md)
 - [`Input`](src/input/input.md)
-- [Scripts](src/scripts/scripts.md)
 
 Intermediate concepts:
-- [`Collider`](src/colliders/collider.md)
-- [`Shader`](src/shaders/shader.md)
 - [`Renderer`](src/renderer/renderer.md)
 - [`Mesh`](src/mesh/mesh.md)
+- [`Text`](src/text/text.md)
+- [`Collider`](src/colliders/collider.md)
 
-Additional information:
+Advanced concepts:
+- [Layers](src/layers/layers.md)
+- [`Shader`](src/shaders/shader.md)
+
+Utilities:
 - [`math`](src/math/math.md)
+- [`Random`](src/random/random.md)
+
+Additional insights:
+- [`HierarchyTree`](src/hierarchy_tree/hierarchy_tree.md)
 
 ## License
 

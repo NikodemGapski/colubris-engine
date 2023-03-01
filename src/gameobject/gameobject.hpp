@@ -70,7 +70,6 @@ public:
 
 	// get a map of all functional layers the gameobject belongs to
 	std::map<std::string, Layer*> get_layers() const;
-	// find a layer from the given collection
 
 	// Components
 

@@ -9,12 +9,11 @@ public:
 
 	PlayerController(GameObject* parent) : ComponentI(parent), speed(150.0f) {}
 
-	void start() {
-		game_object->transform->position = GameData::position(GameData::player_pos);
-	}
+	void start() {}
 
 	void update() {
 		move();
+		game_object->transform->position = GameData::position(GameData::player_pos);
 	}
 
 private:

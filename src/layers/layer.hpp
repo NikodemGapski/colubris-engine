@@ -8,6 +8,7 @@ class LayerCollection;
 class Layer : public BaseLayer {
 // ----- NON-STATIC MEMBERS -----
 public:
+	bool is_active() const;
 	// change the name
 	// (no effect if a different layer with such name already exists in the collection)
 	void rename(std::string name);

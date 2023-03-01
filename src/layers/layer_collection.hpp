@@ -15,7 +15,7 @@ public:
 	std::string get_name() const;
 	// change name
 	// (no effect if a different collection with such name already exists)
-	void set_name(std::string name);
+	void rename(std::string name);
 	// get index
 	int get_index() const;
 	// change index
@@ -50,8 +50,12 @@ private:
 
 // ----- STATIC MEMBERS -----
 public:
+	// find a collection with the given name (returns NULL if none exist)
 	static LayerCollection* find_collection(std::string name);
+	// create a new collection with the given name and operation
+	// (beware: collection names must be unique, calling the method with an already existing name will have no effect)
 	static void add_collection(std::string name, std::function<void(GameObject*, GameObject*)> operation);
+	// destroys the collection with the given name (no effect if no such collection exists)
 	static void remove_collection(std::string name);
 
 private:

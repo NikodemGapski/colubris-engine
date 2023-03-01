@@ -11,6 +11,9 @@ float Random::rand(float min, float max) {
 	generate_next();
 	return min + (float)cur_value / (float)(mod / (max - min));
 }
+uint Random::get_seed() const {
+	return seed;
+}
 
 void Random::generate_next() {
 	ll next = ((ll)a * (ll)cur_value + (ll)c) % (ll)mod;

@@ -16,4 +16,7 @@ Basic utilities include:
 
 ### Setter methods
 
-Setter methods take the form of `setType(std::string name, type value)` and modify the shader's `uniform` variable named `name` to `value`. Types include: `int`, `float`, `glm::mat4`, `glm::vec3`.
+Setter methods set the uniform variables in the shader specified by their name. The methods are of the following form:
+- `set(std::string name, T value)`,
+
+where `T` is some type. Currently available types are: `int`, `float`, `glm::mat4`, `glm::vec3`.

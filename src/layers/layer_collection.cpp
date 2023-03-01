@@ -23,7 +23,7 @@ void LayerCollection::set_active(bool active) {
 std::string LayerCollection::get_name() const {
 	return name;
 }
-void LayerCollection::set_name(std::string name) {
+void LayerCollection::rename(std::string name) {
 	if(this->name == name) return;
 	// name already taken
 	if(find_collection(name) != NULL) return;

@@ -12,11 +12,12 @@ The available constructors are:
 
 Currently, the default meshes available are the following:
 - `Blob` (two triangles merged together; requires no parameters),
-- `Rect` (a rectangle; requires `float` width and `float` height parameters),
+- `Rect` (a rectangle centred at its origin; requires `float width` and `float height` parameters),
 - `Triangle` (a triangle; requires `6` `float` parameters [`x1, y1, x2, y2, x3, y3`]),
-- `Circle` (a circle; requires `float` radius parameter, allows for an `int` seg_num (resolution, set to `40` by default) parameter).
+- `Circle` (a circle; requires `float radius` parameter, allows for an `int seg_num` (resolution, set to `40` by default) parameter).
 
-All default meshes (except for `Blob`) allow for a `glm::vec3` colour parameter (in rgb format).
+All default meshes allow for a `glm::vec3` colour parameter (in normalised rgb format).
+
 ## Structure
 
 ### Mesh
@@ -34,7 +35,7 @@ All default meshes (except for `Blob`) allow for a `glm::vec3` colour parameter 
 ### Vertex
 `Vertex` class contains data about its:
 - `glm::vec3 position`,
-- `glm::vec3 colour` (in rgb format, in range `0.0f-1.0f`).
+- `glm::vec3 colour` (in normalised rgb format, that is in range `0.0f-1.0f`).
 
 ## Indices
 

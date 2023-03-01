@@ -4,7 +4,7 @@ Colliders are components that can detect if they collide with each other.
 
 ## Collider
 
-### Non-static members
+### Non-static public members
 
 `Collider` has a non-static member variable
 - `std::vector<ColliderShape> shapes` (a list of shapes that make up the whole collider)
@@ -28,7 +28,7 @@ The following constructors are available:
 - `bool collide(const Collider&, const Collider&)` (whether two colliders collide),
 - `std::vector<glm::vec2> collision_points(const Collider&, const Collider&)` (returns a list of collision points of two colliders - or an empty list if no collision occurs),
 
-> Note that the `collide` method can be significantly faster than `collision_points`, so, for better performance, try to avoid using the latter for collision detection in your code.
+> Note that the `collide` method can be significantly faster than `collision_points`, because it returns `true` the moment it finds any collision, so, for better performance, try to avoid using the latter for collision detection in your code.
 
 ## ColliderShape
 
@@ -53,7 +53,7 @@ The following static methods are available:
 - `bool collide(const ColliderShape&, const ColliderShape&)` (whether two shapes collide - some of their segments intersect),
 - `std::vector<glm::vec2> collision_points(const ColliderShape&, const ColliderShape&)` (returns a list of collision points of two shapes - or an empty list if no collision occurs).
 
-> Note that the `collide` method can be significantly faster than `collision_points`, so, for better performance, try to avoid using the latter for collision detection in your code.
+> Note that the `collide` method can be significantly faster than `collision_points`, because it returns `true` the moment it finds any collision, so, for better performance, try to avoid using the latter for collision detection in your code.
 
 ## BoundingBox
 

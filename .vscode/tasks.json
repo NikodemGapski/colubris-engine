@@ -10,7 +10,7 @@
                 "${file}",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}",
-				"-I/usr/include/freetype2"
+				// "-I/usr/include/freetype2"
             ],
             "options": {
                 "cwd": "${fileDirname}"

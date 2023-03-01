@@ -113,7 +113,9 @@ ll GameObject::get_id() const {
 }
 
 bool GameObject::is_active() const {
-	return alive && active && (main_layer == NULL || main_layer->is_active());
+	GameObject* parent = get_parent();
+	return alive && active && (main_layer == NULL || main_layer->is_active())
+	&& (parent == NULL || parent->is_active());
 }
 void GameObject::set_active(bool active) {
 	this->active = active;
@@ -168,7 +170,7 @@ void GameObject::set_parent(GameObject* new_parent) {
 }
 
 GameObject* GameObject::get_parent() const {
-	if(node->parent->is_root()) return NULL;
+	if(node == NULL || node->is_root() || node->parent->is_root()) return NULL;
 	return node->parent->obj;
 }
 

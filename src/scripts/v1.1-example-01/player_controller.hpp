@@ -24,7 +24,7 @@ public:
 			GameObject* text = new GameObject("Game Over", NULL);
 			RenderLayer::find_layer("UI")->add(text);
 			text->add_component<Text>(new Text(text, "Game Over!", Renderer::rgb_colour(230, 230, 230)));
-			text->transform->position = {230.0f, 400.0f};
+			text->transform->position = Renderer::get_window_dimensions() / 2.0f - glm::vec2(170.0f, 0.0f);
 		}
 		move();
 		shoot();

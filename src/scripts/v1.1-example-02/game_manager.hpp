@@ -11,16 +11,16 @@
 struct Flower {
 	GameObject* obj;
 	glm::vec2 pos;
-	Flower();
-	Flower(GameObject* obj, glm::vec2 pos);
+	Flower() : pos(glm::vec2(0.0f)), obj(NULL) {}
+	Flower(GameObject* obj, glm::vec2 pos) : pos(pos), obj(obj) {}
 };
 struct Tile {
 	GameObject* obj;
 	int i, j;
 	// tile type (0 - plains, 1 - forest, 2 - desert)
 	Type type;
-	Tile();
-	Tile(int i, int j, GameObject* obj, Type type);
+	Tile() : i(0), j(0), obj(NULL) {}
+	Tile(int i, int j, GameObject* obj, Type type) : i(i), j(j), obj(obj), type(type) {}
 };
 struct Chunk {
 	MainLayer* layer;
@@ -28,8 +28,8 @@ struct Chunk {
 	Tile tile;
 	int i, j;
 	std::vector<Flower> flowers;
-	Chunk();
-	Chunk(int i, int j);
+	Chunk() : i(0), j(0), layer(NULL), collision_layer(NULL) {}
+	Chunk(int i, int j) : i(i), j(j), layer(NULL), collision_layer(NULL) {}
 };
 
 class GameManager : public ComponentI {
@@ -221,13 +221,3 @@ private:
 		return {h_pos, v_pos};
 	}
 };
-
-// implementations of chunk and tile methods to avoid circular dependency on static methods
-Flower::Flower() : pos(glm::vec2(0.0f)), obj(NULL) {}
-Flower::Flower(GameObject* obj, glm::vec2 pos) : pos(pos), obj(obj) {}
-
-Chunk::Chunk() : i(i), j(j), layer(NULL), collision_layer(NULL) {}
-Chunk::Chunk(int i, int j) : i(i), j(j), layer(NULL), collision_layer(NULL) {}
-
-Tile::Tile() : i(0), j(0), obj(NULL) {}
-Tile::Tile(int i, int j, GameObject* obj, Type type) : i(i), j(j), obj(obj), type(type) {}

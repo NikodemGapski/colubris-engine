@@ -1,9 +1,3 @@
-[RENDERING UPDATE]
-- a bit more testing
-
-- fix constructor indentation
-
-
 [UI UPDATE]
 - what if a component has a pointer to a gameobject that's been detroyed? how to handle dangling pointers? - HANDLES [UI UPDATE]
 - general optimisations (data-oriented design)
@@ -14,32 +8,7 @@
 - text aligning
 - camera
 - drawing collider outline for debugging
-- faster collision detection for circles, sweeping
-
-Update the docs:
-- DOCS: new math functions
-- DOCS: new Renderer method
-- DOCS: text size/resolution? font type?
-- DOCS: every gameobject MUST HAVE a transform component
-- DOCS: remember about the compiler flag for the freetype library
-- DOCS: if an object is inactive, then its children are as well
-- DOCS: don't call update on a dead object; start method is always called
-- DOCS: handy transform pointer in GameObject class
-- DOCS: there is no void render layer
-- DOCS: add method that gets global z_index traversing just up the tree
-- DOCS: gameobject: is_alive (- make sure you don't assign a gameobject to a dead one [aka in the same frame it's been destroyed]) -> destroy the node right in the destroy_gameobject method, don't wait until pending
-- DOCS: register_pending method handles names and layers, but destroy_gameobject handles it too
-- DOCS: main layers, render layers, collision layers
-- DOCS: custom layers, layers can be used as chunks
-- DOCS: layer collections, operation (beware: called on all ordered pairs of objects)
-- DOCS: layers are responsible for gameobjects' layer pointers
-- DOCS: adding to a main/render layer removes from the current one
-- DOCS: list of LayerCollections, MainLayers, RenderLayers
-- DOCS: LayerCollection - unique name, list of Layers, operation method, active, z_index
-- DOCS: Layer - unique name per collection, list of objects, active, z_index
-- DOCS: add hierarchy tree modification: set_parent, get_parent, get_children
-- DOCS: incorporate collisions into a layer
-- DOCS: currently a gameobject can belong to only one layer in a collection
-- DOCS: Renderer::rgb_colour, rgba_colour
-- DOCS: component_utils.hpp
-- DOCS: randomness with a seed
+- faster collision detection for circles, sweeping (as a general collision optimisation)
+- change font type, add integer font size (?)
+- find an alternative to the 'handy transform variable` in gameobject (it's not safe being modifiable)
+- is compounding z-index really a good thing? what if we don't want to have objects pass between parents and children, but we want to order the children in a certain way?

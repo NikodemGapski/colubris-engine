@@ -6,6 +6,10 @@
 
 Layer::Layer(std::string name, LayerCollection* collection) : BaseLayer(name), collection(collection), index(0) {}
 
+bool Layer::is_active() const {
+	return collection->is_active() && active;
+}
+
 void Layer::rename(std::string name) {
 	if(this->name == name) return;
 	// name already taken

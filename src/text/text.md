@@ -2,6 +2,10 @@
 
 `Text` is a component class for rendering text.
 
+## Overview
+
+Currently the only font available is Roboto Black and all characters are rendered in 128p resolution. If you want to scale your text, use the `scale` field in the parent's `Transform` component.
+
 ## Fields
 
 The class comprises of the following public fields, which can be modified freely:

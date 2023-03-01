@@ -1,0 +1,4 @@
+set(SCRIPTS_SOURCE
+	${CMAKE_CURRENT_SOURCE_DIR}/initialisation.cpp
+	PARENT_SCOPE
+)
