@@ -38,7 +38,7 @@ The functional layer (`Layer`) is responsible for applying a certain operation (
 The `Layer` class offers the following public methods (apart from those shared by all layer types):
 - `int get_index()` (returns the index of the layer in the collection it belongs to; that index is used to determine the order in which functional layers in a collection are to be executed),
 - `set_index(int index)` (changes the index of the layer).
-> Note that the `is_active()` method also check if the collection the layer belongs to is active. Inactive layers are not executed
+> Note that the `is_active()` method also check if the collection the layer belongs to is active. Inactive layers are not executed.
 
 ### `LayerCollection`
 
@@ -52,7 +52,7 @@ The `LayerCollection` offers the following non-static public methods:
 - `rename(std::string name)` (changes the collection's name; beware that collection names are unique, calling the method with a name of a different collection will have no effect),
 - `int get_index()` (returns the index of the collection; that index is used to determine the order in which collections are executed),
 - `set_index()` (changes the collection's index),
-- `Layer* find(std::string name)` (returns a layer with the given name in the collection; NULL if no such layer exists).
+- `Layer* find(std::string name)` (returns a layer with the given name in the collection; NULL if no such layer exists),
 
 ... and the following static public methods:
 - `LayerCollection* find_collection(std::string name)` (finds a collection with the given name; NULL if no such collection exists),
@@ -63,4 +63,4 @@ The `LayerCollection` offers the following non-static public methods:
 
 Example use case of functional layers is an implementation of chunks (for a simple version of such approach check out the [*Sheep herder*](../scripts/v1.1-example-02/example.md) example scene).
 
-Collision system in the engine is also implemented in functional layers with the default collision layer being the 'world' layer and the layer collection called 'Collision'. All colliders are added to the 'world' layer in the constructor by default.
+Collision system in the engine is also implemented in functional layers with the default collision layer named 'world' and the layer collection called 'Collision'. All colliders are added to the 'world' layer in their constructor by default.

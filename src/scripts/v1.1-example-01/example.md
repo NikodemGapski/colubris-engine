@@ -12,7 +12,10 @@ Shoot down as many enemies as possible without getting touched by them.
 
 ### Controls
 Player movement:
-- position: up/down, left/right arrows
-- rotation: e - clockwise, w - counterclockwise
+- position: up/down, left/right arrows,
+- rotation: e - clockwise, w - counterclockwise.
+
+Shooting:
+- space bar.
 
 ![image](./example-01-img-2.png)
