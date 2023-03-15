@@ -13,11 +13,11 @@ Character::Character(FT_Face face, char c, uint _resolution) : resolution(_resol
 		return;
 	}
 	// load metrics
-	size = {face->glyph->metrics.width, face->glyph->metrics.height};
+	dimensions = {face->glyph->metrics.width, face->glyph->metrics.height};
 	bearing = {face->glyph->metrics.horiBearingX, face->glyph->metrics.horiBearingY};
 	advance = face->glyph->metrics.horiAdvance;
 	// normalise metrics
-	size /= resolution; bearing /= resolution; advance /= resolution;
+	dimensions /= resolution; bearing /= resolution; advance /= resolution;
 	// generate the texture
 	glGenTextures(1, &texture_id);
 	glBindTexture(GL_TEXTURE_2D, texture_id);
@@ -41,20 +41,24 @@ Character::Character(FT_Face face, char c, uint _resolution) : resolution(_resol
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-float Character::render(float x0, uint VBO) {
-	float x = x0 + (float)bearing.x;
-	float y = -(size.y - bearing.y);
+float Character::render(float x0, float scale, uint VBO) {
+	// scaled dimensions
+	glm::vec2 scaled_dimensions = dimensions * scale;
+	glm::vec2 scaled_bearing = bearing * scale;
+
+	float x = x0 + (float)scaled_bearing.x;
+	float y = -(scaled_dimensions.y - scaled_bearing.y);
 	// vertices[i] - {pos.x, pos.y, tex_coords.x, tex_coords.y}
 	// tex_coords start at the top left corner
 	float vertices[6][4] = {
 		// 1st triangle
-		{x, y + (float)size.y,			0.0f, 0.0f},
+		{x, y + scaled_dimensions.y,			0.0f, 0.0f},
 		{x, y,					0.0f, 1.0f},
-		{x + (float)size.x, y,			1.0f, 1.0f},
+		{x + scaled_dimensions.x, y,			1.0f, 1.0f},
 		// 2nd triangle
-		{x, y + (float)size.y,			0.0f, 0.0f},
-		{x + (float)size.x, y + (float)size.y, 1.0f, 0.0f},
-		{x + (float)size.x, y,			1.0f, 1.0f}
+		{x, y + scaled_dimensions.y,			0.0f, 0.0f},
+		{x + scaled_dimensions.x, y + scaled_dimensions.y, 1.0f, 0.0f},
+		{x + scaled_dimensions.x, y,			1.0f, 1.0f}
 	};
 	// bind the texture
 	glBindTexture(GL_TEXTURE_2D, texture_id);
@@ -65,5 +69,9 @@ float Character::render(float x0, uint VBO) {
 	// render the quad
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 
+	return advance * scale;
+}
+
+float Character::get_advance() const {
 	return advance;
 }

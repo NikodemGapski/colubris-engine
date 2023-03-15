@@ -21,10 +21,12 @@ public:
 			GameController::game_on = false;
 			std::cout<<"You died :(\n";
 			// print Game Over!
-			GameObject* text = new GameObject("Game Over", NULL);
-			RenderLayer::find_layer("UI")->add(text);
-			text->add_component<Text>(new Text(text, "Game Over!", Renderer::rgb_colour(230, 230, 230)));
-			text->transform->position = Renderer::get_window_dimensions() / 2.0f - glm::vec2(170.0f, 0.0f);
+			GameObject* game_over = new GameObject("Game Over", NULL);
+			RenderLayer::find_layer("UI")->add(game_over);
+			Text* text = new Text(game_over, "Game Over!", 1.0f, Renderer::rgb_colour(230, 230, 230));
+			text->change_font("Ubuntu Bold");
+			game_over->add_component<Text>(text);
+			game_over->transform->position = Renderer::get_window_dimensions() / 2.0f;
 		}
 		move();
 		shoot();

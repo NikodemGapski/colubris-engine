@@ -1,14 +1,38 @@
 [UI UPDATE]
+
+HANDLES
 - what if a component has a pointer to a gameobject that's been detroyed? how to handle dangling pointers? - HANDLES [UI UPDATE]
+- find an alternative to the 'handy transform variable` in gameobject (it's not safe being modifiable)
+
+OPTIMISATIONS
 - general optimisations (data-oriented design)
+- faster collision detection for circles, sweeping (as a general collision optimisation)
+
+NEW SYSTEMS
 - general event system [UI UPDATE]
-- prefabs [UI UPDATE]
-- a little issue with gameobjects having their render_layer set before registration (despite not yet belonging to the layer)
-- bug: if a new GameObject is created in a start() method, regitration has a problem
-- text aligning
+- error logging
+
+RENDERING
 - camera
 - drawing collider outline for debugging
-- faster collision detection for circles, sweeping (as a general collision optimisation)
-- change font type, add integer font size (?)
-- find an alternative to the 'handy transform variable` in gameobject (it's not safe being modifiable)
+- texture rendering
+- animation (?)
+
+FONT
+- dynamic scaling
+
+UI ELEMENTS
+- buttons, mouse interaction
+- draggable components
+- default shapes (text box, drop-down list, window)
+
+OTHERS
+- prefabs [UI UPDATE]
+
+BUGS AND ISSUES:
+- a little issue with gameobjects having their render_layer set before registration (despite not yet belonging to the layer)
+- bug: if a new GameObject is created in a start() method, regitration has a problem
 - is compounding z-index really a good thing? what if we don't want to have objects pass between parents and children, but we want to order the children in a certain way?
+
+
+----- DOCS -----

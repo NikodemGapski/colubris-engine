@@ -28,7 +28,7 @@ GameObject* create_score() {
 	score->transform->position = {20.0f, 700.0f};
 	score->transform->scale *= 0.5f;
 
-	Text* text = new Text(score, "Score 0", Renderer::rgb_colour(230, 230, 230));
+	Text* text = new Text(score, "Score 0", 1.0f, Renderer::rgb_colour(230, 230, 230));
 	score->add_component<Text>(text);
 	GameData::score_text = text;
 

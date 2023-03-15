@@ -49,9 +49,10 @@ GameObject* create_score() {
 	GameObject* score = new GameObject("Score", NULL);
 	RenderLayer::find_layer("UI")->add(score);
 	score->transform->position = {20.0f, 700.0f};
-	score->transform->scale *= 0.5f;
 
-	Text* text = new Text(score, "Score 0", Renderer::rgb_colour(230, 230, 230));
+	Text* text = new Text(score, "Score 0", 0.5f, Renderer::rgb_colour(230, 230, 230));
+	text->horizontal_align = HorizontalAlign::Left;
+	text->change_font("Ubuntu MediumItalic");
 	score->add_component<Text>(text);
 	GameController::score = text;
 
