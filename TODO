@@ -9,7 +9,6 @@ OPTIMISATIONS
 - faster collision detection for circles, sweeping (as a general collision optimisation)
 
 NEW SYSTEMS
-- general event system [UI UPDATE]
 - error logging
 
 RENDERING

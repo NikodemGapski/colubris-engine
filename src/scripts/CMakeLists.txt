@@ -1,4 +1,7 @@
+
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/v1.2-event-example-01)
+
 set(SCRIPTS_SOURCE
-	${CMAKE_CURRENT_SOURCE_DIR}/initialisation.cpp
+	${SCRIPTS_SOURCE}
 	PARENT_SCOPE
 )

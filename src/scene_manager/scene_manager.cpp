@@ -8,6 +8,7 @@
 #include "render_layer.hpp"
 #include "layer_collection.hpp"
 #include "mesh_single/mesh_single.hpp"
+#include "event.hpp"
 
 void SceneManager::init(GLFWwindow* window) {
 	Time::init();
@@ -22,6 +23,8 @@ void SceneManager::update() {
 
 	// poll input events
 	Input::poll_events();
+	// execute event handlers
+	Event::handle_events();
 
 	// make a hierarchy tree copy to stabilise the traversal on user-defined methods
 	GameObject::cache_hierarchy_tree();

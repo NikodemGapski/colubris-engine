@@ -1,0 +1,8 @@
+set(EVENT_SOURCE
+	${CMAKE_CURRENT_SOURCE_DIR}/event.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/event.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/event_templates.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/event_queue.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/event_queue.cpp
+	PARENT_SCOPE
+)

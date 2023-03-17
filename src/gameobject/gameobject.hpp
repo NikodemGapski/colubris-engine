@@ -196,5 +196,5 @@ public:
 	static void print_tree();
 };
 
-// templates implementations must be visible to translation units that use them, hence the header file
+// ----- TEMPLATE IMPLEMENTATIONS -----
 #include "gameobject_templates.hpp"
