@@ -149,8 +149,9 @@ std::vector<glm::vec2> MeshSingle::get_vertex_positions() const {
 	return result;
 }
 
-void MeshSingle::render() {
+void MeshSingle::render(glm::mat4 transform_matrix) {
 	shader.use();
+	shader.set("transform_matrix", transform_matrix);
 	
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);

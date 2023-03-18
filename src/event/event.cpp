@@ -1,6 +1,6 @@
 #include "event.hpp"
 
-std::unordered_map<std::string, EventQueue*> Event::event_queues;
+Dictionary<EventQueue*> Event::event_queues;
 
 Event::Event(std::string name, void* data, std::function<void()> delete_data) : name(name), data(data), delete_data(delete_data) {}
 Event::~Event() {

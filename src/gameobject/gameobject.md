@@ -20,9 +20,7 @@ Also, the 'convenient' pointer to the `Transform` component is NOT supposed to b
 ### 'z-index'? What is that?
 z-index is a variable responsible for deciding which objects should be rendered on top of the others. The larger the z-index, the 'further away' the object is, and so it will be rendered more to the bottom.
 
-In the colubris engine the final z-index of a gameobject is a sum of all of the z-indices of its ancestors along with the object's value itself. That way, when modifying the parent's z-index all of its children will be brought forward/back along with it, but still allowing for some objects to pass in between the parent and the child if the child's local z-index value will be large enough (basically non-zero).
-
-> Note that modifying the z-index value doesn't immediately change the rendering order of gameobjects. That operation is done once per game cycle right before rendering or manually, in the layer the object belongs to, by calling the `reorder()` method.
+> For more information about the order of rendering, see the [Layers](../layers/layers.md#rendering-order) documentation.
 
 ## Non-static public methods
 
@@ -48,7 +46,9 @@ The class contains the following non-static methods:
 - `std::vector<GameObject*> get_children()` (returns a list of children in the hierarchy tree),
 
 ### Layers
-- `std::map<std::string, Layer*> get_layers()` (returns a map of all functional layers the object belongs to mapped by the layer collection names),
+- `MainLayer* get_main_layer() const` (returns the main layer the gameobject belongs to),
+- `RenderLayer* get_render_layer() const` (returns the render layer the gameobject belongs to),
+- `std::map<std::string, Layer*> get_layers() const` (returns a map of all functional layers the object belongs to mapped by the layer collection names),
 > For more information about functional layers and layers in general, check out the [`Layers`](../layers/layers.md) documentation.
 
 ### Component management
@@ -67,7 +67,7 @@ The available constructors are the following:
 - `GameObject()` (creates an empty gameobject in the 'world' render layer, at the root of the hierarchy tree, and with the name 'GameObject #'+`id`),
 - `GameObject(std::string name, GameObject* parent, float z_index = 0.0f)` (creates an empty gameobject in the 'world' render layer, given name, as child of the `parent` and with the specified z-index value),
 - `GameObject(DefaultMesh mesh_type, std::vector<float> float_args, std::vector<int> int_args, std::vector<glm::vec3> vec3_args, GameObject* parent, float z_index = 0.0f)` (creates a gameobject with the specified mesh, parent, z_index, default name ('GameObject #'+`id`)),
-> For more information about mesh arguments, see the [`Mesh`](../mesh/mesh.md) documentation.
+> For more information about mesh arguments, see the [`Mesh`](../mesh/mesh.md#default-meshes-enum-defaultmesh) documentation.
 
 - `GameObject(std::string name, DefaultMesh mesh_type, std::vector<float> float_args, std::vector<int> int_args, std::vector<glm::vec3> vec3_args, GameObject* parent, float z_index = 0.0f)` (the same as above, but with a specified name),
 - `~GameObject()` (destroys the gameobject).

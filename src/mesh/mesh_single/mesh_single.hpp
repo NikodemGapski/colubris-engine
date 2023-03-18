@@ -31,7 +31,8 @@ public:
 	std::vector<glm::vec2> get_vertex_positions() const;
 private:
 	uint VAO, VBO, EBO;
-	void render();
+	// render the single mesh given the transformation matrix of its parent gameobject
+	void render(glm::mat4 transform_matrix);
 
 // ----- STATIC MEMBERS -----
 private:

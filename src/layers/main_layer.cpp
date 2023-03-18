@@ -1,6 +1,6 @@
 #include "main_layer.hpp"
 
-std::unordered_map<std::string, MainLayer*> MainLayer::layers;
+Dictionary<MainLayer*> MainLayer::layers;
 
 MainLayer::MainLayer(std::string name) : BaseLayer(name) {}
 

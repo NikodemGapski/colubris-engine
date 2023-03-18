@@ -4,6 +4,7 @@
 #include <string>
 #include <functional>
 #include "event_queue.hpp"
+#include "types.hpp"
 
 class Event {
 // ----- NON-STATIC MEMBERS -----
@@ -39,7 +40,7 @@ public:
 	static void listen(std::string name, std::function<void(Event*)> callback);
 
 private:
-	static std::unordered_map<std::string, EventQueue*> event_queues;
+	static Dictionary<EventQueue*> event_queues;
 	// handle events on every event queue
 	static void handle_events();
 

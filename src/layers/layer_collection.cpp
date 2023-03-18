@@ -1,7 +1,7 @@
 #include "layer_collection.hpp"
 
 ll LayerCollection::id_counter = 0;
-std::unordered_map<std::string, LayerCollection*> LayerCollection::collections;
+Dictionary<LayerCollection*> LayerCollection::collections;
 std::set<LayerCollection*, decltype(LayerCollection::comparator)*> LayerCollection::ordered_collections(LayerCollection::comparator);
 
 LayerCollection::LayerCollection(std::string name, std::function<void(GameObject*, GameObject*)> operation) :

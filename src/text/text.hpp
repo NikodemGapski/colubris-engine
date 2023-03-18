@@ -5,6 +5,7 @@
 #include "component.hpp"
 #include "character.hpp"
 #include "shader.hpp"
+#include "types.hpp"
 
 // Horizontal align values
 enum HorizontalAlign {
@@ -42,8 +43,8 @@ private:
 	std::string font_name;
 	// setup OpenGL buffers
 	void setup();
-	// render the text given that the text shader has been prepared by the parent
-	void render();
+	// render the text given the transformation matrix of its parent gameobject
+	void render(glm::mat4 transform_matrix);
 
 	// calculate the width of the text, based on its scale and letters
 	float get_width() const;
@@ -61,7 +62,7 @@ public:
 private:
 	static FT_Library ft_lib;
 	static Shader shader;
-	static std::unordered_map<std::string, char_map> fonts;
+	static Dictionary<char_map> fonts;
 
 	// initialise the class, import fonts
 	static void init();
@@ -70,4 +71,5 @@ private:
 
 	friend class SceneManager;
 	friend class Renderer;
+	friend class GameObject;
 };

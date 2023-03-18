@@ -5,7 +5,6 @@
 
 // forward declarations
 class GameObject;
-class Shader;
 
 // default mesh enumerator
 enum class DefaultMesh {
@@ -41,10 +40,12 @@ public:
 	std::vector<MeshSingle> submeshes;
 
 	// unused, necessary for inheritance
-	
 	void start();
 	void update();
+
 private:
-	void render();
-	friend class SceneManager;
+	// render the mesh given the transformation matrix of its parent gameobjects
+	void render(glm::mat4 transform_matrix);
+
+	friend class GameObject;
 };

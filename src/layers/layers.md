@@ -27,8 +27,33 @@ The `RenderLayer` is responsible for changing the visibility of its collection o
 
 The class offers the same static public methods as the `MainLayer` and the following additional public methods:
 - `int get_z_index()` (returns the layer's z-index value; note that different to the `GameObject` implementation, here z-indices are integers),
-- `set_z_index(int z_index)` (changes the layer's z-index value),
-- `reorder()` (recalculates the order of rendering of gameobjects in the layer's collection).
+- `set_z_index(int z_index)` (changes the layer's z-index value).
+
+### Rendering order
+
+There are three factors which influence the order of rendering of a gameobject:
+- the z-index of the render layer it belongs to,
+- its z-index value,
+- its position in the hierarchy tree.
+
+It is guaranteed, that objects from a layer with a smaller z-index will be rendered after (on top of) objects from layers with larger ones.
+
+The algorithm for the remaining two factors is as follows (starting with `current = root of the hierarchy tree`):
+```
+render_subtree(current) {
+	ordered_gameobjects = sorted({current, current.children})
+	for(object : ordered_gameobjects) {
+		if(object == current) {
+			current.render_in_its_layer()
+		}else {
+			render_subtree(object)
+		}
+	}
+}
+```
+> In other words, siblings and their subtrees are rendered in the their non-decreasing z-index order. The parent is rendered after (on top of) the subtrees of children with their local z-index greater than `0.0f` and before (below) the ones with local z-index greater than `0.0f`.
+
+> It is convenient to think about the colubris engine's z-index ordering as imagining a Z-axis going forward. Then, the larger the z-index, the further away something is.
 
 ## Functional layer
 The functional layer (`Layer`) is responsible for applying a certain operation (specified by the `LayerCollection` it belongs to) to all ordered pairs of active objects in its collection of gameobjects.

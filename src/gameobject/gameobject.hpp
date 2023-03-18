@@ -9,6 +9,7 @@
 #include "component.hpp"
 #include "math.hpp"
 #include "hierarchy_tree.hpp"
+#include "types.hpp"
 
 // forward declarations
 class RenderLayer;
@@ -67,9 +68,12 @@ public:
 	std::vector<GameObject*> get_children() const;
 
 	// Layers
-
+	// return a pointer to the main layer the gameobject belongs to
+	MainLayer* get_main_layer() const;
+	// return a pointer to the render layer the gameobject belongs to
+	RenderLayer* get_render_layer() const;
 	// get a map of all functional layers the gameobject belongs to
-	std::map<std::string, Layer*> get_layers() const;
+	Dictionary<Layer*> get_layers() const;
 
 	// Components
 
@@ -113,15 +117,15 @@ private:
 	MainLayer* main_layer;
 	RenderLayer* render_layer;
 	// the map of functional layers this gameobject belongs to (collection name -> layer pointer)
-	std::map<std::string, Layer*> layers;
+	Dictionary<Layer*> layers;
 	
 	HierarchyTree* node;
 
 	void start();
 	// call update methods on components if the gameobject is active
 	void update();
-	// set the uniform variables of the shader regarding position, rotation and scale
-	void prepare_shader(Shader& shader);
+	// render all renderable components
+	void render();
 
 	// a list of currently happening collisions
 	std::vector<GameObject*> collisions;
@@ -153,7 +157,7 @@ private:
 	static HierarchyTree* hierarchy_tree_copy;
 
 	// map of name -> set of gameobjects
-	static std::unordered_map<std::string, std::unordered_set<GameObject*, Hash> > names;
+	static Dictionary<std::unordered_set<GameObject*, Hash> > names;
 
 	// update all of the global transform data in the objects in the hierarchy tree
 	static void update_transforms();

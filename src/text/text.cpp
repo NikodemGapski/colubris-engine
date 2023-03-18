@@ -12,7 +12,7 @@
 
 FT_Library Text::ft_lib;
 Shader Text::shader;
-std::unordered_map<std::string, char_map> Text::fonts;
+Dictionary<char_map> Text::fonts;
 
 Text::Text(GameObject* parent, std::string text, float scale, glm::vec3 colour) :
 ComponentI(parent), text(text), scale(scale), colour(colour), font_name("Ubuntu Regular"), horizontal_align(HorizontalAlign::Centre) {
@@ -48,8 +48,9 @@ void Text::setup() {
 	glBindVertexArray(0);
 }
 
-void Text::render() {
+void Text::render(glm::mat4 transform_matrix) {
 	shader.use();
+	shader.set("transform_matrix", transform_matrix);
 	shader.set("text_colour", colour);
 	glActiveTexture(GL_TEXTURE0);
 	glBindVertexArray(VAO);

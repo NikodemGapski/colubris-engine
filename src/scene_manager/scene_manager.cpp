@@ -56,21 +56,6 @@ void SceneManager::update() {
 }
 void SceneManager::render() {
 	Renderer::clear_window();
-	for(auto layer : RenderLayer::ordered_layers) {
-		if(!layer->is_active()) continue;
-		// reorder the gameobjets
-		layer->reorder();
-		for(auto obj : layer->ordered_gameobjects) {
-			if(!obj->is_active()) continue;
-			if(obj->has_component<Mesh>()) {
-				obj->prepare_shader(MeshSingle::shader);
-				obj->get_component<Mesh>()->render();
-			}
-			if(obj->has_component<Text>()) {
-				obj->prepare_shader(Text::shader);
-				obj->get_component<Text>()->render();
-			}
-		}
-	}
+	RenderLayer::render_all(&GameObject::hierarchy_tree);
 }
 

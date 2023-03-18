@@ -53,4 +53,5 @@ Curently there are two major example scenes:
 each of them having their own markdown overview file (however the technical details are in the commented code itself).
 
 Additionally, minor examples representing individual engine's features are available:
-- `v1.2-event-example-01` (`Event` class functionality).
+- `v1.2-event-example-01` (`Event` class functionality),
+- `v1.2-z_index-example-01` (z-indexing and render layer functionality).

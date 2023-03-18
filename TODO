@@ -1,37 +1,41 @@
-[UI UPDATE]
+# TODO
 
-HANDLES
-- what if a component has a pointer to a gameobject that's been detroyed? how to handle dangling pointers? - HANDLES [UI UPDATE]
-- find an alternative to the 'handy transform variable` in gameobject (it's not safe being modifiable)
+## HANDLES
+- what if a component has a pointer to a gameobject that's been detroyed? how to handle dangling pointers? - HANDLES
+- find an alternative to the 'handy transform variable' in gameobject (it's not safe being modifiable)
 
-OPTIMISATIONS
+## OPTIMISATIONS
 - general optimisations (data-oriented design)
 - faster collision detection for circles, sweeping (as a general collision optimisation)
 
-NEW SYSTEMS
+## NEW SYSTEMS
 - error logging
 
-RENDERING
+## RENDERING
 - camera
 - drawing collider outline for debugging
 - texture rendering
 - animation (?)
 
-FONT
+## FONT
 - dynamic scaling
 
-UI ELEMENTS
+## UI ELEMENTS
 - buttons, mouse interaction
 - draggable components
 - default shapes (text box, drop-down list, window)
 
-OTHERS
-- prefabs [UI UPDATE]
+## OTHERS
+- prefabs
 
-BUGS AND ISSUES:
+## BUGS AND ISSUES:
 - a little issue with gameobjects having their render_layer set before registration (despite not yet belonging to the layer)
 - bug: if a new GameObject is created in a start() method, regitration has a problem
-- is compounding z-index really a good thing? what if we don't want to have objects pass between parents and children, but we want to order the children in a certain way?
+- dangling listeners (cannot unsubscribe to an event)
 
+## DOCS
 
------ DOCS -----
+# Changes - UI update
+- FONT
+- EVENT SYSTEM
+- improved render ordering

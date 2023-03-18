@@ -9,11 +9,12 @@
 #include "render_layer.hpp"
 #include "main_layer.hpp"
 #include "layer.hpp"
+#include "text.hpp"
 
 ll GameObject::id_counter = 0;
 HierarchyTree GameObject::hierarchy_tree;
 HierarchyTree* GameObject::hierarchy_tree_copy;
-std::unordered_map<std::string, std::unordered_set<GameObject*, GameObject::Hash> > GameObject::names;
+Dictionary<std::unordered_set<GameObject*, GameObject::Hash> > GameObject::names;
 std::unordered_set<GameObject*, GameObject::Hash> GameObject::to_register;
 std::unordered_set<GameObject*, GameObject::Hash> GameObject::to_destroy;
 
@@ -182,13 +183,25 @@ std::vector<GameObject*> GameObject::get_children() const {
 	return result;
 }
 
-std::map<std::string, Layer*> GameObject::get_layers() const {
+MainLayer* GameObject::get_main_layer() const {
+	return main_layer;
+}
+RenderLayer* GameObject::get_render_layer() const {
+	return render_layer;
+}
+Dictionary<Layer*> GameObject::get_layers() const {
 	return layers;
 }
 
-void GameObject::prepare_shader(Shader& shader) {
-	shader.use();
-	shader.set("transform_matrix", transform->generate_matrix());
+void GameObject::render() {
+	// first, render mesh
+	if(has_component<Mesh>()) {
+		get_component<Mesh>()->render(transform->generate_matrix());
+	}
+	// second, render text
+	if(has_component<Text>()) {
+		get_component<Text>()->render(transform->generate_matrix());
+	}
 }
 
 void GameObject::start() {

@@ -5,6 +5,7 @@
 #include "math.hpp" // long long typedef
 #include "gameobject.hpp"
 #include "base_layer.hpp"
+#include "types.hpp"
 
 class RenderLayer : public BaseLayer {
 // ----- NON-STATIC MEMBERS -----
@@ -16,8 +17,6 @@ public:
 	int get_z_index() const;
 	// set z_index
 	void set_z_index(int z_index);
-	// recalculate the z_index order of gameobjects in the layer
-	void reorder();
 	
 	// add the gameobject to the layer
 	void add(GameObject* obj);
@@ -42,9 +41,13 @@ public:
 private:
 	// add 3 basic render layers
 	static void init();
+	// render all layers, node is the hierarchy tree's root node
+	static void render_all(HierarchyTree* root);
+
+	// comparator of render layer pointers based on their objects' z-indices
 	static bool comparator(RenderLayer* a, RenderLayer* b);
 
-	static std::unordered_map<std::string, RenderLayer*> layers;
+	static Dictionary<RenderLayer*> layers;
 	static std::set<RenderLayer*, decltype(comparator)*> ordered_layers;
 // ----- FRIENDS -----
 	friend class SceneManager;

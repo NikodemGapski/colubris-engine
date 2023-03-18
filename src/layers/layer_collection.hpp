@@ -1,6 +1,7 @@
 #pragma once
 #include <functional>
 #include "layer.hpp"
+#include "types.hpp"
 
 class LayerCollection {
 // ----- NON-STATIC MEMBERS -----
@@ -44,7 +45,7 @@ private:
 	void execute_layers();
 
 	// a list of all layers in the collection mapped by their name
-	std::unordered_map<std::string, Layer*> layers;
+	Dictionary<Layer*> layers;
 	// a set of all layers in the collection
 	std::set<Layer*, decltype(Layer::comparator)*> ordered_layers;
 
@@ -66,7 +67,7 @@ private:
 	static bool comparator(LayerCollection* a, LayerCollection* b);
 
 	static std::set<LayerCollection*, decltype(comparator)*> ordered_collections;
-	static std::unordered_map<std::string, LayerCollection*> collections;
+	static Dictionary<LayerCollection*> collections;
 // ----- FRIENDS -----
 	friend class SceneManager;
 	friend class Layer;

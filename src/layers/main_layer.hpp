@@ -1,5 +1,6 @@
 #pragma once
 #include "base_layer.hpp"
+#include "types.hpp"
 
 class MainLayer : public BaseLayer {
 // ----- NON-STATIC MEMBERS -----
@@ -25,5 +26,5 @@ public:
 	// remove the layer with the given name
 	static void remove_layer(std::string name);
 private:
-	static std::unordered_map<std::string, MainLayer*> layers;
+	static Dictionary<MainLayer*> layers;
 };
