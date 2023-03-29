@@ -19,7 +19,7 @@ void callback2(Event* event) {
 		message = "This event (" + event->get_name() + ") does have data.\n";
 	}else {
 		message = "This event (" + event->get_name() + ") does NOT have any data.\n";
-		event->get_data<B>();
+		// event->get_data<B>(); // error - Event::get_data<T>(): the event has no data.
 	}
 	std::cout<<message;
 }

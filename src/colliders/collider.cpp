@@ -7,7 +7,7 @@ LayerCollection* Collider::layer_collection;
 Collider::Collider(GameObject* parent) : ComponentI(parent) {
 	layer_collection->find("world")->add(parent);
 }
-Collider::Collider(GameObject* parent, std::vector<ColliderShape> shapes) : ComponentI(parent), shapes(shapes) {
+Collider::Collider(GameObject* parent, std::vector<Shape> shapes) : ComponentI(parent), shapes(shapes) {
 	layer_collection->find("world")->add(parent);
 }
 Collider::~Collider() {
@@ -30,10 +30,10 @@ void Collider::start() {}
 void Collider::update() {}
 
 bool Collider::collide(const Collider& a, const Collider& b) {
-	// for each pair of ColliderShapes check if they collide
+	// for each pair of Shape check if they collide
 	for(int i = 0; i < a.shapes.size(); ++i) {
 		for(int j = 0; j < b.shapes.size(); ++j) {
-			if(ColliderShape::collide(a.shapes[i], b.shapes[j])) return true;
+			if(Shape::collide(a.shapes[i], b.shapes[j])) return true;
 		}
 	}
 	return false;
@@ -41,10 +41,10 @@ bool Collider::collide(const Collider& a, const Collider& b) {
 
 std::vector<glm::vec2> Collider::collision_points(const Collider& a, const Collider& b) {
 	std::vector<glm::vec2> result;
-	// for each pair of ColliderShapes add collision points
+	// for each pair of Shape add collision points
 	for(int i = 0; i < a.shapes.size(); ++i) {
 		for(int j = 0; j < b.shapes.size(); ++j) {
-			std::vector<glm::vec2> points = ColliderShape::collision_points(a.shapes[i], b.shapes[j]);
+			std::vector<glm::vec2> points = Shape::collision_points(a.shapes[i], b.shapes[j]);
 			result.insert(result.end(), points.begin(), points.end());
 		}
 	}

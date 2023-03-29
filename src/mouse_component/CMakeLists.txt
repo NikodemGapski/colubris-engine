@@ -1,0 +1,5 @@
+set(MOUSE_COMPONENT_SOURCE
+	${CMAKE_CURRENT_SOURCE_DIR}/mouse_component.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/mouse_component.cpp
+	PARENT_SCOPE
+)

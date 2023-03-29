@@ -36,7 +36,7 @@ private:
 		enemy->transform->position = {x_pos, 700.0f};
 		enemy->transform->rotation = -90.0f;
 		// add a collider
-		ColliderShape shape(enemy->transform, enemy->get_component<Mesh>()->submeshes[0].get_vertex_positions());
+		Shape shape(enemy->transform, enemy->get_component<Mesh>()->submeshes[0].get_vertex_positions());
 		enemy->add_component<Collider>(new Collider(enemy, {shape}));
 		// assign a controller
 		enemy->add_component<EnemyController>(new EnemyController(enemy, player));

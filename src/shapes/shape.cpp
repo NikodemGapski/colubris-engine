@@ -1,10 +1,10 @@
-#include "collider_shape.hpp"
+#include "shape.hpp"
 #include "geometry.hpp"
 
-ColliderShape::ColliderShape(Transform* global_transform) : global_transform(global_transform) {}
-ColliderShape::ColliderShape(Transform* global_transform, std::vector<glm::vec2> points) : global_transform(global_transform), points(points) {}
+Shape::Shape(Transform* global_transform) : global_transform(global_transform) {}
+Shape::Shape(Transform* global_transform, std::vector<glm::vec2> points) : global_transform(global_transform), points(points) {}
 
-bool ColliderShape::collide(const ColliderShape& a, const ColliderShape& b) {
+bool Shape::collide(const Shape& a, const Shape& b) {
 	std::vector<glm::vec2> a_points_real = a.get_real_points();
 	std::vector<glm::vec2> b_points_real = b.get_real_points();
 
@@ -25,7 +25,7 @@ bool ColliderShape::collide(const ColliderShape& a, const ColliderShape& b) {
 	return false;
 }
 
-std::vector<glm::vec2> ColliderShape::collision_points(const ColliderShape& a, const ColliderShape& b) {
+std::vector<glm::vec2> Shape::collision_points(const Shape& a, const Shape& b) {
 	std::vector<glm::vec2> a_points_real = a.get_real_points();
 	std::vector<glm::vec2> b_points_real = b.get_real_points();
 	
@@ -48,16 +48,22 @@ std::vector<glm::vec2> ColliderShape::collision_points(const ColliderShape& a, c
 }
 
 
-BoundingBox ColliderShape::get_bounding_box() const {
+BoundingBox Shape::get_bounding_box() const {
 	return BoundingBox(get_real_points());
 }
 
 
-std::vector<glm::vec2> ColliderShape::get_real_points() const {
+std::vector<glm::vec2> Shape::get_real_points() const {
 	// first apply your own transformation
 	std::vector<glm::vec2> result = local_transform.transform(points);
-	// then align with the parent
+	// then align with the global transform
 	result = global_transform->transform(result);
 	
 	return result;
+}
+std::vector<glm::vec2> Shape::get_points() const {
+	return points;
+}
+void Shape::set_points(std::vector<glm::vec2> new_points) {
+	points = new_points;
 }

@@ -157,7 +157,7 @@ private:
 
 		// simplified square collider added to the (i, j) chunk
 		float a = radius / 1.41f / 2.0f;
-		ColliderShape shape(flower->transform, {
+		Shape shape(flower->transform, {
 			{-a, -a}, {a, -a}, {a, a}, {-a, a}
 		});
 		flower->add_component<Collider>(new Collider(flower, {shape}));

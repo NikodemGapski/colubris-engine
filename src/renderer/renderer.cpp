@@ -1,6 +1,7 @@
 #include "renderer.hpp"
 #include "text.hpp"
 #include "mesh_single/mesh_single.hpp"
+#include <glm/gtc/matrix_transform.hpp>
 
 int Renderer::window_width;
 int Renderer::window_height;
@@ -75,3 +76,9 @@ glm::vec4 Renderer::rgba_colour(int r, int g, int b, int a) {
 int Renderer::get_window_width() { return window_width; }
 int Renderer::get_window_height() { return window_height; }
 glm::vec2 Renderer::get_window_dimensions() { return {window_width, window_height}; }
+glm::mat4 Renderer::get_projection_matrix() {
+	return glm::ortho(0.0f, (float)get_window_width(), 0.0f, (float)get_window_height(), -100.0f, 100.0f);
+}
+glm::vec2 Renderer::world_space(glm::vec2 point) {
+	return glm::vec2(point.x, get_window_height() - point.y);
+}

@@ -1,9 +1,5 @@
 set(COLLIDERS_SOURCE
-	${CMAKE_CURRENT_SOURCE_DIR}/collider/collider.hpp
-	${CMAKE_CURRENT_SOURCE_DIR}/collider/collider.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/collider_shape/collider_shape.hpp
-	${CMAKE_CURRENT_SOURCE_DIR}/collider_shape/collider_shape.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/bounding_box/bounding_box.hpp
-	${CMAKE_CURRENT_SOURCE_DIR}/bounding_box/bounding_box.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/collider.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/collider.cpp
 	PARENT_SCOPE
 )

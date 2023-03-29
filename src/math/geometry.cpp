@@ -1,5 +1,6 @@
 #include "geometry.hpp"
 #include "math_core.hpp"
+#include <algorithm>
 
 namespace math {
 	
@@ -86,5 +87,24 @@ namespace math {
 		
 		Line a(a1, a2), b(b1, b2);
 		result.push_back(intersection(a, b));
+	}
+
+	// helper function, the quadrant the point belongs to
+	int quad(glm::vec2 p) {
+		if(p.x >= 0.0f && p.y >= 0.0f) return 0;
+		if(p.x <= 0.0f && p.y >= 0.0f) return 1;
+		if(p.x <= 0.0f && p.y <= 0.0f) return 2;
+		return 3;
+	}
+	void sort_polar(std::vector<glm::vec2>& points) {
+		std::sort(points.begin(), points.end(), [](glm::vec2 a, glm::vec2 b) {
+			if(quad(a) == quad(b)) {
+				if(cross(a, b) == 0.0f) {
+					return glm::length(a) < glm::length(b);
+				}
+				return cross(a, b) > 0.0f;
+			}
+			return quad(a) < quad(b);
+		});
 	}
 }

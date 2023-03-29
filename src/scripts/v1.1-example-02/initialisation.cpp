@@ -17,7 +17,7 @@ GameObject* create_sheep(GameObject* player, GameObject* manager) {
 		Renderer::rgb_colour(230, 230, 230)
 	}, NULL, 1.0f);
 	sheep->add_component<SheepController>(new SheepController(sheep, player, manager));
-	ColliderShape shape(sheep->transform, sheep->get_component<Mesh>()->submeshes[0].get_vertex_positions());
+	Shape shape(sheep->transform, sheep->get_component<Mesh>()->submeshes[0].get_vertex_positions());
 	sheep->add_component<Collider>(new Collider(sheep, {shape}));
 	return sheep;
 }
@@ -29,6 +29,7 @@ GameObject* create_score() {
 	score->transform->scale *= 0.5f;
 
 	Text* text = new Text(score, "Score 0", 1.0f, Renderer::rgb_colour(230, 230, 230));
+	text->horizontal_align = HorizontalAlign::Left;
 	score->add_component<Text>(text);
 	GameData::score_text = text;
 

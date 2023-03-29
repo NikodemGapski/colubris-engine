@@ -161,8 +161,7 @@ Shader MeshSingle::shader;
 
 void MeshSingle::update_projection_matrix() {
 	shader.use();
-	shader.set("projection",
-			glm::ortho(0.0f, (float)Renderer::get_window_width(), 0.0f, (float)Renderer::get_window_height(), -100.0f, 100.0f));
+	shader.set("projection", Renderer::get_projection_matrix());
 }
 
 void MeshSingle::init() {

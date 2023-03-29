@@ -28,8 +28,8 @@ GameObject* create_player() {
 	player->add_component<Mesh>(player_mesh);
 	
 	// collider shapes
-	ColliderShape body_collider(player->transform, body.get_vertex_positions());
-	ColliderShape arm_collider(player->transform, arm.get_vertex_positions());
+	Shape body_collider(player->transform, body.get_vertex_positions());
+	Shape arm_collider(player->transform, arm.get_vertex_positions());
 	// collider
 	Collider* player_collider = new Collider(player, {arm_collider, body_collider});
 	player->add_component<Collider>(player_collider);

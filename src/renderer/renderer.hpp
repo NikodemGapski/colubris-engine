@@ -15,6 +15,10 @@ public:
 	static int get_window_width();
 	static int get_window_height();
 	static glm::vec2 get_window_dimensions();
+	static glm::mat4 get_projection_matrix();
+	
+	// get world space coordinates for a point in screen coordinates
+	static glm::vec2 world_space(glm::vec2 point);
 
 	static glm::vec4 get_bg_colour();
 	// set background colour of the scene (RGBA values 0.0f-1.0f)

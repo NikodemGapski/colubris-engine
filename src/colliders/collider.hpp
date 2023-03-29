@@ -2,7 +2,7 @@
 #include <vector>
 #include <set>
 #include "component.hpp"
-#include "collider_shape/collider_shape.hpp"
+#include "shape.hpp"
 
 // forward declaration
 class GameObject;
@@ -14,7 +14,7 @@ public:
 	// creates a Collider with no shapes and registers it
 	Collider(GameObject* parent);
 	// creates a Collider with given shapes and registers it
-	Collider(GameObject* parent, std::vector<ColliderShape> shapes);
+	Collider(GameObject* parent, std::vector<Shape> shapes);
 	// destroys the Collider and deregisters it
 	~Collider();
 
@@ -24,7 +24,7 @@ public:
 	BoundingBox get_bounding_box() const;
 
 	// a list of shapes of the Collider
-	std::vector<ColliderShape> shapes;
+	std::vector<Shape> shapes;
 
 	void start();
 	void update();

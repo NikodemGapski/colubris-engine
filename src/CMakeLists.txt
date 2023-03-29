@@ -3,10 +3,12 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/renderer/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/shaders/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/gameobject/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/component/)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/shapes/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/mesh/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/scripts/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/input/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/event/)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/mouse_component/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/colliders/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/scene_manager/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/transform/)
@@ -23,9 +25,11 @@ set(MODULES
 	${CMAKE_CURRENT_SOURCE_DIR}/shaders/
 	${CMAKE_CURRENT_SOURCE_DIR}/gameobject/
 	${CMAKE_CURRENT_SOURCE_DIR}/component/
+	${CMAKE_CURRENT_SOURCE_DIR}/shapes/
 	${CMAKE_CURRENT_SOURCE_DIR}/mesh/
 	${CMAKE_CURRENT_SOURCE_DIR}/input/
 	${CMAKE_CURRENT_SOURCE_DIR}/event/
+	${CMAKE_CURRENT_SOURCE_DIR}/mouse_component/
 	${CMAKE_CURRENT_SOURCE_DIR}/colliders/
 	${CMAKE_CURRENT_SOURCE_DIR}/colliders/collider/
 	${CMAKE_CURRENT_SOURCE_DIR}/scene_manager/
@@ -46,10 +50,12 @@ set(EXE_SOURCE
 	${SHADER_SOURCE}
 	${GAMEOBJECT_SOURCE}
 	${COMPONENT_SOURCE}
+	${SHAPES_SOURCE}
 	${MESH_SOURCE}
 	${SCRIPTS_SOURCE}
 	${INPUT_SOURCE}
 	${EVENT_SOURCE}
+	${MOUSE_COMPONENT_SOURCE}
 	${COLLIDERS_SOURCE}
 	${SCENE_MANAGER_SOURCE}
 	${TRANSFORM_SOURCE}

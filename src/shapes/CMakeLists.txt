@@ -1,0 +1,9 @@
+set(SHAPES_SOURCE
+	${CMAKE_CURRENT_SOURCE_DIR}/shape.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/shape.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/convex_shape.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/convex_shape.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/bounding_box.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/bounding_box.cpp
+	PARENT_SCOPE
+)

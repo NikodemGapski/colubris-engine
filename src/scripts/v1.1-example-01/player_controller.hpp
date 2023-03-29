@@ -77,7 +77,7 @@ private:
 			bullet->add_component<Bullet>(new Bullet(bullet));
 			// add collider
 			bullet->add_component<Collider>(new Collider(bullet, {
-				ColliderShape(bullet->transform, bullet->get_component<Mesh>()->submeshes[0].get_vertex_positions())
+				Shape(bullet->transform, bullet->get_component<Mesh>()->submeshes[0].get_vertex_positions())
 			}));
 			// copy transform values
 			Transform* t = bullet->transform;

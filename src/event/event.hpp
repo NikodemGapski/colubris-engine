@@ -50,3 +50,5 @@ private:
 
 // ----- TEMPLATE IMPLEMENTATIONS -----
 #include "event_templates.hpp"
+
+#define MOUSE_EVENT "MOUSE_EVENT"

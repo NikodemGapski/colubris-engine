@@ -21,5 +21,10 @@ namespace math {
 	bool segments_intersect(glm::vec2 a1, glm::vec2 a2, glm::vec2 b1, glm::vec2 b2);
 	// add collision points of segments a and b to the result vector (or none if there is no collision)
 	void add_collision_points(glm::vec2 a1, glm::vec2 a2, glm::vec2 b1, glm::vec2 b2, std::vector<glm::vec2>& result);
+
+	// sort the given points (provided in euclidean coordinates) by their polar coordinates
+	// (in counter-clockwise order / increasing angle)
+	// points with the same angle are sorted in increasing distance to (0, 0) order
+	void sort_polar(std::vector<glm::vec2>& points);
 }
 

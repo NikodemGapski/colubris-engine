@@ -13,7 +13,7 @@ public:
 	// execute all listeners' functions for all events
 	void handle_events();
 
-private:
+protected:
 	std::vector<std::function<void(Event*)> > listeners;
 	std::vector<Event*> events;
 };

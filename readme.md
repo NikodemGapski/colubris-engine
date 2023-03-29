@@ -38,6 +38,7 @@ Intermediate concepts:
 
 Advanced concepts:
 - [Layers](src/layers/layers.md)
+- [`Event`](src/event/event.md)
 - [`Shader`](src/shaders/shader.md)
 
 Utilities:

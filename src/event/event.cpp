@@ -30,7 +30,7 @@ void Event::emit(std::string name) {
 		// create a new event queue
 		event_queues.insert({name, new EventQueue()});
 	}
-	// add a new event to the queue with its data and a type-specific deallocation function
+	// add a new event to the queue
 	event_queues[name]->add_event(new Event(name, NULL, [](){}));
 }
 
