@@ -17,7 +17,7 @@ Libraries used:
 
 ## Setup
 
-To setup the working environment, clone the repository, install the freetype2 library, then configure and build the project using CMake.
+To setup the working environment, clone the repository, install the freetype2 library, then configure and build the project using CMake (by creating a `build` subdirectory and calling `cmake ..` and `make` from there).
 
 ## Documentation
 ### Table of contents
