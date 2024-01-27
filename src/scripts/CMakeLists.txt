@@ -1,5 +1,5 @@
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/v1.2-mouse-example-01)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/v1.3-testing)
 
 set(SCRIPTS_SOURCE
 	${SCRIPTS_SOURCE}

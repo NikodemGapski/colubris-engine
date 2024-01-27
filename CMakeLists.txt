@@ -11,7 +11,7 @@ enable_testing()
 # add executables
 add_subdirectory(src)
 add_executable(colubris-engine ${EXE_SOURCE})
-target_compile_options(colubris-engine PRIVATE -I/usr/include/freetype2 -lfreetype)
+target_compile_options(colubris-engine PRIVATE -std=c++20 -I/usr/include/freetype2 -lfreetype)
 
 # add libraries
 add_subdirectory(lib)

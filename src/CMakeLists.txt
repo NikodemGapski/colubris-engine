@@ -19,6 +19,8 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/text/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/layers/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/hierarchy_tree/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/include_bundles/)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/entity/)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/containers/)
 
 set(MODULES
 	${CMAKE_CURRENT_SOURCE_DIR}/renderer/
@@ -41,6 +43,8 @@ set(MODULES
 	${CMAKE_CURRENT_SOURCE_DIR}/layers/
 	${CMAKE_CURRENT_SOURCE_DIR}/hierarchy_tree/
 	${CMAKE_CURRENT_SOURCE_DIR}/include_bundles/
+	${CMAKE_CURRENT_SOURCE_DIR}/entity/
+	${CMAKE_CURRENT_SOURCE_DIR}/containers/
 	${CMAKE_CURRENT_SOURCE_DIR}/
 	PARENT_SCOPE
 )
@@ -66,6 +70,8 @@ set(EXE_SOURCE
 	${LAYERS_SOURCE}
 	${HIERARCHY_TREE_SOURCE}
 	${INCLUDE_BUNDLES_SOURCE}
+	${ENTITY_SOURCE}
+	${CONTAINERS_SOURCE}
 	${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/types.hpp
 	PARENT_SCOPE
