@@ -1,5 +1,6 @@
 #pragma once
 #include <unordered_set>
+#include <cstddef>
 
 // forward declaration
 class GameObject;
