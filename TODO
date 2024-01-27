@@ -7,8 +7,8 @@
 ## OPTIMISATIONS
 - general optimisations (data-oriented design)
 - faster collision detection for circles, sweeping (as a general collision optimisation)
-- check for collisions of two shapes by finding any point of one shape inside another (?)
-
+- check for collisions of two shapes by finding any point of one shape inside another (?) - downside: you don't know all the collision points, upside: time complexity goes from n^2 to nlogn
+- think about making colliders from convex shapes (faster collision detection), what purpose would the Shape class serve?
 ## NEW SYSTEMS
 - error logging
 

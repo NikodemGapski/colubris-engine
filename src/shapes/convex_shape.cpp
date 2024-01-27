@@ -42,17 +42,17 @@ void ConvexShape::set_points(std::vector<glm::vec2> new_points) {
 }
 
 bool ConvexShape::is_inside(glm::vec2 point) const {
-	// O(n) :(
-	auto real_points = get_real_points();
+	return is_inside(point, get_real_points());
+}
 
-	// O(log n) :)
+bool ConvexShape::is_inside(glm::vec2 point, const std::vector<glm::vec2>& points) {
 	// perform binary search to find the largest i, such that
 	// point is to the left of vector(points[0], points[i])
-	glm::vec2 to_point = point - real_points[0];
-	int l = 0, r = real_points.size() - 1;
+	glm::vec2 to_point = point - points[0];
+	int l = 0, r = points.size() - 1;
 	while(l < r) {
 		int mid = (l + r + 1) / 2;
-		if(math::cross(real_points[mid] - real_points[0], to_point) < 0.0f) {
+		if(math::cross(points[mid] - points[0], to_point) < 0.0f) {
 			// the point is to the right
 			r = mid - 1;
 		}else {
@@ -61,11 +61,27 @@ bool ConvexShape::is_inside(glm::vec2 point) const {
 	}
 
 	// the point is still to the right (it's outside the shape)
-	if(math::cross(real_points[l] - real_points[0], to_point) < 0.0f) return false;
+	if(math::cross(points[l] - points[0], to_point) < 0.0f) return false;
 	// the point is too much to the left (it's outside the shape)
-	if(l == real_points.size() - 1) return false;
+	if(l == points.size() - 1) return false;
 
-	// now the point is between lines (point[0], point[l]) and (point[0], point[l + 1])
-	// the question is whether it's to the left of the segment (point[l], point[l + 1])
-	return !(math::cross(real_points[l + 1] - real_points[l], point - real_points[l]) < 0.0f);
+	// now the point is between lines (points[0], points[l]) and (points[0], points[l + 1])
+	// the question is whether it's to the left of the segment (points[l], points[l + 1])
+	return !(math::cross(points[l + 1] - points[l], point - points[l]) < 0.0f);
+	
+}
+bool ConvexShape::collide(const ConvexShape& a, const ConvexShape& b) {
+	std::vector<glm::vec2> a_points_real = a.get_real_points();
+	std::vector<glm::vec2> b_points_real = b.get_real_points();
+
+	// check bounding boxes
+	BoundingBox a_box(a_points_real), b_box(b_points_real);
+	if(!BoundingBox::intersect(a_box, b_box)) return false;
+
+	// if boxes intersect, check if any b-point is inside a
+	for(auto& b_point : b_points_real) {
+		if(is_inside(b_point, a_points_real)) return true;
+	}
+
+	return false;
 }

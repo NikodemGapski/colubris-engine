@@ -30,7 +30,7 @@ void Collider::start() {}
 void Collider::update() {}
 
 bool Collider::collide(const Collider& a, const Collider& b) {
-	// for each pair of Shape check if they collide
+	// for each pair of Shapes check if they collide
 	for(int i = 0; i < a.shapes.size(); ++i) {
 		for(int j = 0; j < b.shapes.size(); ++j) {
 			if(Shape::collide(a.shapes[i], b.shapes[j])) return true;
